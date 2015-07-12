@@ -59,15 +59,6 @@ namespace Cliver.DataSifter
             AppTitle = ean.Name;
             if (ean.Version.Major > 0 || ean.Version.Minor > 0)
                 AppTitle += ean.Version.Major + "." + ean.Version.Minor;
-
-            Message.Inform(@"eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg
-eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg
-eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg
-eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg
-eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg
-eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg
-"
-                );
         }
 
         static internal void Help()
