@@ -16,16 +16,9 @@ using System.Windows.Forms;
 
 namespace Cliver.DataSifter
 {
-    internal partial class SettingsForm : Form
+    internal partial class SettingsForm : BaseForm
     {
-        internal enum Page
-        {
-            //GENERAL,
-            BROWSER,
-            SOURCE
-        }
-
-        internal static void ThisShow(Page active_tab_page)
+        internal static void ThisShow()
         {
             if (settings_form == null || settings_form.IsDisposed)
                 settings_form = new SettingsForm();
@@ -33,19 +26,16 @@ namespace Cliver.DataSifter
             settings_form.BringToFront();
             settings_form.Activate();
             settings_form.Focus();
-            settings_form.tabCommon.SelectedIndex = (int)active_tab_page;
         }
         static SettingsForm settings_form = null;
 
         SettingsForm()
         {
             InitializeComponent();
-            this.Icon = Program.AppIcon;
         }
 
         private void SettingsForm_Activated(object sender, EventArgs e)
         {
-            CaptureMarkColorInBrowser.BackColor = Settings.Default.CaptureMarkColorInBrowser;
             UserMarkColor.BackColor = Settings.Default.UserMarkColor;
             // NewRegexPattern.Text = Settings.Default.NewRegexPattern;
             flagPrintParseLabels.Checked = Settings.Default.PrintCaptureLabels;
@@ -57,7 +47,6 @@ namespace Cliver.DataSifter
             //flagDisableBrowserWindow.Checked = Settings.Default.DisableBrowserWindow;
             flagCopySelectionToClipboard.Checked = Settings.Default.CopySelectionToClipboard;
             //HelpFileUri.Text = Settings.Default.HelpFileUri;
-            StartWithBrowserWindow.Checked = Settings.Default.StartWithBrowserWindow;
             
             label_colors.Clear();
             foreach (Color c in Settings.Default.FilterBackColors)
@@ -110,7 +99,7 @@ namespace Cliver.DataSifter
 
         private void Reset_Click(object sender, EventArgs e)
         {
-            if (!Message.YesNo(SystemIcons.Exclamation, "After resetting you cannot return back to your previous settings. Proceed?"))
+            if (!Message.YesNo("After resetting you cannot return back to your previous settings. Proceed?"))
                 return;
 
             Settings.Default.Reset();
@@ -122,11 +111,6 @@ namespace Cliver.DataSifter
             if (d.ShowDialog(this) != DialogResult.OK)
                 return;
             UserMarkColor.BackColor = d.Color;
-        }
-
-        private void CaptureMarkColorInBrowser_Click(object sender, EventArgs e)
-        {
-            CaptureMarkColorInBrowser.BackColor = Settings.Default.CaptureMarkColorInBrowser;
         }
 
         private void flagPrintParseLabels_CheckedChanged(object sender, EventArgs e)
@@ -220,19 +204,6 @@ namespace Cliver.DataSifter
 
         private void flagDisableBrowserWindow_CheckedChanged(object sender, EventArgs e)
         {
-        }
-
-        private void flagDisableBrowserWindow_CheckedChanged_1(object sender, EventArgs e)
-        {
-            if (flagDisableBrowserWindow.Checked)
-            {
-                CaptureMarkColorInBrowser.Enabled = false;
-            }
-            else
-            {
-                CaptureMarkColorInBrowser.Enabled = true;
-            }
-
         }
 
         private void bHtmlJavascriptColor_Click(object sender, EventArgs e)

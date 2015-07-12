@@ -6,53 +6,68 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace Cliver.DataSifter
 {
     public partial class BaseForm : Form
     {
+        public static void Sleep(int mss)
+        {
+            DateTime dt = DateTime.Now + new TimeSpan(0, 0, 0, 0, mss);
+            while (dt > DateTime.Now)
+            {
+                Application.DoEvents();
+                Thread.Sleep(10);
+            }
+        }
+
+        public static bool WaitForCondition(Func<bool> check_condition, int timeout_in_mss)
+        {
+            DateTime dt = DateTime.Now + new TimeSpan(0, 0, 0, 0, timeout_in_mss);
+            do
+            {
+                if (check_condition())
+                    return true;
+                Thread.Sleep(10);
+                Application.DoEvents();
+            }
+            while (dt > DateTime.Now);
+            return false;
+        }
+
         public BaseForm()
         {
             InitializeComponent();
         }
 
-        delegate void _set_control_text(Control c, string m);
-        _set_control_text _set_control_text_delegate;
-        protected void set_control_text(Control c, string m)
+        protected void Invoke(MethodInvoker code)
+        {
+            InvokeInControlThread(this, code);
+        }
+
+        protected void BeginInvoke(MethodInvoker code)
+        {
+            BeginInvokeInControlThread(this, code);
+        }
+
+        public static void InvokeInControlThread(Control c, MethodInvoker code)
         {
             if (c.InvokeRequired)
             {
-                _set_control_text_delegate = new _set_control_text(set_control_text);
-                this.BeginInvoke(_set_control_text_delegate, new object[] { c, m });
+                c.Invoke(code);
+                return;
             }
+            code.Invoke();
+        }
+
+        public static void BeginInvokeInControlThread(Control c, MethodInvoker code)
+        {
+            //c.BeginInvoke(code);
+            if (c.InvokeRequired)
+                c.BeginInvoke(code);
             else
-                c.Text = m;
-        }
-
-        //protected void set_control_text(Control c, string m)
-        //{
-        //    if (c.InvokeRequired)
-        //        this.BeginInvoke(new MethodInvoker(() => { c.Text = m; }));
-        //}
-
-        protected void invoke_in_hosting_thread(MethodInvoker code)
-        {
-            if (this.InvokeRequired)
-            {
-                this.Invoke(code);
-                return;
-            }
-            code.Invoke();
-        }
-
-        protected void begin_invoke_in_hosting_thread(MethodInvoker code)
-        {
-            if (this.InvokeRequired)
-            {
-                this.BeginInvoke(code);
-                return;
-            }
-            code.Invoke();
+                c.Invoke(code);
         }
     }
 }

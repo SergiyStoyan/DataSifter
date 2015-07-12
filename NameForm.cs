@@ -19,12 +19,11 @@ namespace Cliver.DataSifter
     /// <summary>
     /// asks for name for the newly saved prepared filter tree
     /// </summary>
-    internal partial class NameForm : Form
+    internal partial class NameForm : BaseForm
     {
         internal NameForm(string default_file_name)
         {
             InitializeComponent();
-            this.Icon = Program.AppIcon;
 
             this.Text = Program.Title;
             boxName.Text = default_file_name;

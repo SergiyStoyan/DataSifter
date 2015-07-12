@@ -376,7 +376,7 @@ namespace Cliver.DataSifter
         /// <returns></returns>
         internal bool ToSavePreviousFilterTree()
         {
-            if (FilterTreeChanged && Message.YesNo(SystemIcons.Exclamation, "The current filter tree was not saved so its modification will be lost. Do you want to save it?"))
+            if (FilterTreeChanged && Message.YesNo("The current filter tree was not saved so its modification will be lost. Do you want to save it?"))
                 return true;
             FilterTreeChanged = false;
             return false;

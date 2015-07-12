@@ -514,7 +514,7 @@ namespace Cliver.DataSifter
             this.DeletePrepared.Name = "DeletePrepared";
             this.DeletePrepared.Size = new System.Drawing.Size(23, 23);
             this.DeletePrepared.TabIndex = 2;
-            this.DeletePrepared.Text = "X";
+            this.DeletePrepared.Text = "x";
             this.DeletePrepared.UseVisualStyleBackColor = true;
             this.DeletePrepared.Click += new System.EventHandler(this.DeletePrepared_Click);
             // 

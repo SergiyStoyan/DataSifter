@@ -122,9 +122,6 @@
     </Compile>
     <Compile Include="Parser\Capture.cs" />
     <Compile Include="Parser\Parser.cs" />
-    <Compile Include="MessageForm\IconRoutines\GroupIconResources.cs" />
-    <Compile Include="MessageForm\IconRoutines\IconEx.cs" />
-    <Compile Include="MessageForm\IconRoutines\IconRoutines.cs" />
     <Compile Include="MessageForm\Message.cs" />
     <Compile Include="MessageForm\MessageForm.cs">
       <SubType>Form</SubType>

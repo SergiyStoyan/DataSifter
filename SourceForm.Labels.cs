@@ -29,7 +29,7 @@ namespace Cliver.DataSifter
     {
         internal void print_capture_label(CaptureLabel cl)
         {
-            invoke_in_hosting_thread(() =>
+            Invoke(() =>
             {
                 TextBox.Select(cl.start3, 0);
                 TextBox.SelectedText = cl.label;
@@ -122,7 +122,7 @@ namespace Cliver.DataSifter
 
         void highlight_capture(CaptureLabel cl)
         {
-            invoke_in_hosting_thread(() =>
+            Invoke(() =>
             {
                 TextBox.Select(cl.start3, cl.end3 - cl.start3);
                 TextBox.SelectionBackColor = Settings.Default.GetFilterBackColor(cl.level);

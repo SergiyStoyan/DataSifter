@@ -5,9 +5,6 @@
     <Setting Name="HighlightHtmlTags" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="EnableJavaScript" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
     <Setting Name="PrintCaptureLabels" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
@@ -19,12 +16,6 @@
     </Setting>
     <Setting Name="UserMarkColor" Type="System.Drawing.Color" Scope="User">
       <Value Profile="(Default)">Chartreuse</Value>
-    </Setting>
-    <Setting Name="CaptureMarkColorInBrowser" Type="System.Drawing.Color" Scope="User">
-      <Value Profile="(Default)">Red</Value>
-    </Setting>
-    <Setting Name="BrowserFormInitialDirectory" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="SourceFormInitialDirectory" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
@@ -92,9 +83,6 @@
 ##################################
 ##################################
 </Value>
-    </Setting>
-    <Setting Name="StartWithBrowserWindow" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="LastSourceFile" Type="System.String" Scope="User">
       <Value Profile="(Default)" />

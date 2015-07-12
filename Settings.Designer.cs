@@ -37,18 +37,6 @@ namespace Cliver.DataSifter {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool EnableJavaScript {
-            get {
-                return ((bool)(this["EnableJavaScript"]));
-            }
-            set {
-                this["EnableJavaScript"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool PrintCaptureLabels {
             get {
@@ -92,30 +80,6 @@ namespace Cliver.DataSifter {
             }
             set {
                 this["UserMarkColor"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Red")]
-        public global::System.Drawing.Color CaptureMarkColorInBrowser {
-            get {
-                return ((global::System.Drawing.Color)(this["CaptureMarkColorInBrowser"]));
-            }
-            set {
-                this["CaptureMarkColorInBrowser"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string BrowserFormInitialDirectory {
-            get {
-                return ((string)(this["BrowserFormInitialDirectory"]));
-            }
-            set {
-                this["BrowserFormInitialDirectory"] = value;
             }
         }
         
@@ -279,18 +243,6 @@ namespace Cliver.DataSifter {
             }
             set {
                 this["OutputDataSeparator"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool StartWithBrowserWindow {
-            get {
-                return ((bool)(this["StartWithBrowserWindow"]));
-            }
-            set {
-                this["StartWithBrowserWindow"] = value;
             }
         }
         

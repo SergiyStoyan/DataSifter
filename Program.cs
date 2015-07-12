@@ -36,11 +36,7 @@ namespace Cliver.DataSifter
 
                 Application.EnableVisualStyles();
                 //Application.SetCompatibleTextRenderingDefault(false);
-
-                Cliver.Message.Caption = AppTitle;
-                Cliver.Message.ButtonColors = null;
-                Cliver.Message.WindowIcon = Program.AppIcon;
-
+                
                 Application.Run(SourceForm.This);
 
                 Settings.Default.Save();
@@ -50,9 +46,6 @@ namespace Cliver.DataSifter
                 Message.Error(e);
             }
         }
-
-        static readonly internal System.Drawing.Icon AppIcon = IconRoutines.ExtractIconFromLibrary(Application.ExecutablePath); //System.Drawing.Icon.ExtractAssociatedIcon(Application.ExecutablePath);
-        //static readonly internal System.Drawing.Icon AppIcon = new System.Drawing.Icon(typeof(Program), Application.ProductName + ".ico");
 
         //static readonly internal System.Windows.Forms.ToolTip ToolTip = new ToolTip();
         
@@ -66,6 +59,15 @@ namespace Cliver.DataSifter
             AppTitle = ean.Name;
             if (ean.Version.Major > 0 || ean.Version.Minor > 0)
                 AppTitle += ean.Version.Major + "." + ean.Version.Minor;
+
+            Message.Inform(@"eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg
+eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg
+eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg
+eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg
+eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg
+eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg eferwfgregwregg
+"
+                );
         }
 
         static internal void Help()

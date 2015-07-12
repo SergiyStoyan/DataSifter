@@ -29,7 +29,7 @@ namespace Cliver.DataSifter
     {        
         #region initializing
 
-        string title = "- SOURCE - " + Program.Title;
+        string title = Program.Title;
 
         internal static readonly SourceForm This;
 
@@ -50,7 +50,6 @@ namespace Cliver.DataSifter
         {
             InitializeComponent();
             set_tool_tip();
-            this.Icon = Program.AppIcon; 
 
             Document.DocumentUpdated += new Document.DocumentUpdatedEventHandler(Document_DocumentUpdated);
             Document.SetTestText();
@@ -259,7 +258,7 @@ namespace Cliver.DataSifter
             {
                 GroupCapture0 = parser.Parse(Document.Text);
                 FilterTreeParsedTime = DateTime.Now;
-                invoke_in_hosting_thread(() =>
+                Invoke(() =>
                 {
                     TextBox.DeselectAll();
                     FilterTreeForm.This.buttonParse.Checked = false;
@@ -282,12 +281,9 @@ namespace Cliver.DataSifter
         {
             OpenFileDialog d = new OpenFileDialog();
             d.Title = "Pick a file to be parsed";
-            if (Settings.Default.BrowserFormInitialDirectory != null)
-                d.InitialDirectory = Settings.Default.BrowserFormInitialDirectory;
             if (d.ShowDialog(this) != DialogResult.OK || d.FileName == "")
                 return;
             FileInfo f = new FileInfo(d.FileName);
-            Settings.Default.BrowserFormInitialDirectory = f.DirectoryName;
             Settings.Default.Save();
             //if (BrowserForm.Opened)
             //    uri_manager.Load(d.FileName);
@@ -373,7 +369,7 @@ namespace Cliver.DataSifter
 
         private void bSettings_Click(object sender, EventArgs e)
         {
-            SettingsForm.ThisShow(SettingsForm.Page.SOURCE);
+            SettingsForm.ThisShow();
         }
 
         internal void SetStatus(string status)

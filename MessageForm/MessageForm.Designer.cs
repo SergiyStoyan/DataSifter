@@ -54,32 +54,11 @@ namespace Cliver
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MessageForm));
-            this.silent_box = new System.Windows.Forms.CheckBox();
-            this.button_sample = new System.Windows.Forms.Button();
             this.image_box = new System.Windows.Forms.PictureBox();
-            this.label = new System.Windows.Forms.RichTextBox();
+            this.message = new System.Windows.Forms.RichTextBox();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)(this.image_box)).BeginInit();
             this.SuspendLayout();
-            // 
-            // silent_box
-            // 
-            this.silent_box.AutoSize = true;
-            this.silent_box.Location = new System.Drawing.Point(12, 79);
-            this.silent_box.Name = "silent_box";
-            this.silent_box.Size = new System.Drawing.Size(32, 17);
-            this.silent_box.TabIndex = 1;
-            this.silent_box.Text = "g";
-            this.silent_box.UseVisualStyleBackColor = false;
-            // 
-            // button_sample
-            // 
-            this.button_sample.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.button_sample.Location = new System.Drawing.Point(40, 41);
-            this.button_sample.Name = "button_sample";
-            this.button_sample.Size = new System.Drawing.Size(74, 23);
-            this.button_sample.TabIndex = 2;
-            this.button_sample.Text = "button_sample";
-            this.button_sample.UseVisualStyleBackColor = false;
             // 
             // image_box
             // 
@@ -87,36 +66,47 @@ namespace Cliver
             this.image_box.Location = new System.Drawing.Point(12, 6);
             this.image_box.Name = "image_box";
             this.image_box.Size = new System.Drawing.Size(27, 25);
+            this.image_box.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.image_box.TabIndex = 4;
             this.image_box.TabStop = false;
             // 
-            // label
+            // message
             // 
-            this.label.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.label.Location = new System.Drawing.Point(45, 12);
-            this.label.Name = "label";
-            this.label.ReadOnly = true;
-            this.label.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.label.Size = new System.Drawing.Size(306, 19);
-            this.label.TabIndex = 6;
-            this.label.Text = "label";
+            this.message.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.message.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.message.Location = new System.Drawing.Point(54, 12);
+            this.message.Name = "message";
+            this.message.ReadOnly = true;
+            this.message.Size = new System.Drawing.Size(325, 64);
+            this.message.TabIndex = 6;
+            this.message.Text = "message";
+            this.message.ContentsResized += new System.Windows.Forms.ContentsResizedEventHandler(this.Message_ContentsResized);
+            // 
+            // flowLayoutPanel1
+            // 
+            this.flowLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.flowLayoutPanel1.AutoSize = true;
+            this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(299, 82);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(80, 30);
+            this.flowLayoutPanel1.TabIndex = 7;
             // 
             // MessageForm
             // 
-            this.AutoScaleBaseSize = new System.Drawing.Size(5, 14);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.ClientSize = new System.Drawing.Size(391, 120);
-            this.Controls.Add(this.label);
+            this.Controls.Add(this.flowLayoutPanel1);
+            this.Controls.Add(this.message);
             this.Controls.Add(this.image_box);
-            this.Controls.Add(this.button_sample);
-            this.Controls.Add(this.silent_box);
             this.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "MessageForm";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Load += new System.EventHandler(this.MessageForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.image_box)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -124,9 +114,8 @@ namespace Cliver
         }
         #endregion
 
-        private CheckBox silent_box;
-        private Button button_sample;
         private PictureBox image_box;
-        private RichTextBox label;
+        private RichTextBox message;
+        private FlowLayoutPanel flowLayoutPanel1;
     }
 }

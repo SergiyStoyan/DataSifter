@@ -74,26 +74,6 @@ namespace Cliver.DataSifter
             Document.title = title;
             Document.uri = uri;
 
-            //if (Settings.Default.flagEnableJavaScript)
-            //{//Allow java scripts to run and possibly change html source
-            //    WebBrowser w = new WebBrowser();
-            //    w.DocumentText = source;
-            //    //wait while scripts are processed
-            //    DateTime t = DateTime.Now + new TimeSpan(0, 0, 0, 1);
-            //    //Thread.Sleep(1000);
-            //    while (DateTime.Now < t)
-            //        Application.DoEvents();
-
-            //    if (w.Document.Body != null)
-            //    {
-            //        Document.body = w.Document.Body.OuterHtml;
-            //    }
-            //    else
-            //    {
-            //        Message.Inform("This document does not contain body. It is probably a frame set. Framed pages are not supported.");
-            //        Document.body = "";
-            //    }
-            //}
             DocumentLoadedTime = DateTime.Now;
 
             if (DocumentUpdated != null)
@@ -104,12 +84,6 @@ namespace Cliver.DataSifter
 
         internal delegate void DocumentUpdatedEventHandler();
         static internal event DocumentUpdatedEventHandler DocumentUpdated = null;
-
-        //static internal void SourceFormGotNew(string source, string title, string uri)
-        //{
-        //    set(source, title, uri);
-        //    BrowserForm.This.SynchronizeDocument();
-        //}
 
         static internal void LoadFromFile(string file)
         {

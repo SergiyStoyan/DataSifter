@@ -21,12 +21,11 @@ namespace Cliver.DataSifter
     /// <summary>
     /// lists group names used in the current filter tree
     /// </summary>
-    internal partial class OutputForm : Form
+    internal partial class OutputForm : BaseForm
     {
         internal OutputForm(List<OutputGroup> all_ogs, List<OutputGroup> captured_ogs)
         {
             InitializeComponent();
-            this.Icon = Program.AppIcon;
             set_tool_tip();
 
             this.all_ogs = all_ogs;
@@ -85,17 +84,17 @@ namespace Cliver.DataSifter
             {
                // if (SourceForm.This.GroupCapture0 == null || Document.DocumentLoadedTime > SourceForm.This.FilterTreeParsedTime)
                 {
-                    Message.Ok(SystemIcons.Exclamation, "You have to perform parsing before getting results.");
+                    Message.Exclaim("You have to perform parsing before getting results.");
                     return null;
                 }
                // if (SourceForm.This.FilterTreeChangedTime > SourceForm.This.FilterTreeParsedTime)
                 {
-                    Message.Ok(SystemIcons.Exclamation, "Filter tree was changed after the last parsing. You have to perform parsing before getting results.");
+                    Message.Exclaim("Filter tree was changed after the last parsing. You have to perform parsing before getting results.");
                     return null;
                 }
                 if (GroupNames.SelectedItem == null)
                 {
-                    Message.Ok(SystemIcons.Exclamation, "No group name is selected.");
+                    Message.Exclaim("No group name is selected.");
                     return null;
                 }
                 return get_captures_for_selected_group(captured_ogs[GroupNames.SelectedIndex].GetChain(), Regex.Replace(CaptureSeparator.Text, @"(?<!\r)\n", "\r\n", RegexOptions.Compiled| RegexOptions.Singleline | RegexOptions.IgnoreCase));
@@ -161,7 +160,7 @@ namespace Cliver.DataSifter
                 {
                     if (GroupNames.SelectedItem == null)
                     {
-                        Message.Ok(SystemIcons.Exclamation, "No group name is selected.");
+                        Message.Exclaim("No group name is selected.");
                         return;
                     }
                     file_name = captured_ogs[GroupNames.SelectedIndex].Name;
