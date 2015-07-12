@@ -495,7 +495,7 @@ namespace Cliver.DataSifter
         private void buttonParse_CheckedChanged(object sender, EventArgs e)
         {
             if (this.buttonParse.Checked && SourceForm.This.RunParse())
-                //this.buttonParse.BackColor = Color.LimeGreen;
+                //this.buttonParse.BackColor = Color.FromArgb(0, 96, 88);
                 this.buttonParse.BackColor = Color.FromArgb(240, 20, 60);
             else
             {

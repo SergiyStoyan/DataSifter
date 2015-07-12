@@ -320,6 +320,7 @@ namespace Cliver.DataSifter
         private void cHideFilters_CheckedChanged(object sender, EventArgs e)
         {
             splitContainer1.Panel2Collapsed = cHideFilters.Checked;
+            cHideFilters.Image.RotateFlip(RotateFlipType.Rotate180FlipNone);
         }
 
         private void SourceForm_FormClosing(object sender, FormClosingEventArgs e)
