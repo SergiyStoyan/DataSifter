@@ -53,9 +53,15 @@ namespace Cliver.DataSifter
         {
             Parser p = GetFilterTreeParser();
             if (p == null)
+            {
+                Message.Exclaim("Filter tree is blank.");
                 return;
+            }
             if (p.RootFilters == null || p.RootFilters.Length < 1)
+            {
+                Message.Exclaim("No filter tree is active.");
                 return;
+            }
 
             NameForm nf = new NameForm((string)PreparedFilterTrees.SelectedItem);
             do
@@ -99,7 +105,10 @@ namespace Cliver.DataSifter
         private void DeletePrepared_Click(object sender, EventArgs e)
         {
             if (PreparedFilterTrees.SelectedIndex < 0)
+            {
+                Message.Exclaim("No prepared filter tree is selected.");
                 return;
+            }
 
             string prepared_filter_name = (string)PreparedFilterTrees.SelectedItem;
 
@@ -128,7 +137,10 @@ namespace Cliver.DataSifter
             try
             {
                 if (PreparedFilterTrees.SelectedIndex < 0)
+                {
+                    Message.Exclaim("No prepared filter tree is selected.");
                     return;
+                }
 
                 Parser p = new Parser(prepared_filter_tree_files[(string)PreparedFilterTrees.SelectedItem]);
                 AddFilterTreeToSelectedTreeNode(p.RootFilters);

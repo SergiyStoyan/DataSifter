@@ -64,7 +64,6 @@ namespace Cliver.DataSifter
             this.panel4 = new System.Windows.Forms.Panel();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.AddPrepared = new System.Windows.Forms.Button();
-            this.InsertPrepared = new System.Windows.Forms.Button();
             this.SavePrepared = new System.Windows.Forms.Button();
             this.DeletePrepared = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -115,7 +114,7 @@ namespace Cliver.DataSifter
             this.FilterTree.HideSelection = false;
             this.FilterTree.Location = new System.Drawing.Point(0, 0);
             this.FilterTree.Name = "FilterTree";
-            this.FilterTree.Size = new System.Drawing.Size(909, 120);
+            this.FilterTree.Size = new System.Drawing.Size(920, 120);
             this.FilterTree.TabIndex = 0;
             this.FilterTree.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.FilterTree_AfterCheck);
             this.FilterTree.DrawNode += new System.Windows.Forms.DrawTreeNodeEventHandler(this.FilterTree_DrawNode);
@@ -432,7 +431,7 @@ namespace Cliver.DataSifter
             this.PreparedFilterTrees.Location = new System.Drawing.Point(30, 13);
             this.PreparedFilterTrees.Margin = new System.Windows.Forms.Padding(0);
             this.PreparedFilterTrees.Name = "PreparedFilterTrees";
-            this.PreparedFilterTrees.Size = new System.Drawing.Size(121, 107);
+            this.PreparedFilterTrees.Size = new System.Drawing.Size(110, 107);
             this.PreparedFilterTrees.TabIndex = 0;
             this.PreparedFilterTrees.DoubleClick += new System.EventHandler(this.PreparedFilters_DoubleClick);
             // 
@@ -441,7 +440,7 @@ namespace Cliver.DataSifter
             this.label3.Dock = System.Windows.Forms.DockStyle.Top;
             this.label3.Location = new System.Drawing.Point(0, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(151, 13);
+            this.label3.Size = new System.Drawing.Size(140, 13);
             this.label3.TabIndex = 1;
             this.label3.Text = "Prepared Filter Trees:";
             this.label3.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -454,13 +453,12 @@ namespace Cliver.DataSifter
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.Location = new System.Drawing.Point(0, 0);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(151, 120);
+            this.panel4.Size = new System.Drawing.Size(140, 120);
             this.panel4.TabIndex = 18;
             // 
             // flowLayoutPanel2
             // 
             this.flowLayoutPanel2.Controls.Add(this.AddPrepared);
-            this.flowLayoutPanel2.Controls.Add(this.InsertPrepared);
             this.flowLayoutPanel2.Controls.Add(this.SavePrepared);
             this.flowLayoutPanel2.Controls.Add(this.DeletePrepared);
             this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Left;
@@ -475,35 +473,22 @@ namespace Cliver.DataSifter
             // 
             this.AddPrepared.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.AddPrepared.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.AddPrepared.ForeColor = System.Drawing.Color.Black;
+            this.AddPrepared.ForeColor = System.Drawing.Color.Green;
             this.AddPrepared.Location = new System.Drawing.Point(3, 0);
             this.AddPrepared.Margin = new System.Windows.Forms.Padding(3, 0, 3, 2);
             this.AddPrepared.Name = "AddPrepared";
             this.AddPrepared.Size = new System.Drawing.Size(23, 23);
             this.AddPrepared.TabIndex = 0;
-            this.AddPrepared.Text = "+";
+            this.AddPrepared.Text = "<";
             this.AddPrepared.UseVisualStyleBackColor = true;
             this.AddPrepared.Click += new System.EventHandler(this.AddPrepared_Click);
-            // 
-            // InsertPrepared
-            // 
-            this.InsertPrepared.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.InsertPrepared.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.InsertPrepared.ForeColor = System.Drawing.Color.Black;
-            this.InsertPrepared.Location = new System.Drawing.Point(3, 25);
-            this.InsertPrepared.Margin = new System.Windows.Forms.Padding(3, 0, 3, 2);
-            this.InsertPrepared.Name = "InsertPrepared";
-            this.InsertPrepared.Size = new System.Drawing.Size(23, 23);
-            this.InsertPrepared.TabIndex = 3;
-            this.InsertPrepared.Text = "<";
-            this.InsertPrepared.UseVisualStyleBackColor = true;
             // 
             // SavePrepared
             // 
             this.SavePrepared.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.SavePrepared.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SavePrepared.ForeColor = System.Drawing.Color.Black;
-            this.SavePrepared.Location = new System.Drawing.Point(3, 50);
+            this.SavePrepared.ForeColor = System.Drawing.Color.Blue;
+            this.SavePrepared.Location = new System.Drawing.Point(3, 25);
             this.SavePrepared.Margin = new System.Windows.Forms.Padding(3, 0, 3, 2);
             this.SavePrepared.Name = "SavePrepared";
             this.SavePrepared.Size = new System.Drawing.Size(23, 23);
@@ -516,8 +501,8 @@ namespace Cliver.DataSifter
             // 
             this.DeletePrepared.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.DeletePrepared.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DeletePrepared.ForeColor = System.Drawing.Color.Black;
-            this.DeletePrepared.Location = new System.Drawing.Point(3, 75);
+            this.DeletePrepared.ForeColor = System.Drawing.Color.Red;
+            this.DeletePrepared.Location = new System.Drawing.Point(3, 50);
             this.DeletePrepared.Margin = new System.Windows.Forms.Padding(3, 0, 3, 2);
             this.DeletePrepared.Name = "DeletePrepared";
             this.DeletePrepared.Size = new System.Drawing.Size(23, 23);
@@ -564,7 +549,7 @@ namespace Cliver.DataSifter
             // 
             this.splitContainer2.Panel2.Controls.Add(this.panel4);
             this.splitContainer2.Size = new System.Drawing.Size(1062, 120);
-            this.splitContainer2.SplitterDistance = 909;
+            this.splitContainer2.SplitterDistance = 920;
             this.splitContainer2.SplitterWidth = 2;
             this.splitContainer2.TabIndex = 0;
             // 
@@ -859,7 +844,6 @@ namespace Cliver.DataSifter
         private System.Windows.Forms.Panel FilterBox;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox FilterType;
-        private System.Windows.Forms.Button InsertPrepared;
         private System.Windows.Forms.ComboBox InputGroupName;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox pLevelHighlight;
