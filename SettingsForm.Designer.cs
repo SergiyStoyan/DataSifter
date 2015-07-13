@@ -43,7 +43,6 @@ namespace Cliver.DataSifter
             this.bHtmlJavascriptColor = new System.Windows.Forms.Button();
             this.bHtmlCommentColor = new System.Windows.Forms.Button();
             this.bHtmlTagsColor = new System.Windows.Forms.Button();
-            this.UserMarkColor = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.bEditColor = new System.Windows.Forms.Button();
             this.bRemoveColor = new System.Windows.Forms.Button();
@@ -125,7 +124,7 @@ namespace Cliver.DataSifter
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(356, 253);
+            this.tabPage3.Size = new System.Drawing.Size(346, 242);
             this.tabPage3.TabIndex = 0;
             this.tabPage3.Text = "Preferences";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -175,7 +174,6 @@ namespace Cliver.DataSifter
             this.tabPage4.Controls.Add(this.bHtmlJavascriptColor);
             this.tabPage4.Controls.Add(this.bHtmlCommentColor);
             this.tabPage4.Controls.Add(this.bHtmlTagsColor);
-            this.tabPage4.Controls.Add(this.UserMarkColor);
             this.tabPage4.Controls.Add(this.label3);
             this.tabPage4.Controls.Add(this.bEditColor);
             this.tabPage4.Controls.Add(this.bRemoveColor);
@@ -192,7 +190,7 @@ namespace Cliver.DataSifter
             // bHtmlJavascriptColor
             // 
             this.bHtmlJavascriptColor.BackColor = System.Drawing.SystemColors.Window;
-            this.bHtmlJavascriptColor.Location = new System.Drawing.Point(206, 123);
+            this.bHtmlJavascriptColor.Location = new System.Drawing.Point(199, 92);
             this.bHtmlJavascriptColor.Name = "bHtmlJavascriptColor";
             this.bHtmlJavascriptColor.Size = new System.Drawing.Size(118, 23);
             this.bHtmlJavascriptColor.TabIndex = 9;
@@ -202,7 +200,7 @@ namespace Cliver.DataSifter
             // bHtmlCommentColor
             // 
             this.bHtmlCommentColor.BackColor = System.Drawing.SystemColors.Window;
-            this.bHtmlCommentColor.Location = new System.Drawing.Point(206, 94);
+            this.bHtmlCommentColor.Location = new System.Drawing.Point(199, 63);
             this.bHtmlCommentColor.Name = "bHtmlCommentColor";
             this.bHtmlCommentColor.Size = new System.Drawing.Size(118, 23);
             this.bHtmlCommentColor.TabIndex = 6;
@@ -212,21 +210,12 @@ namespace Cliver.DataSifter
             // bHtmlTagsColor
             // 
             this.bHtmlTagsColor.BackColor = System.Drawing.SystemColors.Window;
-            this.bHtmlTagsColor.Location = new System.Drawing.Point(206, 65);
+            this.bHtmlTagsColor.Location = new System.Drawing.Point(199, 34);
             this.bHtmlTagsColor.Name = "bHtmlTagsColor";
             this.bHtmlTagsColor.Size = new System.Drawing.Size(118, 23);
             this.bHtmlTagsColor.TabIndex = 5;
             this.bHtmlTagsColor.Text = "Html Tag Color";
             this.bHtmlTagsColor.UseVisualStyleBackColor = false;
-            // 
-            // UserMarkColor
-            // 
-            this.UserMarkColor.Location = new System.Drawing.Point(206, 34);
-            this.UserMarkColor.Name = "UserMarkColor";
-            this.UserMarkColor.Size = new System.Drawing.Size(118, 23);
-            this.UserMarkColor.TabIndex = 4;
-            this.UserMarkColor.Text = "User Mark Color";
-            this.UserMarkColor.UseVisualStyleBackColor = true;
             // 
             // label3
             // 
@@ -272,6 +261,8 @@ namespace Cliver.DataSifter
             this.listBoxLabelColors.Name = "listBoxLabelColors";
             this.listBoxLabelColors.Size = new System.Drawing.Size(120, 160);
             this.listBoxLabelColors.TabIndex = 0;
+            this.listBoxLabelColors.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBoxLabelColors_DrawItem);
+            this.listBoxLabelColors.DoubleClick += new System.EventHandler(this.listBoxLabelColors_DoubleClick);
             // 
             // SettingsForm
             // 
@@ -289,7 +280,6 @@ namespace Cliver.DataSifter
             this.MinimizeBox = false;
             this.Name = "SettingsForm";
             this.Text = "DataSifter Settings";
-            this.Activated += new System.EventHandler(this.SettingsForm_Activated);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.SettingsForm_FormClosed);
             this.tabControl2.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
@@ -318,7 +308,6 @@ namespace Cliver.DataSifter
         private System.Windows.Forms.Button bHtmlJavascriptColor;
         private System.Windows.Forms.Button bHtmlCommentColor;
         private System.Windows.Forms.Button bHtmlTagsColor;
-        private System.Windows.Forms.Button UserMarkColor;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button bEditColor;
         private System.Windows.Forms.Button bRemoveColor;

@@ -14,9 +14,6 @@
     <Setting Name="HtmlCommentColor" Type="System.Drawing.Color" Scope="User">
       <Value Profile="(Default)">DarkCyan</Value>
     </Setting>
-    <Setting Name="UserMarkColor" Type="System.Drawing.Color" Scope="User">
-      <Value Profile="(Default)">Chartreuse</Value>
-    </Setting>
     <Setting Name="SourceFormInitialDirectory" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>

@@ -18,33 +18,16 @@ namespace Cliver.DataSifter
 {
     internal partial class SettingsForm : BaseForm
     {
-        internal static void ThisShow()
-        {
-            if (settings_form == null || settings_form.IsDisposed)
-                settings_form = new SettingsForm();
-            settings_form.Show();
-            settings_form.BringToFront();
-            settings_form.Activate();
-            settings_form.Focus();
-        }
-        static SettingsForm settings_form = null;
-
-        SettingsForm()
+        internal SettingsForm()
         {
             InitializeComponent();
-        }
 
-        private void SettingsForm_Activated(object sender, EventArgs e)
-        {
-            UserMarkColor.BackColor = Settings.Default.UserMarkColor;
-            // NewRegexPattern.Text = Settings.Default.NewRegexPattern;
             flagPrintParseLabels.Checked = Settings.Default.PrintCaptureLabels;
             flagHighlightHtmlTags.Checked = Settings.Default.HighlightHtmlTags;
             flagStripParsedTextInStatusBarFromHtmlTags.Checked = Settings.Default.StripParsedTextInStatusBarFromHtmlTags;
             bHtmlTagsColor.ForeColor = Settings.Default.HtmlTagsColor;
             bHtmlCommentColor.ForeColor = Settings.Default.HtmlCommentColor;
             bHtmlJavascriptColor.ForeColor = Settings.Default.HtmlJavascriptColor;
-            //flagDisableBrowserWindow.Checked = Settings.Default.DisableBrowserWindow;
             flagCopySelectionToClipboard.Checked = Settings.Default.CopySelectionToClipboard;
             //HelpFileUri.Text = Settings.Default.HelpFileUri;
             
@@ -68,15 +51,12 @@ namespace Cliver.DataSifter
 
         private void OK_Click(object sender, EventArgs e)
         {
-            Settings.Default.UserMarkColor = UserMarkColor.BackColor;
-            //Settings.Default.NewRegexPattern = NewRegexPattern.Text;
             Settings.Default.PrintCaptureLabels = flagPrintParseLabels.Checked;
             Settings.Default.HighlightHtmlTags = flagHighlightHtmlTags.Checked;
             Settings.Default.FilterBackColors = label_colors.ToArray();
             Settings.Default.HtmlTagsColor = bHtmlTagsColor.ForeColor;
             Settings.Default.HtmlCommentColor = bHtmlCommentColor.ForeColor;
             Settings.Default.HtmlJavascriptColor = bHtmlJavascriptColor.ForeColor;
-            //Settings.Default.DisableBrowserWindow = flagDisableBrowserWindow.Checked;
             Settings.Default.StripParsedTextInStatusBarFromHtmlTags = flagStripParsedTextInStatusBarFromHtmlTags.Checked;
             Settings.Default.CopySelectionToClipboard = flagCopySelectionToClipboard.Checked;
             //Settings.Default.HelpFileUri = HelpFileUri.Text;
@@ -85,13 +65,7 @@ namespace Cliver.DataSifter
             Settings.Default.Reload();
             this.Close();
         }
-
-        new void Close()
-        {
-            base.Close();
-            settings_form = null;
-        }
-
+        
         private void Cancel_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -103,14 +77,6 @@ namespace Cliver.DataSifter
                 return;
 
             Settings.Default.Reset();
-        }
-
-        private void UserMarkColor_Click(object sender, EventArgs e)
-        {
-            ColorDialog d = new ColorDialog();
-            if (d.ShowDialog(this) != DialogResult.OK)
-                return;
-            UserMarkColor.BackColor = d.Color;
         }
 
         private void flagPrintParseLabels_CheckedChanged(object sender, EventArgs e)

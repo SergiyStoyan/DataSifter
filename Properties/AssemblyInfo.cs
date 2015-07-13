@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("DataSifter")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Building parser tool")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("CliverSoft")]
 [assembly: AssemblyProduct("DataSifter")]
-[assembly: AssemblyCopyright("Copyright © 2006-2013, Sergey Stoyan")]
+[assembly: AssemblyCopyright("Copyright © 2006-2015, Sergey Stoyan")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

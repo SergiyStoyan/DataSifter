@@ -73,18 +73,6 @@ namespace Cliver.DataSifter {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Chartreuse")]
-        public global::System.Drawing.Color UserMarkColor {
-            get {
-                return ((global::System.Drawing.Color)(this["UserMarkColor"]));
-            }
-            set {
-                this["UserMarkColor"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string SourceFormInitialDirectory {
             get {

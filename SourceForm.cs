@@ -370,7 +370,8 @@ namespace Cliver.DataSifter
 
         private void bSettings_Click(object sender, EventArgs e)
         {
-            SettingsForm.ThisShow();
+            SettingsForm sf = new SettingsForm();
+            sf.ShowDialog(this);
         }
 
         internal void SetStatus(string status)
