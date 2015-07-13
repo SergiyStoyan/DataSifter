@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Cliver.DataSifter</RootNamespace>
     <AssemblyName>DataSifter</AssemblyName>
-    <ApplicationIcon>RegexTreeer.ico</ApplicationIcon>
+    <ApplicationIcon>sifter.ico</ApplicationIcon>
     <ManifestCertificateThumbprint>580B8B6430EF633E7498414A889196CCF11C1D7F</ManifestCertificateThumbprint>
     <ManifestKeyFile>RegexTreeer_TemporaryKey.pfx</ManifestKeyFile>
     <GenerateManifests>true</GenerateManifests>
@@ -44,7 +44,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;REGEX_TREEER</DefineConstants>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Debug\DataSifter.xml</DocumentationFile>
@@ -224,7 +224,7 @@
     <Compile Include="ThreadRunner.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="RegexTreeer.ico" />
+    <Content Include="sifter.ico" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
