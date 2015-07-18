@@ -4,29 +4,29 @@
 [Code]
 function AppName(Param: String): String;
 begin
-  Result := 'RegexTreeer';
+  Result := 'DataSifter';
 end;
 
 function Version(Param: String): String;
 begin
-  Result := '2.6.0';
+  Result := '3.1.0';
 end;
 
 [Setup]
-OutputBaseFilename=RegexTreeerSetup
+OutputBaseFilename=DataSifterSetup
 AppName={code:AppName}
 AppVerName={code:AppName} {code:Version}
 AppPublisher=Sergey Stoyan, cliversoft.com
 AppPublisherURL=http://www.cliversoft.com
 AppSupportURL=http://www.cliversoft.com
 AppUpdatesURL=http://www.cliversoft.com
-DefaultDirName={pf}\RegexTreeer
-DefaultGroupName=RegexTreeer
+DefaultDirName={pf}\DataSifter
+DefaultGroupName=DataSifter
 InfoAfterFile=.\install_notes.txt
 Compression=lzma
 SolidCompression=yes
 LicenseFile=.\license.txt
-SetupIconFile=RegexTreeer.ico
+SetupIconFile=DataSifter.ico
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
@@ -35,13 +35,13 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: ".\bin\Release\RegexTreeer.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: ".\bin\Release\RegexTreeer.exe.config"; DestDir: "{app}"; Flags: ignoreversion
-Source: ".\bin\Release\RegexTreeer.xml"; DestDir: "{app}"; Flags: ignoreversion
+Source: ".\bin\Release\DataSifter.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: ".\bin\Release\DataSifter.exe.config"; DestDir: "{app}"; Flags: ignoreversion
+Source: ".\bin\Release\DataSifter.xml"; DestDir: "{app}"; Flags: ignoreversion
 Source: ".\bin\Release\*.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: ".\PreparedRegexes\*.rgx"; DestDir: "{app}\PreparedRegexes"; Flags: ignoreversion
+Source: ".\PreparedFilterTrees\*.rgx"; DestDir: "{app}\PreparedFilterTrees"; Flags: ignoreversion
 Source: ".\Satellites\*"; Excludes: ".svn,"; DestDir: "{app}"; Flags: ignoreversion
-;Source: ".\Help\RegexTreeer.chm"; DestDir: "{app}"; Flags: ignoreversion
+;Source: ".\Help\DataSifter.chm"; DestDir: "{app}"; Flags: ignoreversion
 ;Source: "..\Cliver.Parser_Test\*"; DestDir: "{app}\Sample"; Flags: ignoreversion
 Source: "..\Cliver.Parser_Test\_pages\*"; Excludes: ".svn,"; DestDir: "{app}\Samples"; Flags: ignoreversion
 Source: "..\Cliver.Parser_Test\_config_files\*.rgx"; Excludes: ".svn,"; DestDir: "{app}\Samples"; Flags: ignoreversion
@@ -50,19 +50,19 @@ Source: "..\Cliver.Parser_Test\_config_files\*.rgx"; Excludes: ".svn,"; DestDir:
 [Directories]
 
 [Icons]
-Name: "{group}\RegexTreeer"; Filename: "{app}\RegexTreeer.exe"
-Name: "{group}\Homepage"; Filename: "http://cliversoft.com/products/regextreeer/index.php"
-Name: "{group}\{cm:UninstallProgram,RegexTreeer}"; Filename: "{uninstallexe}"; IconFilename: "{app}\uninstall.ico"
-Name: "{userdesktop}\RegexTreeer"; Filename: "{app}\RegexTreeer.exe"; Tasks: desktopicon
+Name: "{group}\DataSifter"; Filename: "{app}\DataSifter.exe"
+Name: "{group}\Homepage"; Filename: "http://cliversoft.com/products/DataSifter/index.php"
+Name: "{group}\{cm:UninstallProgram,DataSifter}"; Filename: "{uninstallexe}"; IconFilename: "{app}\uninstall.ico"
+Name: "{userdesktop}\DataSifter"; Filename: "{app}\DataSifter.exe"; Tasks: desktopicon
 
 [Registry]
-Root: HKCR; Subkey: ".rgx"; ValueType: string; ValueName: ""; ValueData: "RegexTreeFile"; Flags: uninsdeletevalue
-Root: HKCR; Subkey: "RegexTreeFile"; ValueType: string; ValueName: ""; ValueData: "regex tree file"; Flags: uninsdeletekey
-Root: HKCR; Subkey: "RegexTreeFile\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\RegexTreeer.exe,0"
+Root: HKCR; Subkey: ".fltr"; ValueType: string; ValueName: ""; ValueData: "FilterTreeFile"; Flags: uninsdeletevalue
+Root: HKCR; Subkey: "FilterTreeFile"; ValueType: string; ValueName: ""; ValueData: "filter tree file"; Flags: uninsdeletekey
+Root: HKCR; Subkey: "FilterTreeFile\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\DataSifter.exe,0"
 ;"DefaultIcon" is the registry key that specifies the filename containing the icon to associate with the file type. ",0" tells Explorer to use the first icon from MYPROG.EXE. (",1" would mean the second icon.)
-Root: HKCR; Subkey: "RegexTreeFile\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\RegexTreeer.exe"" ""%1"""
+Root: HKCR; Subkey: "FilterTreeFile\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\DataSifter.exe"" ""%1"""
 
 [Run]
-Filename: "{app}\RegexTreeer.exe"; Description: "{cm:LaunchProgram,RegexTreeer}"; Flags: nowait postinstall skipifsilent
+Filename: "{app}\DataSifter.exe"; Description: "{cm:LaunchProgram,DataSifter}"; Flags: nowait postinstall skipifsilent
 
 
