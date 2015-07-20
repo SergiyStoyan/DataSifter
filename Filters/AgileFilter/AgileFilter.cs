@@ -42,8 +42,7 @@ namespace Cliver
                 throw new Exception("Filter definition could not be parsed:\n" + defintion);
             Xpath = m.Groups["Xpath"].Value;
             GroupName = m.Groups["GroupName"].Value;
-            InputGroupName = m.Groups["InputGroupName"].Value;
-            GroupName = m.Groups["GroupName"].Value;
+            InputGroupName = input_group_name;
             fill_group_index2raw_group_names();
         }
 
