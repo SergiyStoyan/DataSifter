@@ -69,7 +69,7 @@ namespace Cliver.DataSifter
             TextBox.Text = Document.Text;
             count_positions_ignored_by_rich_text_box();
 
-            Text = Document.Title + " " + title;
+            Text = Document.Title + " - " + title;
 
             CaptureLabels.Clear();
             fill_NavigateBy(true);
