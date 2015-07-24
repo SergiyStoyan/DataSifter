@@ -272,11 +272,9 @@ namespace Cliver.DataSifter
                 string file_name = FilterTreeName.Text;
                 if (file_name != null)
                     file_name.Trim();
-                if (!string.IsNullOrEmpty(Settings.Default.SourceFormInitialDirectory)
-                    && !string.IsNullOrEmpty(file_name)
-                    )
+                if (!string.IsNullOrEmpty(Settings.Default.LastFilterTreeFile) && !string.IsNullOrEmpty(file_name))
                 {
-                    file = Settings.Default.SourceFormInitialDirectory + "\\" + file_name;
+                    file = Path.GetDirectoryName(Settings.Default.LastFilterTreeFile) + "\\" + file_name;
                     if (!file_name.EndsWith("." + Program.FilterTreeFileExtension, StringComparison.InvariantCultureIgnoreCase))
                         file += "." + Program.FilterTreeFileExtension;
                 }
@@ -292,12 +290,11 @@ namespace Cliver.DataSifter
                     d.AddExtension = true;
                     d.DefaultExt = Program.FilterTreeFileExtension;
                     d.Filter = "Filter tree files (*." + Program.FilterTreeFileExtension + ")|*." + Program.FilterTreeFileExtension + "|All files (*.*)|*.*";
-                    if (!string.IsNullOrEmpty(Settings.Default.SourceFormInitialDirectory))
-                        d.InitialDirectory = Settings.Default.SourceFormInitialDirectory;
+                    if (!string.IsNullOrEmpty(Settings.Default.LastFilterTreeFile))
+                        d.InitialDirectory = Path.GetDirectoryName(Settings.Default.LastFilterTreeFile);
                     if (d.ShowDialog(this) != DialogResult.OK)
                         return;
-                    FileInfo f = new FileInfo(d.FileName);
-                    Settings.Default.SourceFormInitialDirectory = f.DirectoryName;
+                    Settings.Default.LastFilterTreeFile = d.FileName;
                     Settings.Default.Save();
                     file = d.FileName;
                 }
@@ -344,19 +341,13 @@ namespace Cliver.DataSifter
             OpenFileDialog d = new OpenFileDialog();
             d.Title = "Pick a filter tree file to open within DataSifter";
             d.Filter = "Filter tree files (*." + Program.FilterTreeFileExtension + ")|*." + Program.FilterTreeFileExtension + "|All files (*.*)|*.*";
-            if (Settings.Default.SourceFormInitialDirectory != null)
-                d.InitialDirectory = Settings.Default.SourceFormInitialDirectory;
-            d.ShowDialog();
-            if (d.FileName == "")
+            if (Settings.Default.LastFilterTreeFile != null)
+                d.InitialDirectory = Path.GetDirectoryName( Settings.Default.LastFilterTreeFile);
+            if (d.ShowDialog(this) != DialogResult.OK || d.FileName == "")
                 return;
-
-            LoadFilterTree(d.FileName);
-
-            FileInfo fi = new FileInfo(d.FileName);
-            Settings.Default.SourceFormInitialDirectory = fi.DirectoryName;
-            Settings.Default.LastFilterTreeFile = fi.FullName;
+            Settings.Default.LastFilterTreeFile = d.FileName;
             Settings.Default.Save();
-
+            LoadFilterTree(d.FileName);
             Focus();
         }
 

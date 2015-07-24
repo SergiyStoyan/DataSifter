@@ -73,18 +73,6 @@ namespace Cliver.DataSifter {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string SourceFormInitialDirectory {
-            get {
-                return ((string)(this["SourceFormInitialDirectory"]));
-            }
-            set {
-                this["SourceFormInitialDirectory"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Arial, 6.75pt, style=Bold")]
         public global::System.Drawing.Font CaptureLabelFont {
             get {

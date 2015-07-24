@@ -1,5 +1,5 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Cliver.DataSifter" GeneratedClassName="Settings">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Cliver.DataSifter.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
     <Setting Name="HighlightHtmlTags" Type="System.Boolean" Scope="User">
@@ -13,9 +13,6 @@
     </Setting>
     <Setting Name="HtmlCommentColor" Type="System.Drawing.Color" Scope="User">
       <Value Profile="(Default)">DarkCyan</Value>
-    </Setting>
-    <Setting Name="SourceFormInitialDirectory" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="CaptureLabelFont" Type="System.Drawing.Font" Scope="User">
       <Value Profile="(Default)">Arial, 6.75pt, style=Bold</Value>

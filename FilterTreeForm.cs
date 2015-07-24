@@ -531,6 +531,11 @@ namespace Cliver.DataSifter
 
         #region checking if filter node was edited
 
+        private void FilterTreeName_TextChanged(object sender, EventArgs e)
+        {
+            //FilterTreeChanged = true;
+        }
+
         /// <summary>
         /// sets the filter name to the selected filter tree node
         /// </summary>

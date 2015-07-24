@@ -281,13 +281,12 @@ namespace Cliver.DataSifter
         {
             OpenFileDialog d = new OpenFileDialog();
             d.Title = "Pick a file to be parsed";
+            if (Settings.Default.LastSourceFile != null)
+                d.InitialDirectory = Path.GetDirectoryName(Settings.Default.LastSourceFile);
             if (d.ShowDialog(this) != DialogResult.OK || d.FileName == "")
                 return;
-            FileInfo f = new FileInfo(d.FileName);
+            Settings.Default.LastSourceFile = d.FileName;
             Settings.Default.Save();
-            //if (BrowserForm.Opened)
-            //    uri_manager.Load(d.FileName);
-            //else
             Document.LoadFromFile(d.FileName);
         }
 
