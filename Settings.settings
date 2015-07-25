@@ -87,14 +87,18 @@
     <Setting Name="ApplicationVersion" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="SourceFormInitialDirectory" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
     <Setting Name="_FilterTypeName2NewFilter" Type="System.Collections.Specialized.StringCollection" Scope="User">
       <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
   &lt;string&gt;RegexFilter&lt;/string&gt;
-  &lt;string&gt;&amp;gt;(?'N'.*?)&amp;lt;\nIgnoreCase, Compiled, Singleline&lt;/string&gt;
+  &lt;string&gt;&amp;gt;(?'N'.*?)&amp;lt;
+IgnoreCase, Compiled, Singleline&lt;/string&gt;
 &lt;/ArrayOfString&gt;</Value>
     </Setting>
-    <Setting Name="SourceFormInitialDirectory" Type="System.String" Scope="User">
+    <Setting Name="_FilterTreeFolder2SourceFolder" Type="System.Collections.Specialized.StringCollection" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
   </Settings>

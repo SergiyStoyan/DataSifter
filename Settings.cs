@@ -39,16 +39,21 @@ namespace Cliver.DataSifter {
         {
             try
             {
-                if (Settings.Default.FilterMarkColorsRGB == null)
-                    Settings.Default.FilterMarkColorsRGB = new int[] { };
-                Settings.Default.FilterBackColors = convert_integers2Colors(Settings.Default.FilterMarkColorsRGB);
-                if (Settings.Default.FilterBackColors.Length < 1)
-                    Settings.Default.FilterBackColors = new Color[1] { Color.Red };
+                if (FilterMarkColorsRGB == null)
+                    FilterMarkColorsRGB = new int[] { };
+                FilterBackColors = convert_integers2Colors(FilterMarkColorsRGB);
+                if (FilterBackColors.Length < 1)
+                    FilterBackColors = new Color[1] { Color.Red };
 
-                if (Settings.Default._FilterTypeName2NewFilter == null)
-                    Settings.Default._FilterTypeName2NewFilter = new System.Collections.Specialized.StringCollection();
+                if (_FilterTypeName2NewFilter == null)
+                    _FilterTypeName2NewFilter = new System.Collections.Specialized.StringCollection();
                 for (int i = 0; i < Settings.Default._FilterTypeName2NewFilter.Count; i += 2)
-                    FilterTypeName2NewFilter[Settings.Default._FilterTypeName2NewFilter[i]] = Settings.Default._FilterTypeName2NewFilter[i + 1];
+                    FilterTypeName2NewFilter[Settings.Default._FilterTypeName2NewFilter[i]] = _FilterTypeName2NewFilter[i + 1];
+
+                if (_FilterTreeFolder2SourceFolder == null)
+                    _FilterTreeFolder2SourceFolder = new System.Collections.Specialized.StringCollection();
+                for (int i = 0; i < _FilterTreeFolder2SourceFolder.Count; i += 2)
+                    FilterTreeFolder2SourceFolder[_FilterTreeFolder2SourceFolder[i]] = _FilterTreeFolder2SourceFolder[i + 1];                
             }
             catch (Exception ex)
             {
@@ -57,18 +62,27 @@ namespace Cliver.DataSifter {
         }
 
         public Dictionary<string, string> FilterTypeName2NewFilter = new Dictionary<string, string>();
+        public System.Collections.Specialized.OrderedDictionary FilterTreeFolder2SourceFolder = new System.Collections.Specialized.OrderedDictionary();
+        internal Color[] FilterBackColors = new Color[0];
 
         void Settings_SettingsSaving(object sender, CancelEventArgs e)
         {
             try
             {
-                Settings.Default.FilterMarkColorsRGB = convert_Colors2integers(Settings.Default.FilterBackColors);
+                FilterMarkColorsRGB = convert_Colors2integers(FilterBackColors);
 
-                Settings.Default._FilterTypeName2NewFilter.Clear();
+                _FilterTypeName2NewFilter.Clear();
                 foreach (string type_name in FilterTypeName2NewFilter.Keys)
                 {
-                    Settings.Default._FilterTypeName2NewFilter.Add(type_name);
-                    Settings.Default._FilterTypeName2NewFilter.Add(FilterTypeName2NewFilter[type_name]);
+                    _FilterTypeName2NewFilter.Add(type_name);
+                    _FilterTypeName2NewFilter.Add(FilterTypeName2NewFilter[type_name]);
+                }
+
+                Settings.Default._FilterTreeFolder2SourceFolder.Clear();
+                foreach (string ft_file in FilterTreeFolder2SourceFolder.Keys)
+                {
+                    _FilterTreeFolder2SourceFolder.Add(ft_file);
+                    _FilterTreeFolder2SourceFolder.Add((string)FilterTreeFolder2SourceFolder[ft_file]);
                 }
             }
             catch (Exception ex)
@@ -76,9 +90,7 @@ namespace Cliver.DataSifter {
                 Message.Error(ex);
             }
         }
-
-        internal Color[] FilterBackColors = new Color[0];
-
+        
         int[] convert_Colors2integers(Color[] colors)
         {
             int[] rgbs = new int[colors.Length];

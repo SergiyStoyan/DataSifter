@@ -260,10 +260,23 @@ namespace Cliver.DataSifter {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string SourceFormInitialDirectory {
+            get {
+                return ((string)(this["SourceFormInitialDirectory"]));
+            }
+            set {
+                this["SourceFormInitialDirectory"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-16""?>
 <ArrayOfString xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
   <string>RegexFilter</string>
-  <string>&gt;(?'N'.*?)&lt;\nIgnoreCase, Compiled, Singleline</string>
+  <string>&gt;(?'N'.*?)&lt;
+IgnoreCase, Compiled, Singleline</string>
 </ArrayOfString>")]
         public global::System.Collections.Specialized.StringCollection _FilterTypeName2NewFilter {
             get {
@@ -276,13 +289,12 @@ namespace Cliver.DataSifter {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string SourceFormInitialDirectory {
+        public global::System.Collections.Specialized.StringCollection _FilterTreeFolder2SourceFolder {
             get {
-                return ((string)(this["SourceFormInitialDirectory"]));
+                return ((global::System.Collections.Specialized.StringCollection)(this["_FilterTreeFolder2SourceFolder"]));
             }
             set {
-                this["SourceFormInitialDirectory"] = value;
+                this["_FilterTreeFolder2SourceFolder"] = value;
             }
         }
     }

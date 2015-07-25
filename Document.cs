@@ -60,7 +60,7 @@ namespace Cliver.DataSifter
             string test = null;
             try
             {
-                test = File.ReadAllText(Program.AppDir + @"\welcome.html");
+                test = System.IO.File.ReadAllText(Program.AppDir + @"\welcome.html");
             }
             catch { }
             if (string.IsNullOrEmpty(test))
@@ -87,10 +87,11 @@ namespace Cliver.DataSifter
 
         static internal void LoadFromFile(string file)
         {
+            Document.file = file;
             if (file == null || file == string.Empty)
                 return;
 
-            if (!File.Exists(file))
+            if (!System.IO.File.Exists(file))
             {
                 Message.Error(uri + " does not exist");
                 return;
@@ -101,11 +102,20 @@ namespace Cliver.DataSifter
 
             try
             {
-                set(File.ReadAllText(file, Encoding.UTF8), file, file);
+                set(System.IO.File.ReadAllText(file, Encoding.UTF8), file, file);
             }
             catch (Exception e)
             {
                 Message.Error(e);
+            }
+        }
+
+        static string file = null;
+        static internal string File
+        {
+            get
+            {
+                return file;
             }
         }
     }

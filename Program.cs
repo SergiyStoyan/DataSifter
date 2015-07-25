@@ -79,7 +79,7 @@ namespace Cliver.DataSifter
             }
             catch (Exception ex)
             {
-                Cliver.Message.Error(ex);
+                Message.Error(ex);
             }
         }
 

@@ -21,7 +21,7 @@ using System.Net;
 using System.Reflection;
 using System.Threading;
 
-namespace Cliver
+namespace Cliver.DataSifter
 {
     partial class MessageForm
     {

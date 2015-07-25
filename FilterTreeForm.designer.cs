@@ -71,6 +71,7 @@ namespace Cliver.DataSifter
             this.FilterBox = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.FilterTreeFileDir = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.Filter_flowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.label6 = new System.Windows.Forms.Label();
@@ -114,7 +115,7 @@ namespace Cliver.DataSifter
             this.FilterTree.HideSelection = false;
             this.FilterTree.Location = new System.Drawing.Point(0, 0);
             this.FilterTree.Name = "FilterTree";
-            this.FilterTree.Size = new System.Drawing.Size(932, 120);
+            this.FilterTree.Size = new System.Drawing.Size(952, 120);
             this.FilterTree.TabIndex = 0;
             this.FilterTree.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.FilterTree_AfterCheck);
             this.FilterTree.DrawNode += new System.Windows.Forms.DrawTreeNodeEventHandler(this.FilterTree_DrawNode);
@@ -205,7 +206,7 @@ namespace Cliver.DataSifter
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(757, 29);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(712, 29);
             this.flowLayoutPanel1.TabIndex = 1;
             // 
             // NewFilterTree
@@ -275,15 +276,15 @@ namespace Cliver.DataSifter
             // 
             this.label4.Location = new System.Drawing.Point(223, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(59, 24);
+            this.label4.Size = new System.Drawing.Size(37, 24);
             this.label4.TabIndex = 20;
-            this.label4.Text = "Filter Type:";
+            this.label4.Text = "Filter:";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // FilterTypes
             // 
             this.FilterTypes.FormattingEnabled = true;
-            this.FilterTypes.Location = new System.Drawing.Point(288, 3);
+            this.FilterTypes.Location = new System.Drawing.Point(266, 3);
             this.FilterTypes.Name = "FilterTypes";
             this.FilterTypes.Size = new System.Drawing.Size(96, 21);
             this.FilterTypes.TabIndex = 21;
@@ -292,7 +293,7 @@ namespace Cliver.DataSifter
             // 
             this.Add.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.Add.Image = ((System.Drawing.Image)(resources.GetObject("Add.Image")));
-            this.Add.Location = new System.Drawing.Point(387, 3);
+            this.Add.Location = new System.Drawing.Point(365, 3);
             this.Add.Margin = new System.Windows.Forms.Padding(0, 3, 1, 3);
             this.Add.Name = "Add";
             this.Add.Size = new System.Drawing.Size(43, 23);
@@ -305,7 +306,7 @@ namespace Cliver.DataSifter
             // 
             this.Insert.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.Insert.Image = ((System.Drawing.Image)(resources.GetObject("Insert.Image")));
-            this.Insert.Location = new System.Drawing.Point(431, 3);
+            this.Insert.Location = new System.Drawing.Point(409, 3);
             this.Insert.Margin = new System.Windows.Forms.Padding(0, 3, 1, 3);
             this.Insert.Name = "Insert";
             this.Insert.Size = new System.Drawing.Size(43, 23);
@@ -318,7 +319,7 @@ namespace Cliver.DataSifter
             // 
             this.Remove.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.Remove.Image = ((System.Drawing.Image)(resources.GetObject("Remove.Image")));
-            this.Remove.Location = new System.Drawing.Point(475, 3);
+            this.Remove.Location = new System.Drawing.Point(453, 3);
             this.Remove.Margin = new System.Windows.Forms.Padding(0, 3, 1, 3);
             this.Remove.Name = "Remove";
             this.Remove.Size = new System.Drawing.Size(43, 23);
@@ -330,7 +331,7 @@ namespace Cliver.DataSifter
             // 
             this.bRemoveBranch.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.bRemoveBranch.Image = ((System.Drawing.Image)(resources.GetObject("bRemoveBranch.Image")));
-            this.bRemoveBranch.Location = new System.Drawing.Point(519, 3);
+            this.bRemoveBranch.Location = new System.Drawing.Point(497, 3);
             this.bRemoveBranch.Margin = new System.Windows.Forms.Padding(0, 3, 1, 3);
             this.bRemoveBranch.Name = "bRemoveBranch";
             this.bRemoveBranch.Size = new System.Drawing.Size(43, 23);
@@ -342,7 +343,7 @@ namespace Cliver.DataSifter
             // 
             this.bUp.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.bUp.Image = ((System.Drawing.Image)(resources.GetObject("bUp.Image")));
-            this.bUp.Location = new System.Drawing.Point(563, 3);
+            this.bUp.Location = new System.Drawing.Point(541, 3);
             this.bUp.Margin = new System.Windows.Forms.Padding(0, 3, 1, 3);
             this.bUp.Name = "bUp";
             this.bUp.Size = new System.Drawing.Size(43, 23);
@@ -354,7 +355,7 @@ namespace Cliver.DataSifter
             // 
             this.bDown.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.bDown.Image = ((System.Drawing.Image)(resources.GetObject("bDown.Image")));
-            this.bDown.Location = new System.Drawing.Point(607, 3);
+            this.bDown.Location = new System.Drawing.Point(585, 3);
             this.bDown.Margin = new System.Windows.Forms.Padding(0, 3, 1, 3);
             this.bDown.Name = "bDown";
             this.bDown.Size = new System.Drawing.Size(43, 23);
@@ -366,7 +367,7 @@ namespace Cliver.DataSifter
             // 
             this.bSaveAsPatternFilter.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.bSaveAsPatternFilter.Image = ((System.Drawing.Image)(resources.GetObject("bSaveAsPatternFilter.Image")));
-            this.bSaveAsPatternFilter.Location = new System.Drawing.Point(651, 3);
+            this.bSaveAsPatternFilter.Location = new System.Drawing.Point(629, 3);
             this.bSaveAsPatternFilter.Margin = new System.Windows.Forms.Padding(0, 3, 1, 3);
             this.bSaveAsPatternFilter.Name = "bSaveAsPatternFilter";
             this.bSaveAsPatternFilter.Size = new System.Drawing.Size(43, 23);
@@ -376,17 +377,18 @@ namespace Cliver.DataSifter
             // 
             // label8
             // 
-            this.label8.Location = new System.Drawing.Point(695, 0);
+            this.label8.Location = new System.Drawing.Point(673, 0);
             this.label8.Margin = new System.Windows.Forms.Padding(0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(57, 24);
+            this.label8.Size = new System.Drawing.Size(34, 24);
             this.label8.TabIndex = 18;
-            this.label8.Text = "File Name:";
+            this.label8.Text = "File:";
             this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // pFilterTreeNameChangedHighlight
             // 
-            this.pFilterTreeNameChangedHighlight.Location = new System.Drawing.Point(752, 0);
+            this.pFilterTreeNameChangedHighlight.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pFilterTreeNameChangedHighlight.Location = new System.Drawing.Point(707, 0);
             this.pFilterTreeNameChangedHighlight.Margin = new System.Windows.Forms.Padding(0);
             this.pFilterTreeNameChangedHighlight.Name = "pFilterTreeNameChangedHighlight";
             this.pFilterTreeNameChangedHighlight.Size = new System.Drawing.Size(5, 5);
@@ -394,12 +396,11 @@ namespace Cliver.DataSifter
             // 
             // FilterTreeName
             // 
-            this.FilterTreeName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.FilterTreeName.Location = new System.Drawing.Point(757, 4);
+            this.FilterTreeName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.FilterTreeName.Location = new System.Drawing.Point(996, 4);
             this.FilterTreeName.Margin = new System.Windows.Forms.Padding(0);
             this.FilterTreeName.Name = "FilterTreeName";
-            this.FilterTreeName.Size = new System.Drawing.Size(305, 20);
+            this.FilterTreeName.Size = new System.Drawing.Size(66, 20);
             this.FilterTreeName.TabIndex = 1;
             this.FilterTreeName.TextChanged += new System.EventHandler(this.FilterTreeName_TextChanged);
             this.FilterTreeName.Enter += new System.EventHandler(this.FilterTreeName_Enter);
@@ -432,7 +433,7 @@ namespace Cliver.DataSifter
             this.PreparedFilterTrees.Location = new System.Drawing.Point(30, 13);
             this.PreparedFilterTrees.Margin = new System.Windows.Forms.Padding(0);
             this.PreparedFilterTrees.Name = "PreparedFilterTrees";
-            this.PreparedFilterTrees.Size = new System.Drawing.Size(98, 107);
+            this.PreparedFilterTrees.Size = new System.Drawing.Size(78, 107);
             this.PreparedFilterTrees.TabIndex = 0;
             this.PreparedFilterTrees.DoubleClick += new System.EventHandler(this.PreparedFilters_DoubleClick);
             // 
@@ -441,7 +442,7 @@ namespace Cliver.DataSifter
             this.label3.Dock = System.Windows.Forms.DockStyle.Top;
             this.label3.Location = new System.Drawing.Point(0, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(128, 13);
+            this.label3.Size = new System.Drawing.Size(108, 13);
             this.label3.TabIndex = 1;
             this.label3.Text = "Prepared Filter Trees:";
             this.label3.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -454,7 +455,7 @@ namespace Cliver.DataSifter
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.Location = new System.Drawing.Point(0, 0);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(128, 120);
+            this.panel4.Size = new System.Drawing.Size(108, 120);
             this.panel4.TabIndex = 18;
             // 
             // flowLayoutPanel2
@@ -550,7 +551,7 @@ namespace Cliver.DataSifter
             // 
             this.splitContainer2.Panel2.Controls.Add(this.panel4);
             this.splitContainer2.Size = new System.Drawing.Size(1062, 120);
-            this.splitContainer2.SplitterDistance = 932;
+            this.splitContainer2.SplitterDistance = 952;
             this.splitContainer2.SplitterWidth = 2;
             this.splitContainer2.TabIndex = 0;
             // 
@@ -577,13 +578,26 @@ namespace Cliver.DataSifter
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.flowLayoutPanel1);
+            this.panel2.Controls.Add(this.FilterTreeFileDir);
             this.panel2.Controls.Add(this.FilterTreeName);
+            this.panel2.Controls.Add(this.flowLayoutPanel1);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(1062, 30);
             this.panel2.TabIndex = 1;
+            // 
+            // FilterTreeFileDir
+            // 
+            this.FilterTreeFileDir.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.FilterTreeFileDir.Location = new System.Drawing.Point(712, 4);
+            this.FilterTreeFileDir.Margin = new System.Windows.Forms.Padding(0);
+            this.FilterTreeFileDir.Name = "FilterTreeFileDir";
+            this.FilterTreeFileDir.ReadOnly = true;
+            this.FilterTreeFileDir.Size = new System.Drawing.Size(284, 20);
+            this.FilterTreeFileDir.TabIndex = 2;
+            this.FilterTreeFileDir.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // panel1
             // 
@@ -850,5 +864,6 @@ namespace Cliver.DataSifter
         private System.Windows.Forms.TextBox pLevelHighlight;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.TextBox FilterTreeFileDir;
     }
 }

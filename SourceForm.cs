@@ -19,6 +19,7 @@ using System.Configuration;
 using System.Diagnostics;
 using System.Threading;
 using System.Web;
+using System.Linq;
 
 namespace Cliver.DataSifter
 {
@@ -283,8 +284,9 @@ namespace Cliver.DataSifter
             {
                 OpenFileDialog d = new OpenFileDialog();
                 d.Title = "Pick a file to be parsed";
-                if (!string.IsNullOrWhiteSpace(Settings.Default.LastSourceFile))
-                    d.InitialDirectory = Path.GetDirectoryName(Settings.Default.LastSourceFile);
+                d.InitialDirectory = get_corresponding_source_folder(Settings.Default.LastFilterTreeFile);
+                if (string.IsNullOrWhiteSpace(d.InitialDirectory) || !Directory.Exists(d.InitialDirectory))
+                    d.InitialDirectory = null;
                 if (d.ShowDialog(this) != DialogResult.OK || d.FileName == "")
                     return;
                 Settings.Default.LastSourceFile = d.FileName;
@@ -295,6 +297,14 @@ namespace Cliver.DataSifter
             {
                 Message.Error(ex);
             }
+        }
+
+        string get_corresponding_source_folder(string filter_tree_file)
+        {
+            string ft_folder = Path.GetDirectoryName(filter_tree_file);
+            if (Settings.Default.FilterTreeFolder2SourceFolder.Contains(ft_folder))
+                return (string)Settings.Default.FilterTreeFolder2SourceFolder[ft_folder];
+            return Path.GetDirectoryName(Settings.Default.LastSourceFile);
         }
 
         private void About_Click(object sender, EventArgs e)

@@ -16,7 +16,7 @@ using System.Reflection;
 //using System.Reflection.Emit;
 using System.Windows.Forms;
 
-namespace Cliver
+namespace Cliver.DataSifter
 {
     /// <summary>
     /// Run a function as another thread, polls if it is working too long and then asks to break it.

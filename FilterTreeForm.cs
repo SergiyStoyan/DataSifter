@@ -155,6 +155,9 @@ namespace Cliver.DataSifter
                 if (tree_name.EndsWith("." + Program.FilterTreeFileExtension, StringComparison.InvariantCultureIgnoreCase))
                     tree_name = tree_name.Substring(0, tree_name.LastIndexOf("."));
                 FilterTreeName.Text = tree_name;
+                FilterTreeFileDir.Text = Path.GetDirectoryName(Settings.Default.LastFilterTreeFile) + @"\";
+                FilterTreeFileDir.SelectionStart = FilterTreeFileDir.Text.Length;
+                FilterTreeFileDir.ScrollToCaret();
             }
             catch (Exception e)
             {

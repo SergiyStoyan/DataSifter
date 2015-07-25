@@ -272,9 +272,9 @@ namespace Cliver.DataSifter
                 string file_name = FilterTreeName.Text;
                 if (file_name != null)
                     file_name.Trim();
-                if (!string.IsNullOrEmpty(Settings.Default.LastFilterTreeFile) && !string.IsNullOrEmpty(file_name))
+                if (!string.IsNullOrEmpty(FilterTreeFileDir.Text) && !string.IsNullOrEmpty(file_name))
                 {
-                    file = Path.GetDirectoryName(Settings.Default.LastFilterTreeFile) + "\\" + file_name;
+                    file = FilterTreeFileDir.Text + "\\" + file_name;
                     if (!file_name.EndsWith("." + Program.FilterTreeFileExtension, StringComparison.InvariantCultureIgnoreCase))
                         file += "." + Program.FilterTreeFileExtension;
                 }
@@ -303,7 +303,7 @@ namespace Cliver.DataSifter
                 if (p == null)
                     return;
                 if (p.RootFilters == null || p.RootFilters.Length < 1)
-                    return;     
+                    return;
 
                 FileInfo fi = new FileInfo(file);
                 if (fi.Exists)
@@ -321,6 +321,17 @@ namespace Cliver.DataSifter
                 FilterTreeName.Text = file.Substring(p1, p2 - p1);
 
                 FilterTreeChanged = false;
+
+                if (!string.IsNullOrWhiteSpace(Document.File))
+                {
+                    string ft_folder = Path.GetDirectoryName(file);
+                    if (Settings.Default.FilterTreeFolder2SourceFolder.Contains(ft_folder))
+                        Settings.Default.FilterTreeFolder2SourceFolder.Remove(ft_folder);
+                    Settings.Default.FilterTreeFolder2SourceFolder.Add(ft_folder, Path.GetDirectoryName(Document.File));
+                    if (Settings.Default.FilterTreeFolder2SourceFolder.Count > 30)
+                        Settings.Default.FilterTreeFolder2SourceFolder.RemoveAt(0);
+                    Settings.Default.Save();
+                }
             }
             catch (Exception ex)
             {
@@ -343,8 +354,9 @@ namespace Cliver.DataSifter
                 OpenFileDialog d = new OpenFileDialog();
                 d.Title = "Pick a filter tree file to open within DataSifter";
                 d.Filter = "Filter tree files (*." + Program.FilterTreeFileExtension + ")|*." + Program.FilterTreeFileExtension + "|All files (*.*)|*.*";
-                if (!string.IsNullOrWhiteSpace(Settings.Default.LastFilterTreeFile))
-                    d.InitialDirectory = Path.GetDirectoryName(Settings.Default.LastFilterTreeFile);
+                d.InitialDirectory = get_corresponding_filter_tree_folder(Settings.Default.LastSourceFile);
+                if (string.IsNullOrWhiteSpace(d.InitialDirectory) || !Directory.Exists(d.InitialDirectory))
+                    d.InitialDirectory = null;
                 if (d.ShowDialog(this) != DialogResult.OK || d.FileName == "")
                     return;
                 Settings.Default.LastFilterTreeFile = d.FileName;
@@ -356,6 +368,18 @@ namespace Cliver.DataSifter
             {
                 Message.Error(ex);
             }
+        }
+
+        string get_corresponding_filter_tree_folder(string source_file)
+        {
+            string s_folder = Path.GetDirectoryName(source_file);
+            foreach (string ft_folder in Settings.Default.FilterTreeFolder2SourceFolder.Keys)
+            {
+                string sf = (string)Settings.Default.FilterTreeFolder2SourceFolder[ft_folder];
+                if (sf == s_folder)
+                    return ft_folder;
+            }
+            return Path.GetDirectoryName(Settings.Default.LastFilterTreeFile);
         }
 
         /// <summary>

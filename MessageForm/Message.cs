@@ -15,7 +15,7 @@ using System.Reflection;
 using System.Diagnostics;
 using System.IO;
 
-namespace Cliver
+namespace Cliver.DataSifter
 {
     /// <summary>
     /// Show MessageForm with predefined features
