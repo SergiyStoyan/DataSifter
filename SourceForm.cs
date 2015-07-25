@@ -279,15 +279,22 @@ namespace Cliver.DataSifter
 
         private void File_Click(object sender, EventArgs e)
         {
-            OpenFileDialog d = new OpenFileDialog();
-            d.Title = "Pick a file to be parsed";
-            if (Settings.Default.LastSourceFile != null)
-                d.InitialDirectory = Path.GetDirectoryName(Settings.Default.LastSourceFile);
-            if (d.ShowDialog(this) != DialogResult.OK || d.FileName == "")
-                return;
-            Settings.Default.LastSourceFile = d.FileName;
-            Settings.Default.Save();
-            Document.LoadFromFile(d.FileName);
+            try
+            {
+                OpenFileDialog d = new OpenFileDialog();
+                d.Title = "Pick a file to be parsed";
+                if (!string.IsNullOrWhiteSpace(Settings.Default.LastSourceFile))
+                    d.InitialDirectory = Path.GetDirectoryName(Settings.Default.LastSourceFile);
+                if (d.ShowDialog(this) != DialogResult.OK || d.FileName == "")
+                    return;
+                Settings.Default.LastSourceFile = d.FileName;
+                Settings.Default.Save();
+                Document.LoadFromFile(d.FileName);
+            }
+            catch (Exception ex)
+            {
+                Message.Error(ex);
+            }
         }
 
         private void About_Click(object sender, EventArgs e)

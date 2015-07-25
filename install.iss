@@ -38,7 +38,8 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 [Files]
 Source: ".\bin\Debug\DataSifter.exe"; DestDir: "{app}"; Flags: ignoreversion 
 Source: ".\bin\Debug\DataSifter.exe.config"; DestDir: "{app}"; Flags: ignoreversion 
-Source: ".\bin\Debug\DataSifter.xml"; DestDir: "{app}"; Flags: ignoreversion 
+;Source: ".\bin\Debug\DataSifter.xml"; DestDir: "{app}"; Flags: ignoreversion 
+Source: ".\bin\Debug\DataSifter.pdb"; DestDir: "{app}"; Flags: ignoreversion 
 Source: ".\bin\Debug\*.dll"; DestDir: "{app}"; Flags: ignoreversion 
 Source: ".\PreparedFilterTrees\*.fltr"; DestDir: "{app}\PreparedFilterTrees"; Flags: ignoreversion
 ;Source: ".\Help\DataSifter.chm"; DestDir: "{app}"; Flags: ignoreversion
@@ -57,9 +58,9 @@ Name: "{group}\{cm:UninstallProgram,DataSifter}"; Filename: "{uninstallexe}"; Ic
 Name: "{userdesktop}\DataSifter"; Filename: "{app}\DataSifter.exe"; Tasks: desktopicon
 
 [Registry]
-Root: HKCR; Subkey: ".fltr"; ValueType: string; ValueName: ""; ValueData: "FilterTreeFile"; Flags: uninsdeletevalue
-Root: HKCR; Subkey: "FilterTreeFile"; ValueType: string; ValueName: ""; ValueData: "filter tree file"; Flags: uninsdeletekey
-Root: HKCR; Subkey: "FilterTreeFile\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\DataSifter.exe,0"
+Root: HKCR; Subkey: ".fltr"; ValueType: string; ValueName: ""; ValueData: "FilterTreeFile"; Flags: uninsdeletekey
+Root: HKCR; Subkey: "FilterTreeFile"; ValueType: string; ValueName: ""; ValueData: "Filter tree file"; Flags: uninsdeletekey
+Root: HKCR; Subkey: "FilterTreeFile\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\DataSifter.exe,0"; Flags: uninsdeletekey; 
 ;"DefaultIcon" is the registry key that specifies the filename containing the icon to associate with the file type. ",0" tells Explorer to use the first icon from MYPROG.EXE. (",1" would mean the second icon.)
 Root: HKCR; Subkey: "FilterTreeFile\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\DataSifter.exe"" ""%1"""
 

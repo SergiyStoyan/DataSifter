@@ -533,7 +533,8 @@ namespace Cliver.DataSifter
 
         private void FilterTreeName_TextChanged(object sender, EventArgs e)
         {
-            //FilterTreeChanged = true;
+            //if (!string.IsNullOrWhiteSpace(FilterTreeName.Text))
+            //    FilterTreeChanged = true;
         }
 
         /// <summary>

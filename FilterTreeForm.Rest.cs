@@ -335,20 +335,27 @@ namespace Cliver.DataSifter
         /// <param name="e"></param>
         internal void OpenFilterTree_Click(object sender, EventArgs e)
         {
-            if (ToSavePreviousFilterTree())
-                return;
+            try
+            {
+                if (ToSavePreviousFilterTree())
+                    return;
 
-            OpenFileDialog d = new OpenFileDialog();
-            d.Title = "Pick a filter tree file to open within DataSifter";
-            d.Filter = "Filter tree files (*." + Program.FilterTreeFileExtension + ")|*." + Program.FilterTreeFileExtension + "|All files (*.*)|*.*";
-            if (Settings.Default.LastFilterTreeFile != null)
-                d.InitialDirectory = Path.GetDirectoryName( Settings.Default.LastFilterTreeFile);
-            if (d.ShowDialog(this) != DialogResult.OK || d.FileName == "")
-                return;
-            Settings.Default.LastFilterTreeFile = d.FileName;
-            Settings.Default.Save();
-            LoadFilterTree(d.FileName);
-            Focus();
+                OpenFileDialog d = new OpenFileDialog();
+                d.Title = "Pick a filter tree file to open within DataSifter";
+                d.Filter = "Filter tree files (*." + Program.FilterTreeFileExtension + ")|*." + Program.FilterTreeFileExtension + "|All files (*.*)|*.*";
+                if (!string.IsNullOrWhiteSpace(Settings.Default.LastFilterTreeFile))
+                    d.InitialDirectory = Path.GetDirectoryName(Settings.Default.LastFilterTreeFile);
+                if (d.ShowDialog(this) != DialogResult.OK || d.FileName == "")
+                    return;
+                Settings.Default.LastFilterTreeFile = d.FileName;
+                Settings.Default.Save();
+                LoadFilterTree(d.FileName);
+                Focus();
+            }
+            catch(Exception ex)
+            {
+                Message.Error(ex);
+            }
         }
 
         /// <summary>
@@ -379,7 +386,7 @@ namespace Cliver.DataSifter
         /// <returns></returns>
         internal bool ToSavePreviousFilterTree()
         {
-            if (FilterTreeChanged && Message.YesNo("The current filter tree was not saved so its modification will be lost. Do you want to save it?"))
+            if (FilterTreeChanged && FilterTree.Nodes.Count > 0 && Message.YesNo("The current filter tree was not saved so its modification will be lost. Do you want to save it?"))
                 return true;
             FilterTreeChanged = false;
             return false;
@@ -402,12 +409,12 @@ namespace Cliver.DataSifter
             FilterTreeName.Text = "";
             InputGroupName.Items.Clear();
             FilterComment.Text = "";
-            
-            if (string.IsNullOrWhiteSpace(FilterTreeName.Text))
-            {
-                FilterTreeName.Text = Path.GetFileNameWithoutExtension(Document.Title);
-                FilterTreeChanged = true;
-            }
+
+            //if (string.IsNullOrWhiteSpace(FilterTreeName.Text))
+            //{
+            //    FilterTreeName.Text = Path.GetFileNameWithoutExtension(Document.Title);
+            //    FilterTreeChanged = true;
+            //}
         }
 
         #endregion
