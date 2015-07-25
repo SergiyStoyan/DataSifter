@@ -7,11 +7,18 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Threading;
+using System.Reflection;
 
 namespace Cliver.DataSifter
 {
     public partial class BaseForm : Form
     {
+        public BaseForm()
+        {
+            InitializeComponent();
+            this.Icon = Icon.ExtractAssociatedIcon(Assembly.GetEntryAssembly().Location);
+        }
+
         public static void Sleep(int mss)
         {
             DateTime dt = DateTime.Now + new TimeSpan(0, 0, 0, 0, mss);
@@ -34,11 +41,6 @@ namespace Cliver.DataSifter
             }
             while (dt > DateTime.Now);
             return false;
-        }
-
-        public BaseForm()
-        {
-            InitializeComponent();
         }
 
         protected void Invoke(MethodInvoker code)

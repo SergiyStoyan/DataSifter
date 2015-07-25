@@ -114,7 +114,7 @@ namespace Cliver.DataSifter
             this.FilterTree.HideSelection = false;
             this.FilterTree.Location = new System.Drawing.Point(0, 0);
             this.FilterTree.Name = "FilterTree";
-            this.FilterTree.Size = new System.Drawing.Size(930, 120);
+            this.FilterTree.Size = new System.Drawing.Size(932, 120);
             this.FilterTree.TabIndex = 0;
             this.FilterTree.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.FilterTree_AfterCheck);
             this.FilterTree.DrawNode += new System.Windows.Forms.DrawTreeNodeEventHandler(this.FilterTree_DrawNode);
@@ -432,7 +432,7 @@ namespace Cliver.DataSifter
             this.PreparedFilterTrees.Location = new System.Drawing.Point(30, 13);
             this.PreparedFilterTrees.Margin = new System.Windows.Forms.Padding(0);
             this.PreparedFilterTrees.Name = "PreparedFilterTrees";
-            this.PreparedFilterTrees.Size = new System.Drawing.Size(100, 107);
+            this.PreparedFilterTrees.Size = new System.Drawing.Size(98, 107);
             this.PreparedFilterTrees.TabIndex = 0;
             this.PreparedFilterTrees.DoubleClick += new System.EventHandler(this.PreparedFilters_DoubleClick);
             // 
@@ -441,7 +441,7 @@ namespace Cliver.DataSifter
             this.label3.Dock = System.Windows.Forms.DockStyle.Top;
             this.label3.Location = new System.Drawing.Point(0, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(130, 13);
+            this.label3.Size = new System.Drawing.Size(128, 13);
             this.label3.TabIndex = 1;
             this.label3.Text = "Prepared Filter Trees:";
             this.label3.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -454,7 +454,7 @@ namespace Cliver.DataSifter
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.Location = new System.Drawing.Point(0, 0);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(130, 120);
+            this.panel4.Size = new System.Drawing.Size(128, 120);
             this.panel4.TabIndex = 18;
             // 
             // flowLayoutPanel2
@@ -550,7 +550,7 @@ namespace Cliver.DataSifter
             // 
             this.splitContainer2.Panel2.Controls.Add(this.panel4);
             this.splitContainer2.Size = new System.Drawing.Size(1062, 120);
-            this.splitContainer2.SplitterDistance = 930;
+            this.splitContainer2.SplitterDistance = 932;
             this.splitContainer2.SplitterWidth = 2;
             this.splitContainer2.TabIndex = 0;
             // 

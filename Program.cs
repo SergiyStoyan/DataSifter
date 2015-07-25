@@ -55,10 +55,17 @@ namespace Cliver.DataSifter
 
         static Program()
         {
-            AssemblyName ean = Assembly.GetEntryAssembly().GetName();
-            AppTitle = ean.Name;
-            if (ean.Version.Major > 0 || ean.Version.Minor > 0)
-                AppTitle += ean.Version.Major + "." + ean.Version.Minor;
+            try
+            {
+                AssemblyName ean = Assembly.GetEntryAssembly().GetName();
+                AppTitle = ean.Name;
+                if (ean.Version.Major > 0 || ean.Version.Minor > 0)
+                    AppTitle += ean.Version.Major + "." + ean.Version.Minor;
+            }
+            catch(Exception e)
+            {
+                Message.Error(e);
+            }
         }
 
         static internal void Help()

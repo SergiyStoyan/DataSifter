@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Cliver.DataSifter</RootNamespace>
     <AssemblyName>DataSifter</AssemblyName>
-    <ApplicationIcon>sifter.ico</ApplicationIcon>
+    <ApplicationIcon>DataSifter.ico</ApplicationIcon>
     <ManifestCertificateThumbprint>580B8B6430EF633E7498414A889196CCF11C1D7F</ManifestCertificateThumbprint>
     <ManifestKeyFile>RegexTreeer_TemporaryKey.pfx</ManifestKeyFile>
     <GenerateManifests>true</GenerateManifests>
@@ -224,7 +224,7 @@
     <Compile Include="ThreadRunner.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="sifter.ico" />
+    <Content Include="DataSifter.ico" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

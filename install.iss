@@ -2,12 +2,12 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 [Code]
-function AppName(Param: String): String;
+function AppName(param: String): String;
 begin
   Result := 'DataSifter';
-end;
+end; 
 
-function Version(Param: String): String;
+function Version(param: String): String;
 begin
   Result := '3.1.0';
 end;
@@ -22,11 +22,12 @@ AppSupportURL=http://www.cliversoft.com
 AppUpdatesURL=http://www.cliversoft.com
 DefaultDirName={pf}\DataSifter
 DefaultGroupName=DataSifter
-InfoAfterFile=.\install_notes.txt
+;InfoAfterFile=.\install_notes.txt
 Compression=lzma
 SolidCompression=yes
 LicenseFile=.\license.txt
-SetupIconFile=DataSifter.ico
+SetupIconFile=DataSifter.ico      
+UsePreviousLanguage=no
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
@@ -35,16 +36,16 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: ".\bin\Release\DataSifter.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: ".\bin\Release\DataSifter.exe.config"; DestDir: "{app}"; Flags: ignoreversion
-Source: ".\bin\Release\DataSifter.xml"; DestDir: "{app}"; Flags: ignoreversion
-Source: ".\bin\Release\*.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: ".\PreparedFilterTrees\*.rgx"; DestDir: "{app}\PreparedFilterTrees"; Flags: ignoreversion
-Source: ".\Satellites\*"; Excludes: ".svn,"; DestDir: "{app}"; Flags: ignoreversion
+Source: ".\bin\Debug\DataSifter.exe"; DestDir: "{app}"; Flags: ignoreversion 
+Source: ".\bin\Debug\DataSifter.exe.config"; DestDir: "{app}"; Flags: ignoreversion 
+Source: ".\bin\Debug\DataSifter.xml"; DestDir: "{app}"; Flags: ignoreversion 
+Source: ".\bin\Debug\*.dll"; DestDir: "{app}"; Flags: ignoreversion 
+Source: ".\PreparedFilterTrees\*.fltr"; DestDir: "{app}\PreparedFilterTrees"; Flags: ignoreversion
 ;Source: ".\Help\DataSifter.chm"; DestDir: "{app}"; Flags: ignoreversion
 ;Source: "..\Cliver.Parser_Test\*"; DestDir: "{app}\Sample"; Flags: ignoreversion
-Source: "..\Cliver.Parser_Test\_pages\*"; Excludes: ".svn,"; DestDir: "{app}\Samples"; Flags: ignoreversion
-Source: "..\Cliver.Parser_Test\_config_files\*.rgx"; Excludes: ".svn,"; DestDir: "{app}\Samples"; Flags: ignoreversion
+;Source: "..\Cliver.Parser_Test\_pages\*"; Excludes: ".svn,"; DestDir: "{app}\Samples"; Flags: ignoreversion
+;Source: "..\Cliver.Parser_Test\_config_files\*.fltr"; Excludes: ".svn,"; DestDir: "{app}\Samples"; Flags: ignoreversion
+;Source: "..\Cliver.Parser_Test\_config_files\*.fltr"; Excludes: ".svn,"; DestDir: "{app}\Samples"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Directories]

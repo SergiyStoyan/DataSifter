@@ -39,6 +39,8 @@ namespace Cliver.DataSifter {
         {
             try
             {
+                if (Settings.Default.FilterMarkColorsRGB == null)
+                    Settings.Default.FilterMarkColorsRGB = new int[] { };
                 Settings.Default.FilterBackColors = convert_integers2Colors(Settings.Default.FilterMarkColorsRGB);
                 if (Settings.Default.FilterBackColors.Length < 1)
                     Settings.Default.FilterBackColors = new Color[1] { Color.Red };
