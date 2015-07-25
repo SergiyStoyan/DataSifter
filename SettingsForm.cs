@@ -77,6 +77,7 @@ namespace Cliver.DataSifter
                 return;
 
             Settings.Default.Reset();
+            Settings.Default.Reload();
         }
 
         private void flagPrintParseLabels_CheckedChanged(object sender, EventArgs e)

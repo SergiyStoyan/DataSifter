@@ -260,12 +260,29 @@ namespace Cliver.DataSifter {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-16""?>
+<ArrayOfString xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
+  <string>RegexFilter</string>
+  <string>&gt;(?'N'.*?)&lt;\nIgnoreCase, Compiled, Singleline</string>
+</ArrayOfString>")]
         public global::System.Collections.Specialized.StringCollection _FilterTypeName2NewFilter {
             get {
                 return ((global::System.Collections.Specialized.StringCollection)(this["_FilterTypeName2NewFilter"]));
             }
             set {
                 this["_FilterTypeName2NewFilter"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string SourceFormInitialDirectory {
+            get {
+                return ((string)(this["SourceFormInitialDirectory"]));
+            }
+            set {
+                this["SourceFormInitialDirectory"] = value;
             }
         }
     }

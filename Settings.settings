@@ -1,5 +1,5 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Cliver.DataSifter.Properties" GeneratedClassName="Settings">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Cliver.DataSifter" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
     <Setting Name="HighlightHtmlTags" Type="System.Boolean" Scope="User">
@@ -88,6 +88,13 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="_FilterTypeName2NewFilter" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;string&gt;RegexFilter&lt;/string&gt;
+  &lt;string&gt;&amp;gt;(?'N'.*?)&amp;lt;\nIgnoreCase, Compiled, Singleline&lt;/string&gt;
+&lt;/ArrayOfString&gt;</Value>
+    </Setting>
+    <Setting Name="SourceFormInitialDirectory" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
   </Settings>
