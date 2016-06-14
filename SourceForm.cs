@@ -216,6 +216,7 @@ namespace Cliver.DataSifter
             //page = TextBox.Text;
             ThreadStart ts = new ThreadStart(parse);
             parse_thread = new Thread(ts);
+            parse_thread.IsBackground = true;
             parse_thread.Start();
             return true;
         }
@@ -301,6 +302,8 @@ namespace Cliver.DataSifter
 
         string get_corresponding_source_folder(string filter_tree_file)
         {
+            if (string.IsNullOrWhiteSpace(filter_tree_file))
+                return "";
             string ft_folder = Path.GetDirectoryName(filter_tree_file);
             if (Settings.Default.FilterTreeFolder2SourceFolder.Contains(ft_folder))
                 return (string)Settings.Default.FilterTreeFolder2SourceFolder[ft_folder];

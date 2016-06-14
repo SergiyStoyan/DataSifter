@@ -318,6 +318,7 @@ namespace Cliver.DataSifter
 
                 int p1 = file.LastIndexOf(@"\") + 1;
                 int p2 = file.LastIndexOf(".");
+                FilterTreeFileDir.Text = file.Substring(0, p1);
                 FilterTreeName.Text = file.Substring(p1, p2 - p1);
 
                 FilterTreeChanged = false;
