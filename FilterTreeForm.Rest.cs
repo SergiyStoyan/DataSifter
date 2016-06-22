@@ -355,7 +355,7 @@ namespace Cliver.DataSifter
                 OpenFileDialog d = new OpenFileDialog();
                 d.Title = "Pick a filter tree file to open within DataSifter";
                 d.Filter = "Filter tree files (*." + Program.FilterTreeFileExtension + ")|*." + Program.FilterTreeFileExtension + "|All files (*.*)|*.*";
-                d.InitialDirectory = get_corresponding_filter_tree_folder(Settings.Default.LastSourceFile);
+                d.InitialDirectory = get_corresponding_filter_tree_folder(Settings.Default.LastFilterTreeFile);
                 if (string.IsNullOrWhiteSpace(d.InitialDirectory) || !Directory.Exists(d.InitialDirectory))
                     d.InitialDirectory = null;
                 if (d.ShowDialog(this) != DialogResult.OK || d.FileName == "")
