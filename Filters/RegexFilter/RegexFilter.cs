@@ -100,10 +100,10 @@ namespace Cliver
 
     public class RegexMatches : FilterMatchCollection
     {
-        public RegexMatches(FilterGroup parent_group, Regex Regex)
+        public RegexMatches(FilterGroup parent_group, Regex regex)
             : base(parent_group)
         {
-            m0 = Regex.Match(parent_group.Text);
+            m0 = regex.Match(parent_group.Text);
             if (!m0.Success)
                 return;
             Reset();

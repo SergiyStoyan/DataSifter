@@ -105,7 +105,7 @@ namespace Cliver
 
     public class AgileMatches : FilterMatchCollection
     {
-        public AgileMatches(FilterGroup parent_group, string Xpath)
+        public AgileMatches(FilterGroup parent_group, string xpath)
             : base(parent_group)
         {
             HtmlAgilityPack.HtmlNodeCollection ns = null;
@@ -117,7 +117,7 @@ namespace Cliver
             //{
                 HtmlAgilityPack.HtmlDocument d = new HtmlAgilityPack.HtmlDocument();
                 d.LoadHtml(parent_group.Text);
-                ns = d.DocumentNode.SelectNodes(Xpath);
+                ns = d.DocumentNode.SelectNodes(xpath);
             //}
             if (ns == null)
                 return;

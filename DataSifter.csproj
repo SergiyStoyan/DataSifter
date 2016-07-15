@@ -67,6 +67,10 @@
       <HintPath>References\HtmlAgilityPack\HtmlAgilityPack.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
@@ -95,6 +99,13 @@
     <Compile Include="Filters\AgileFilter\AgileControl.Designer.cs">
       <DependentUpon>AgileControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Filters\JsonFilter\JsonControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Filters\JsonFilter\JsonControl.Designer.cs">
+      <DependentUpon>JsonControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Filters\JsonFilter\JsonFilter.cs" />
     <Compile Include="Filters\RegexFilter\RegexControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -160,6 +171,9 @@
     <EmbeddedResource Include="Filters\AgileFilter\AgileControl.resx">
       <DependentUpon>AgileControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Filters\JsonFilter\JsonControl.resx">
+      <DependentUpon>JsonControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Filters\RegexFilter\RegexControl.resx">
       <DependentUpon>RegexControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -202,6 +216,7 @@
       <DependentUpon>SourceForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
+    <None Include="packages.config" />
     <None Include="Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
