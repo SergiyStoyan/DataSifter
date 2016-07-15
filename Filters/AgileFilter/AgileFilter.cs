@@ -29,7 +29,9 @@ namespace Cliver
 
         override internal string GetDescription()
         {
-            return "";
+            return @"Based on HtmlAgilityPack.1.4.9.5
+
+Xpath can be any supported.";
         }
 
         override internal string GetHelpUrl()

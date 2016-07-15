@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace Cliver.DataSifter
 {
-    public partial class FilterControl : BaseControl
+    public partial class FilterControl : UserControl
     {
         //needed for VS designer
         public FilterControl()

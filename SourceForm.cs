@@ -260,7 +260,7 @@ namespace Cliver.DataSifter
             {
                 GroupCapture0 = parser.Parse(Document.Text);
                 FilterTreeParsedTime = DateTime.Now;
-                Invoke(() =>
+                ControlRoutines.Invoke(this, () =>
                 {
                     TextBox.DeselectAll();
                     FilterTreeForm.This.buttonParse.Checked = false;

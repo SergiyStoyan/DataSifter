@@ -29,7 +29,9 @@ namespace Cliver
 
         override internal string GetDescription()
         {
-            return "";
+            return @"Based on System.Text.RegularExpressions
+
+Regex can be any supported.";
         }
 
         override internal string GetHelpUrl()

@@ -45,15 +45,18 @@ namespace Cliver.DataSifter {
                 if (FilterBackColors.Length < 1)
                     FilterBackColors = new Color[1] { Color.Red };
 
-                if (_FilterTypeName2NewFilter == null)
-                    _FilterTypeName2NewFilter = new System.Collections.Specialized.StringCollection();
-                for (int i = 0; i < Settings.Default._FilterTypeName2NewFilter.Count; i += 2)
-                    FilterTypeName2NewFilter[Settings.Default._FilterTypeName2NewFilter[i]] = _FilterTypeName2NewFilter[i + 1];
+                if (_FilterTypeNames2NewFilter == null)
+                    _FilterTypeNames2NewFilter = new System.Collections.Specialized.StringCollection();
+                for (int i = 0; i < Settings.Default._FilterTypeNames2NewFilter.Count; i += 2)
+                    FilterTypeName2NewFilter[Settings.Default._FilterTypeNames2NewFilter[i]] = _FilterTypeNames2NewFilter[i + 1];
 
-                if (_FilterTreeFolder2SourceFolder == null)
-                    _FilterTreeFolder2SourceFolder = new System.Collections.Specialized.StringCollection();
-                for (int i = 0; i < _FilterTreeFolder2SourceFolder.Count; i += 2)
-                    FilterTreeFolder2SourceFolder[_FilterTreeFolder2SourceFolder[i]] = _FilterTreeFolder2SourceFolder[i + 1];                
+                if (_FilterTreeFolders2SourceFolder == null)
+                    _FilterTreeFolders2SourceFolder = new System.Collections.Specialized.StringCollection();
+                for (int i = 0; i < _FilterTreeFolders2SourceFolder.Count; i += 2)
+                    FilterTreeFolder2SourceFolder[_FilterTreeFolders2SourceFolder[i]] = _FilterTreeFolders2SourceFolder[i + 1];
+
+                if (OperatedFilterTypeNames == null)
+                    OperatedFilterTypeNames = new System.Collections.Specialized.StringCollection();
             }
             catch (Exception ex)
             {
@@ -71,19 +74,19 @@ namespace Cliver.DataSifter {
             {
                 FilterMarkColorsRGB = convert_Colors2integers(FilterBackColors);
 
-                _FilterTypeName2NewFilter.Clear();
+                _FilterTypeNames2NewFilter.Clear();
                 foreach (string type_name in FilterTypeName2NewFilter.Keys)
                 {
-                    _FilterTypeName2NewFilter.Add(type_name);
-                    _FilterTypeName2NewFilter.Add(FilterTypeName2NewFilter[type_name]);
+                    _FilterTypeNames2NewFilter.Add(type_name);
+                    _FilterTypeNames2NewFilter.Add(FilterTypeName2NewFilter[type_name]);
                 }
 
-                Settings.Default._FilterTreeFolder2SourceFolder.Clear();
+                Settings.Default._FilterTreeFolders2SourceFolder.Clear();
                 foreach (string ft_file in FilterTreeFolder2SourceFolder.Keys)
                 {
-                    _FilterTreeFolder2SourceFolder.Add(ft_file);
-                    _FilterTreeFolder2SourceFolder.Add((string)FilterTreeFolder2SourceFolder[ft_file]);
-                }
+                    _FilterTreeFolders2SourceFolder.Add(ft_file);
+                    _FilterTreeFolders2SourceFolder.Add((string)FilterTreeFolder2SourceFolder[ft_file]);
+                }                
             }
             catch (Exception ex)
             {

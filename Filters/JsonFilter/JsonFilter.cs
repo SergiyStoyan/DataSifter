@@ -27,7 +27,14 @@ namespace Cliver
 
         override internal string GetDescription()
         {
-            return "SAMPLES:\r\n*.Users[*].Phones[*]\r\nor\r\nCountries.USA.Users[*].Phones[0]\r\nor\r\n*Users[*].Phones[0]\r\n\r\n'*' means any path substring.";
+            return @"Based on Newtonsoft.Json.9.0.1
+
+PATH SAMPLES:
+*.Users[*].Phones[*]
+Countries.USA.Users[*].Phones[0]
+*Phones[*]
+
+where '*' implies any path substring.";
         }
 
         override internal string GetHelpUrl()

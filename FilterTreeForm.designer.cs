@@ -116,7 +116,7 @@ namespace Cliver.DataSifter
             this.FilterTree.HideSelection = false;
             this.FilterTree.Location = new System.Drawing.Point(0, 0);
             this.FilterTree.Name = "FilterTree";
-            this.FilterTree.Size = new System.Drawing.Size(962, 120);
+            this.FilterTree.Size = new System.Drawing.Size(978, 120);
             this.FilterTree.TabIndex = 0;
             this.FilterTree.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.FilterTree_AfterCheck);
             this.FilterTree.DrawNode += new System.Windows.Forms.DrawTreeNodeEventHandler(this.FilterTree_DrawNode);
@@ -411,18 +411,19 @@ namespace Cliver.DataSifter
             // 
             this.FilterComment.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.FilterComment.Location = new System.Drawing.Point(552, 6);
+            this.FilterComment.Location = new System.Drawing.Point(525, 3);
             this.FilterComment.Name = "FilterComment";
-            this.FilterComment.Size = new System.Drawing.Size(509, 20);
+            this.FilterComment.Size = new System.Drawing.Size(536, 20);
             this.FilterComment.TabIndex = 0;
             this.FilterComment.Leave += new System.EventHandler(this.FilterComment_Leave);
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(491, 0);
+            this.label7.Location = new System.Drawing.Point(465, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(54, 13);
+            this.label7.Padding = new System.Windows.Forms.Padding(0, 6, 0, 0);
+            this.label7.Size = new System.Drawing.Size(54, 19);
             this.label7.TabIndex = 16;
             this.label7.Text = "Comment:";
             this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -435,7 +436,7 @@ namespace Cliver.DataSifter
             this.PreparedFilterTrees.Location = new System.Drawing.Point(30, 13);
             this.PreparedFilterTrees.Margin = new System.Windows.Forms.Padding(0);
             this.PreparedFilterTrees.Name = "PreparedFilterTrees";
-            this.PreparedFilterTrees.Size = new System.Drawing.Size(68, 107);
+            this.PreparedFilterTrees.Size = new System.Drawing.Size(52, 107);
             this.PreparedFilterTrees.TabIndex = 0;
             this.PreparedFilterTrees.DoubleClick += new System.EventHandler(this.PreparedFilters_DoubleClick);
             // 
@@ -444,7 +445,7 @@ namespace Cliver.DataSifter
             this.label3.Dock = System.Windows.Forms.DockStyle.Top;
             this.label3.Location = new System.Drawing.Point(0, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(98, 13);
+            this.label3.Size = new System.Drawing.Size(82, 13);
             this.label3.TabIndex = 1;
             this.label3.Text = "Prepared Filter Trees:";
             this.label3.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -457,7 +458,7 @@ namespace Cliver.DataSifter
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.Location = new System.Drawing.Point(0, 0);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(98, 120);
+            this.panel4.Size = new System.Drawing.Size(82, 120);
             this.panel4.TabIndex = 18;
             // 
             // flowLayoutPanel2
@@ -532,7 +533,7 @@ namespace Cliver.DataSifter
             // 
             this.splitContainer1.Panel2.Controls.Add(this.FilterBox);
             this.splitContainer1.Panel2.Controls.Add(this.label1);
-            this.splitContainer1.Size = new System.Drawing.Size(1062, 221);
+            this.splitContainer1.Size = new System.Drawing.Size(1062, 227);
             this.splitContainer1.SplitterDistance = 120;
             this.splitContainer1.SplitterWidth = 2;
             this.splitContainer1.TabIndex = 19;
@@ -553,7 +554,7 @@ namespace Cliver.DataSifter
             // 
             this.splitContainer2.Panel2.Controls.Add(this.panel4);
             this.splitContainer2.Size = new System.Drawing.Size(1062, 120);
-            this.splitContainer2.SplitterDistance = 962;
+            this.splitContainer2.SplitterDistance = 978;
             this.splitContainer2.SplitterWidth = 2;
             this.splitContainer2.TabIndex = 0;
             // 
@@ -562,7 +563,7 @@ namespace Cliver.DataSifter
             this.FilterBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.FilterBox.Location = new System.Drawing.Point(0, 13);
             this.FilterBox.Name = "FilterBox";
-            this.FilterBox.Size = new System.Drawing.Size(1062, 86);
+            this.FilterBox.Size = new System.Drawing.Size(1062, 92);
             this.FilterBox.TabIndex = 9;
             this.FilterBox.Leave += new System.EventHandler(this.FilterBox_Leave);
             // 
@@ -606,9 +607,9 @@ namespace Cliver.DataSifter
             this.panel1.Controls.Add(this.FilterComment);
             this.panel1.Controls.Add(this.Filter_flowLayoutPanel);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 251);
+            this.panel1.Location = new System.Drawing.Point(0, 257);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1062, 34);
+            this.panel1.Size = new System.Drawing.Size(1062, 28);
             this.panel1.TabIndex = 0;
             // 
             // Filter_flowLayoutPanel
@@ -621,9 +622,9 @@ namespace Cliver.DataSifter
             this.Filter_flowLayoutPanel.Controls.Add(this.label2);
             this.Filter_flowLayoutPanel.Controls.Add(this.InputGroupName);
             this.Filter_flowLayoutPanel.Controls.Add(this.label7);
-            this.Filter_flowLayoutPanel.Location = new System.Drawing.Point(3, 3);
+            this.Filter_flowLayoutPanel.Location = new System.Drawing.Point(0, 0);
             this.Filter_flowLayoutPanel.Name = "Filter_flowLayoutPanel";
-            this.Filter_flowLayoutPanel.Size = new System.Drawing.Size(549, 27);
+            this.Filter_flowLayoutPanel.Size = new System.Drawing.Size(524, 27);
             this.Filter_flowLayoutPanel.TabIndex = 7;
             // 
             // FilterHelp
@@ -631,10 +632,10 @@ namespace Cliver.DataSifter
             this.FilterHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.FilterHelp.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.FilterHelp.Image = ((System.Drawing.Image)(resources.GetObject("FilterHelp.Image")));
-            this.FilterHelp.Location = new System.Drawing.Point(0, 0);
-            this.FilterHelp.Margin = new System.Windows.Forms.Padding(0);
+            this.FilterHelp.Location = new System.Drawing.Point(0, 3);
+            this.FilterHelp.Margin = new System.Windows.Forms.Padding(0, 3, 3, 0);
             this.FilterHelp.Name = "FilterHelp";
-            this.FilterHelp.Size = new System.Drawing.Size(35, 26);
+            this.FilterHelp.Size = new System.Drawing.Size(35, 23);
             this.FilterHelp.TabIndex = 37;
             this.FilterHelp.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.FilterHelp.UseVisualStyleBackColor = true;
@@ -643,10 +644,11 @@ namespace Cliver.DataSifter
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(35, 0);
+            this.label6.Location = new System.Drawing.Point(38, 0);
             this.label6.Margin = new System.Windows.Forms.Padding(0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(61, 13);
+            this.label6.Padding = new System.Windows.Forms.Padding(0, 6, 0, 0);
+            this.label6.Size = new System.Drawing.Size(61, 19);
             this.label6.TabIndex = 35;
             this.label6.Text = "Mark Color:";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -654,19 +656,20 @@ namespace Cliver.DataSifter
             // pLevelHighlight
             // 
             this.pLevelHighlight.BackColor = System.Drawing.SystemColors.Control;
-            this.pLevelHighlight.Location = new System.Drawing.Point(99, 3);
+            this.pLevelHighlight.Location = new System.Drawing.Point(102, 3);
             this.pLevelHighlight.Name = "pLevelHighlight";
             this.pLevelHighlight.ReadOnly = true;
-            this.pLevelHighlight.Size = new System.Drawing.Size(76, 20);
+            this.pLevelHighlight.Size = new System.Drawing.Size(47, 20);
             this.pLevelHighlight.TabIndex = 36;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(178, 0);
+            this.label5.Location = new System.Drawing.Point(152, 0);
             this.label5.Margin = new System.Windows.Forms.Padding(0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(34, 13);
+            this.label5.Padding = new System.Windows.Forms.Padding(0, 6, 0, 0);
+            this.label5.Size = new System.Drawing.Size(34, 19);
             this.label5.TabIndex = 33;
             this.label5.Text = "Type:";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -674,7 +677,7 @@ namespace Cliver.DataSifter
             // FilterType
             // 
             this.FilterType.BackColor = System.Drawing.SystemColors.InactiveBorder;
-            this.FilterType.Location = new System.Drawing.Point(215, 3);
+            this.FilterType.Location = new System.Drawing.Point(189, 3);
             this.FilterType.Name = "FilterType";
             this.FilterType.ReadOnly = true;
             this.FilterType.Size = new System.Drawing.Size(77, 20);
@@ -683,10 +686,11 @@ namespace Cliver.DataSifter
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(295, 0);
+            this.label2.Location = new System.Drawing.Point(269, 0);
             this.label2.Margin = new System.Windows.Forms.Padding(0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(66, 13);
+            this.label2.Padding = new System.Windows.Forms.Padding(0, 6, 0, 0);
+            this.label2.Size = new System.Drawing.Size(66, 19);
             this.label2.TabIndex = 32;
             this.label2.Text = "Input Group:";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -694,7 +698,7 @@ namespace Cliver.DataSifter
             // InputGroupName
             // 
             this.InputGroupName.FormattingEnabled = true;
-            this.InputGroupName.Location = new System.Drawing.Point(364, 3);
+            this.InputGroupName.Location = new System.Drawing.Point(338, 3);
             this.InputGroupName.Name = "InputGroupName";
             this.InputGroupName.Size = new System.Drawing.Size(121, 21);
             this.InputGroupName.TabIndex = 22;

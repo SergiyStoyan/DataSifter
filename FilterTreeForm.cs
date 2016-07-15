@@ -16,6 +16,7 @@ using System.Windows.Forms;
 using System.Text.RegularExpressions;
 using System.Xml;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 
 namespace Cliver.DataSifter
@@ -24,7 +25,7 @@ namespace Cliver.DataSifter
     /// Control (or Form) that provides creating/editing filter tree.
     /// This part provides the main functionality that includes inserting/deleting filter nodes.
     /// </summary>
-    internal partial class FilterTreeForm : BaseControl //BaseForm
+    internal partial class FilterTreeForm : UserControl //BaseForm
     {
         #region initializing
 
@@ -66,8 +67,11 @@ namespace Cliver.DataSifter
             this.Text = title;
             load_prepared_filter_trees();
 
+            FilterTypes.ValueMember = "Type";
+            FilterTypes.DisplayMember = "Name";
             foreach (Type ft in FilterApi.GetFilterTypes())
-                FilterTypes.Items.Add(new FilterTypesItem(FilterApi.GetFilterReadableTypeName(ft), ft));
+                FilterTypes.Items.Add(new FilterTypesItem(ft));
+            order_filters_in_dropdown();
             if (FilterTypes.Items.Count > 0)
                 FilterTypes.SelectedIndex = 0;
             else
@@ -100,18 +104,18 @@ namespace Cliver.DataSifter
 
         public class FilterTypesItem
         {
-            public readonly string Text;
-            public readonly Type Value;
+            public readonly string Name;
+            public readonly Type Type;
 
             public override string ToString()
             {
-                return Text;
+                return Name;
             }
 
-            public FilterTypesItem(string text, Type value)
+            public FilterTypesItem(Type type)
             {
-                Text = text;
-                Value = value;
+                Name = FilterApi.GetFilterReadableTypeName(type);
+                Type = type;
             }
         }
 
@@ -384,7 +388,7 @@ namespace Cliver.DataSifter
             TreeNode stn = (TreeNode)FilterTree.SelectedNode;
             if (stn == null)
                 return;
-            Filter f = FilterApi.CreateDefaultFilter(((FilterTypesItem)FilterTypes.SelectedItem).Value);
+            Filter f = FilterApi.CreateDefaultFilter(((FilterTypesItem)FilterTypes.SelectedItem).Type);
             TreeNode ptn = stn.Parent;
             TreeNodeCollection tns;
             int level;
@@ -422,6 +426,8 @@ namespace Cliver.DataSifter
             tn.Checked = true;
 
             FilterTreeChanged = true;
+
+            order_filters_in_dropdown(((FilterTypesItem)FilterTypes.SelectedItem).Name);
         }
 
         /// <summary>
@@ -431,7 +437,7 @@ namespace Cliver.DataSifter
         /// <param name="e"></param>
         private void Add_Click(object sender, EventArgs e)
         {
-            Type ft = ((FilterTypesItem)FilterTypes.SelectedItem).Value;
+            Type ft = ((FilterTypesItem)FilterTypes.SelectedItem).Type;
             Filter f = FilterApi.CreateFilter(ft, FilterApi.GetFilterVersion(ft), null, null, null);
             TreeNode stn = FilterTree.SelectedNode;
             TreeNode tn;
@@ -455,6 +461,41 @@ namespace Cliver.DataSifter
             tn.Checked = true;
 
             FilterTreeChanged = true;
+
+            order_filters_in_dropdown(((FilterTypesItem)FilterTypes.SelectedItem).Name);
+        }
+
+        void order_filters_in_dropdown(string last_operated_filter_type_name = null)
+        {
+            if (last_operated_filter_type_name != null)
+            {
+                Settings.Default.OperatedFilterTypeNames.Add(last_operated_filter_type_name);
+                if (Settings.Default.OperatedFilterTypeNames.Count > 10)
+                    Settings.Default.OperatedFilterTypeNames.RemoveAt(0);
+            }
+
+            Dictionary<FilterTypesItem, int> ftis2frequency = new Dictionary<FilterTypesItem, int>();
+            foreach (FilterTypesItem fti in FilterTypes.Items)
+            {
+                int count = 0;
+                foreach (string ftn in Settings.Default.OperatedFilterTypeNames)
+                    if (ftn == fti.Name)
+                        count++;
+                ftis2frequency[fti] = count;
+            }
+            List<KeyValuePair<FilterTypesItem, int>> ftis2frequency_ = ftis2frequency.ToList();
+            ftis2frequency_.Sort(
+                delegate (KeyValuePair<FilterTypesItem, int> pair1,
+                KeyValuePair<FilterTypesItem, int> pair2)
+                {
+                    return -pair1.Value.CompareTo(pair2.Value);
+                }
+            );
+            FilterTypesItem selected_fti = (FilterTypesItem)FilterTypes.SelectedItem;
+            FilterTypes.Items.Clear();
+            foreach (KeyValuePair<FilterTypesItem, int> pair in ftis2frequency_)
+                FilterTypes.Items.Add(pair.Key);
+            FilterTypes.SelectedItem = selected_fti;
         }
 
         /// <summary>

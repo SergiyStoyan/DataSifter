@@ -12,7 +12,7 @@ namespace Cliver.DataSifter {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "12.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "14.0.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -272,12 +272,12 @@ namespace Cliver.DataSifter {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::System.Collections.Specialized.StringCollection _FilterTreeFolder2SourceFolder {
+        public global::System.Collections.Specialized.StringCollection _FilterTreeFolders2SourceFolder {
             get {
-                return ((global::System.Collections.Specialized.StringCollection)(this["_FilterTreeFolder2SourceFolder"]));
+                return ((global::System.Collections.Specialized.StringCollection)(this["_FilterTreeFolders2SourceFolder"]));
             }
             set {
-                this["_FilterTreeFolder2SourceFolder"] = value;
+                this["_FilterTreeFolders2SourceFolder"] = value;
             }
         }
         
@@ -289,12 +289,23 @@ namespace Cliver.DataSifter {
   <string>&gt;(?'N'.*?)&lt;
 IgnoreCase, Compiled, Singleline</string>
 </ArrayOfString>")]
-        public global::System.Collections.Specialized.StringCollection _FilterTypeName2NewFilter {
+        public global::System.Collections.Specialized.StringCollection _FilterTypeNames2NewFilter {
             get {
-                return ((global::System.Collections.Specialized.StringCollection)(this["_FilterTypeName2NewFilter"]));
+                return ((global::System.Collections.Specialized.StringCollection)(this["_FilterTypeNames2NewFilter"]));
             }
             set {
-                this["_FilterTypeName2NewFilter"] = value;
+                this["_FilterTypeNames2NewFilter"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Collections.Specialized.StringCollection OperatedFilterTypeNames {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["OperatedFilterTypeNames"]));
+            }
+            set {
+                this["OperatedFilterTypeNames"] = value;
             }
         }
     }
