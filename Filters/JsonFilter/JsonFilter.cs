@@ -27,7 +27,7 @@ namespace Cliver
 
         override internal string GetDescription()
         {
-            return "SAMPLES:\r\n*.Users[*].Phones[*]\r\nor\r\nCountries.USA.Users[*].Phones[0]";
+            return "SAMPLES:\r\n*.Users[*].Phones[*]\r\nor\r\nCountries.USA.Users[*].Phones[0]\r\nor\r\n*Users[*].Phones[0]\r\n\r\n'*' means any path substring.";
         }
 
         override internal string GetHelpUrl()
@@ -116,10 +116,10 @@ namespace Cliver
             json_path = Regex.Replace(json_path, @"\s+", "");
             //json_path = Regex.Escape(json_path);
             json_path = Regex.Replace(json_path, @"\.", @"\.");
-            json_path = Regex.Replace(json_path, @"\[\*\]", @"[\d+]");
+            //json_path = Regex.Replace(json_path, @"\[\*\]", @"[\d+]");
             json_path = Regex.Replace(json_path, @"\[", @"\[");
             json_path = Regex.Replace(json_path, @"\]", @"\]");
-            json_path = Regex.Replace(json_path, @"\*", @".+?");
+            json_path = Regex.Replace(json_path, @"\*", @".*?");
             json_path = @"^" + json_path + @"$";
             json_path_regex = new Regex(json_path, RegexOptions.IgnoreCase);
             //jt0 = new Newtonsoft.Json.Linq.JObject(parent_group.Text);
@@ -207,7 +207,7 @@ namespace Cliver
             }
             while (!json_path_regex.IsMatch(reader.Path));
             
-            current_start = Regex.Match(ParentGroup.Text, @"(.*?\n){" + (reader.LineNumber - 1) + "}").Value.Length + reader.LinePosition;
+            current_start = Regex.Match(ParentGroup.Text, @"(.*?\n){" + (reader.LineNumber - 1) + "}").Value.Length + reader.LinePosition - 1;
 
             reader.Skip();
 
