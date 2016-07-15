@@ -22,12 +22,19 @@ namespace Cliver
 {
     internal class RegexFilter : Filter
     {
-        override public Version Version
+        override protected Version get_version()
         {
-            get
-            {
-                return new Version(1, 0);
-            }
+            return new Version(1, 0);
+        }
+
+        override internal string GetDescription()
+        {
+            return "";
+        }
+
+        override internal string GetHelpUrl()
+        {
+            return "";
         }
 
         public RegexFilter(Version version, string defintion, string input_group_name, string comment)

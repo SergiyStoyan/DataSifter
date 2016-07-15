@@ -16,13 +16,16 @@ namespace Cliver.DataSifter
 {
     public abstract class Filter
     {
-        abstract public Version Version
-        {
-            get;
-        }
+        readonly public Version Version;
+        abstract protected Version get_version();
+        
+        abstract internal string GetDescription();
+        
+        abstract internal string GetHelpUrl();
 
         public Filter(Version version, string input_group_name, string comment)
         {
+            Version = get_version();
             if (version > Version)
                 throw new Exception("Version of the filter " + version.ToString() + " is older then version of the node definition:\n" + Version.ToString() + "<" + version.ToString());           
             

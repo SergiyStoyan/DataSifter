@@ -969,5 +969,18 @@ namespace Cliver.DataSifter
                 Clipboard.SetData(DataFormats.Text, Clipboard.GetText(System.Windows.Forms.TextDataFormat.Text));
         }
         #endregion
+
+        private void FilterHelp_Click(object sender, EventArgs e)
+        {
+            TreeNode stn = (TreeNode)FilterTree.SelectedNode;
+            if (stn == null)
+                return;
+
+            if (CurrentFilterControl == null)
+                return;
+
+            Filter f = (Filter)stn.Tag;
+            Message.Inform(f.GetDescription());
+        }
     }
 }

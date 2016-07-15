@@ -20,12 +20,19 @@ namespace Cliver
 {
     internal class JsonFilter : Filter
     {
-        override public Version Version
+        override protected Version get_version()
         {
-            get
-            {
-                return new Version(1, 0);
-            }
+            return new Version(1, 0);
+        }
+
+        override internal string GetDescription()
+        {
+            return "SAMPLES:\r\n*.Users[*].Phones[*]\r\nor\r\nCountries.USA.Users[*].Phones[0]";
+        }
+
+        override internal string GetHelpUrl()
+        {
+            return "";
         }
 
         public JsonFilter(Version version, string defintion, string input_group_name, string comment)
@@ -106,10 +113,19 @@ namespace Cliver
         public JsonMatches(FilterGroup parent_group, string json_path)
             : base(parent_group)
         {
+            json_path = Regex.Replace(json_path, @"\s+", "");
+            //json_path = Regex.Escape(json_path);
+            json_path = Regex.Replace(json_path, @"\.", @"\.");
+            json_path = Regex.Replace(json_path, @"\[\*\]", @"[\d+]");
+            json_path = Regex.Replace(json_path, @"\[", @"\[");
+            json_path = Regex.Replace(json_path, @"\]", @"\]");
+            json_path = Regex.Replace(json_path, @"\*", @".+?");
+            json_path = @"^" + json_path + @"$";
+            json_path_regex = new Regex(json_path, RegexOptions.IgnoreCase);
             //jt0 = new Newtonsoft.Json.Linq.JObject(parent_group.Text);
             Reset();
         }
-        //readonly Newtonsoft.Json.Linq.JToken jt0 = null;
+        readonly Regex json_path_regex = null;
         Newtonsoft.Json.JsonTextReader reader = null;
 
         //List<string> get_element_list_by_path(string path)
@@ -166,29 +182,63 @@ namespace Cliver
             if (reader != null)
                 reader.Close();
             reader = new Newtonsoft.Json.JsonTextReader(new StringReader(ParentGroup.Text.Trim()));
-            reset = true;
+            current_start = -1;
+            current_end = -1;
         }
-        bool reset = false;
-        
+
         override public FilterMatch Current
         {
             get
             {
-                int position = Regex.Match(ParentGroup.Text, @"(.*?\n){" + reader.LineNumber + "}").Value.Length + reader.LinePosition;
-                return new FilterMatch(new List<FilterGroup>() { new FilterGroup(ParentGroup, position, reader.ReadAsString()) });
+                //int position = Regex.Match(ParentGroup.Text, @"(.*?\n){" + reader.LineNumber + "}").Value.Length + reader.LinePosition;
+                return new FilterMatch(new List<FilterGroup>() { new FilterGroup(ParentGroup, current_start, ParentGroup.Text.Substring(current_start, current_end - current_start)) });
             }
         }
-        
+
         override public bool MoveNext()
         {
             if (reader == null)
-               return false;
-            while(reader.Read())
+                return false;
+
+            do
             {
-                if (reader.Path == "-")
-                    break;
+                if (!reader.Read())
+                    return false;
             }
-            return reader.Value != null;
+            while (!json_path_regex.IsMatch(reader.Path));
+            
+            current_start = Regex.Match(ParentGroup.Text, @"(.*?\n){" + (reader.LineNumber - 1) + "}").Value.Length + reader.LinePosition;
+
+            reader.Skip();
+
+            //if (reader.TokenType == Newtonsoft.Json.JsonToken.PropertyName)
+            //    reader.Read();
+
+            //if (reader.TokenType == Newtonsoft.Json.JsonToken.StartArray
+            //    || reader.TokenType == Newtonsoft.Json.JsonToken.StartConstructor
+            //    || reader.TokenType == Newtonsoft.Json.JsonToken.StartObject
+            //    )
+            //{
+            //    int depth = reader.Depth;
+
+            //    while (reader.Read())
+            //    {
+            //        if (depth == reader.Depth
+            //            && (
+            //            reader.TokenType == Newtonsoft.Json.JsonToken.EndArray
+            //            || reader.TokenType == Newtonsoft.Json.JsonToken.EndConstructor
+            //            || reader.TokenType == Newtonsoft.Json.JsonToken.EndObject
+            //            )
+            //            )
+            //            break;
+            //    }
+            //}
+
+            current_end = Regex.Match(ParentGroup.Text, @"(.*?\n){" + (reader.LineNumber - 1) + "}").Value.Length + reader.LinePosition;
+            return true;
         }
+
+        int current_start = -1;
+        int current_end = -1;
     }
 }
