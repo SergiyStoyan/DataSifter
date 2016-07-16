@@ -29,8 +29,10 @@ namespace Cliver
         {
             return @"Based on Newtonsoft.Json.9.0.1
 
+Path can have the following structure:
+
 PATH SAMPLES:
-*.Users[*].Phones[*]
+*.Users[12].Phones[*]
 Countries.USA.Users[*].Phones[0]
 *Phones[*]
 
