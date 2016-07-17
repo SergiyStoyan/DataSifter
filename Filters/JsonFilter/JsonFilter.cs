@@ -29,14 +29,17 @@ namespace Cliver
         {
             return @"Based on Newtonsoft.Json.9.0.1
 
-Path can have the following structure:
+Json paths must comply with the following format:
+
+property.property|.array[index]...
+
+where any part of the path string can be substituted by '*'. 
 
 PATH SAMPLES:
-*.Users[12].Phones[*]
-Countries.USA.Users[*].Phones[0]
-*Phones[*]
 
-where '*' implies any path substring.";
+*.Users[0].Phones
+Countries.USA.Users[*].Phones[0]
+*hones*";
         }
 
         override internal string GetHelpUrl()
@@ -137,55 +140,6 @@ where '*' implies any path substring.";
         readonly Regex json_path_regex = null;
         Newtonsoft.Json.JsonTextReader reader = null;
 
-        //List<string> get_element_list_by_path(string path)
-        //{
-        //    string[] key_index_pairs = path.Split('/');
-        //    List<string> level_es = new List<string>();
-        //    level_es.Add(text0);
-        //    foreach (string key_index_pair in key_index_pairs)
-        //    {
-        //        string[] p = key_index_pair.Split(',');
-        //        string key = p[0].Trim();
-        //        string _index = null;
-        //        if (p.Length < 2)
-        //            _index = "*";
-        //        else
-        //            _index = p[1].Trim();
-        //        List<string> child_es = new List<string>();
-        //        if (_index == "*")
-        //        {
-        //            foreach (string le in level_es)
-        //            {
-        //                List<string> es;
-        //                dynamic json = Newtonsoft.Json.JsonConvert.DeserializeObject(le);
-        //                json[key]
-        //                if (!le.child_group_captures.TryGetValue(key, out es))
-        //                    throw (new Exception("Key '" + key + "' in the path '" + path + "' was not found."));
-        //                child_es.AddRange(es);
-        //            }
-        //        }
-        //        else
-        //        {
-        //            int index = -1;
-        //            if (!int.TryParse(_index, out index))
-        //                throw (new Exception("Index '" + _index + "' in the path '" + path + "' is inadmissible. Index might be integer or '*' only."));
-
-        //            foreach (dynamic lgc in level_gcs)
-        //            {
-        //                List<dynamic> gcs;
-        //                if (!lgc.child_group_captures.TryGetValue(key, out gcs))
-        //                    throw (new Exception("Key '" + key + "' in the path '" + path + "' was not found."));
-        //                if (gcs.Count <= index || index < 0)
-        //                    continue;
-        //                child_gcs.Add((dynamic)gcs[index]);
-        //            }
-        //        }
-        //        level_gcs = child_gcs;
-        //    }
-
-        //    return level_gcs;
-        //}
-
         override public void Reset()
         {
             if (reader != null)
@@ -199,7 +153,6 @@ where '*' implies any path substring.";
         {
             get
             {
-                //int position = Regex.Match(ParentGroup.Text, @"(.*?\n){" + reader.LineNumber + "}").Value.Length + reader.LinePosition;
                 return new FilterMatch(new List<FilterGroup>() { new FilterGroup(ParentGroup, current_start, ParentGroup.Text.Substring(current_start, current_end - current_start)) });
             }
         }
@@ -217,31 +170,10 @@ where '*' implies any path substring.";
             while (!json_path_regex.IsMatch(reader.Path));
             
             current_start = Regex.Match(ParentGroup.Text, @"(.*?\n){" + (reader.LineNumber - 1) + "}").Value.Length + reader.LinePosition - 1;
+            if (reader.TokenType == Newtonsoft.Json.JsonToken.PropertyName)
+                current_start += Regex.Replace(ParentGroup.Text.Substring(current_start), @"(?<=\s*\:\s*).*", "", RegexOptions.Singleline).Length + 1;
 
             reader.Skip();
-
-            //if (reader.TokenType == Newtonsoft.Json.JsonToken.PropertyName)
-            //    reader.Read();
-
-            //if (reader.TokenType == Newtonsoft.Json.JsonToken.StartArray
-            //    || reader.TokenType == Newtonsoft.Json.JsonToken.StartConstructor
-            //    || reader.TokenType == Newtonsoft.Json.JsonToken.StartObject
-            //    )
-            //{
-            //    int depth = reader.Depth;
-
-            //    while (reader.Read())
-            //    {
-            //        if (depth == reader.Depth
-            //            && (
-            //            reader.TokenType == Newtonsoft.Json.JsonToken.EndArray
-            //            || reader.TokenType == Newtonsoft.Json.JsonToken.EndConstructor
-            //            || reader.TokenType == Newtonsoft.Json.JsonToken.EndObject
-            //            )
-            //            )
-            //            break;
-            //    }
-            //}
 
             current_end = Regex.Match(ParentGroup.Text, @"(.*?\n){" + (reader.LineNumber - 1) + "}").Value.Length + reader.LinePosition;
             return true;

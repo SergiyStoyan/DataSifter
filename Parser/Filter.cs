@@ -18,9 +18,9 @@ namespace Cliver.DataSifter
     {
         readonly public Version Version;
         abstract protected Version get_version();
-        
+
         abstract internal string GetDescription();
-        
+
         abstract internal string GetHelpUrl();
 
         public Filter(Version version, string input_group_name, string comment)

@@ -113,6 +113,7 @@
     <Compile Include="OutputForm.designer.cs">
       <DependentUpon>OutputForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Parser\FilterType.cs" />
     <Compile Include="Parser\FilterApi.cs" />
     <Compile Include="Filters\AgileFilter\AgileFilter.cs" />
     <Compile Include="Filters\RegexFilter\RegexFilter.cs" />
