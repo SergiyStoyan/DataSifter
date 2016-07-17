@@ -171,6 +171,7 @@ namespace Cliver.DataSifter
                 parse(capture0, fg, f);
             return capture0;
         }
+        //public static System.Diagnostics.Stopwatch Watch = new System.Diagnostics.Stopwatch();
 
         void parse(Capture parent_capture, FilterGroup parent_filter_group, Filter filter)
         {

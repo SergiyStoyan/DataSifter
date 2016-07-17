@@ -174,7 +174,7 @@ Countries.USA.Users[0].Phones[0]
             
             current_start = Regex.Match(ParentGroup.Text, @"(.*?\n){" + (reader.LineNumber - 1) + "}").Value.Length + reader.LinePosition - 1;
             if (reader.TokenType == Newtonsoft.Json.JsonToken.PropertyName)
-                current_start += Regex.Replace(ParentGroup.Text.Substring(current_start), @"(?<=\s*\:\s*).*", "", RegexOptions.Singleline).Length + 1;
+                current_start = Regex.Match(ParentGroup.Text, @".{" + current_start + @"}\s*\:\s*", RegexOptions.Singleline).Length;
 
             reader.Skip();
 
