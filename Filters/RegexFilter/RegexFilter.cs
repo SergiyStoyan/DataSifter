@@ -27,16 +27,19 @@ namespace Cliver
             return new Version(1, 0);
         }
 
-        override internal string GetDescription()
+        override protected string get_description()
         {
-            return @"Based on System.Text.RegularExpressions
-
-Regex can be any supported.";
+            return @"Based on .NET System.Text.RegularExpressions engine.
+Regex can be any supported by the engine. 
+However, avoid embedded groups as their cuptures are hardly dislayed. Use child regexes instead of embedded groups.";
         }
 
-        override internal string GetHelpUrl()
+        override internal string HelpUrl
         {
-            return "";
+            get
+            {
+                return "";
+            }
         }
 
         public RegexFilter(Version version, string defintion, string input_group_name, string comment)

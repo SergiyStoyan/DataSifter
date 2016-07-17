@@ -27,16 +27,18 @@ namespace Cliver
             return new Version(1, 0);
         }
 
-        override internal string GetDescription()
+        override protected string get_description()
         {
-            return @"Based on HtmlAgilityPack.1.4.9.5
-
-Xpath can be any supported.";
+            return @"Based on HtmlAgilityPack.1.4.9.5 engine.
+Xpath can be any supported by the engine.";
         }
 
-        override internal string GetHelpUrl()
+        override internal string HelpUrl
         {
-            return "";
+            get
+            {
+                return "";
+            }
         }
 
         public AgileFilter(Version version, string defintion, string input_group_name, string comment)
@@ -96,8 +98,7 @@ Xpath can be any supported.";
         //        return true;
         //    return false;
         //}
-
-
+        
         override internal string ReadableTypeName
         {
             get

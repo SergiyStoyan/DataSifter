@@ -1013,15 +1013,17 @@ namespace Cliver.DataSifter
 
         private void FilterHelp_Click(object sender, EventArgs e)
         {
+            Filter f;
             TreeNode stn = (TreeNode)FilterTree.SelectedNode;
-            if (stn == null)
-                return;
+            if (stn != null)
+                f = (Filter)stn.Tag;
+            else
+            {
+                Type ft = ((FilterTypesItem)FilterTypes.SelectedItem).Type;
+                f = FilterApi.CreateFilter(ft, FilterApi.GetFilterVersion(ft), null, null, null);
+            }
 
-            if (CurrentFilterControl == null)
-                return;
-
-            Filter f = (Filter)stn.Tag;
-            Message.Inform(f.GetDescription());
+            Message.Inform(f.Description);
         }
     }
 }

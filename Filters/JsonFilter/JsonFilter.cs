@@ -25,26 +25,29 @@ namespace Cliver
             return new Version(1, 0);
         }
 
-        override internal string GetDescription()
+        override protected string get_description()
         {
-            return @"Based on Newtonsoft.Json.9.0.1
+            return @"Based on Newtonsoft.Json.9.0.1 engine.
 
 Json paths must comply with the following format:
 
-property.property|.array[index]...
+property. ...property{or}array[index]...
 
 where any part of the path string can be substituted by '*'. 
 
 PATH SAMPLES:
 
-*.Users[0].Phones
-Countries.USA.Users[*].Phones[0]
+Countries.USA.Users[0].Phones[0]
+*.Users[*].Phones
 *hones*";
         }
 
-        override internal string GetHelpUrl()
+        override internal string HelpUrl
         {
-            return "";
+            get
+            {
+                return "";
+            }
         }
 
         public JsonFilter(Version version, string defintion, string input_group_name, string comment)

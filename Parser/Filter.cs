@@ -19,9 +19,21 @@ namespace Cliver.DataSifter
         readonly public Version Version;
         abstract protected Version get_version();
 
-        abstract internal string GetDescription();
+        internal string Description
+        {
+            get
+            {
+                return "FILTER: " + ReadableTypeName + @"
 
-        abstract internal string GetHelpUrl();
+" + get_description();
+            }
+        }
+        abstract protected string get_description();
+
+        abstract internal string HelpUrl
+        {
+            get;
+        }
 
         public Filter(Version version, string input_group_name, string comment)
         {
