@@ -26,7 +26,7 @@ namespace Cliver.DataSifter
     /// <summary>
     /// Form that hosts parsed text and filter tree editor control
     /// </summary>
-    internal partial class SourceForm : Form//BaseForm//
+    internal partial class SourceForm : BaseForm//Form//
     {        
         #region initializing
 
