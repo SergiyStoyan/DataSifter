@@ -40,7 +40,7 @@ namespace Cliver.DataSifter
             This.splitContainer1.Panel2.BackColor = SystemColors.Control;
             This.splitContainer2.BackColor = SourceForm.SplitterColor;
             This.splitContainer2.Panel1.BackColor = SystemColors.Control;
-            This.splitContainer2.Panel2.BackColor = SystemColors.Control;
+            This.splitContainer2.Panel2.BackColor = SystemColors.Control;          
         }
 
         static void Document_DocumentUpdated()

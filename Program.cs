@@ -12,6 +12,8 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Threading;
+using System.Text.RegularExpressions;
 
 namespace Cliver.DataSifter
 {
@@ -21,7 +23,7 @@ namespace Cliver.DataSifter
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        static void Main(string [] args)
         {
             try
             {
@@ -55,6 +57,19 @@ namespace Cliver.DataSifter
 
         static Program()
         {
+            Application.ThreadException += delegate (object sender, System.Threading.ThreadExceptionEventArgs e)
+            {
+                Message.Error(e.Exception);
+            };
+            Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
+            AppDomain.CurrentDomain.UnhandledException += delegate (object sender, UnhandledExceptionEventArgs e)
+            {
+                if (e.IsTerminating || e.ExceptionObject is ThreadAbortException)
+                    return;
+                if (e.ExceptionObject is Exception)
+                    Message.Error((Exception)e.ExceptionObject);
+            };
+
             try
             {
                 AssemblyName ean = Assembly.GetEntryAssembly().GetName();
@@ -62,7 +77,7 @@ namespace Cliver.DataSifter
                 if (ean.Version.Major > 0 || ean.Version.Minor > 0)
                     AppTitle += ean.Version.Major + "." + ean.Version.Minor;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Message.Error(e);
             }

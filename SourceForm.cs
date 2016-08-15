@@ -58,11 +58,25 @@ namespace Cliver.DataSifter
 
             if (System.IO.File.Exists(Settings.Default.LastSourceFile))
                 Document.LoadFromFile(Settings.Default.LastSourceFile);
-            if (System.IO.File.Exists(Settings.Default.LastFilterTreeFile))
-                FilterTreeForm.This.LoadFilterTree(Settings.Default.LastFilterTreeFile);
+
+            string fltr_file = null;
+            foreach (string a in Environment.GetCommandLineArgs())
+            {
+                if (Regex.IsMatch(a, @"\.fltr$", RegexOptions.IgnoreCase))
+                {
+                    fltr_file = a;
+                    break;
+                }
+            }
+            if (fltr_file == null)
+            {
+                if (System.IO.File.Exists(Settings.Default.LastFilterTreeFile))
+                    fltr_file = Settings.Default.LastFilterTreeFile;
+            }
+            FilterTreeForm.This.LoadFilterTree(fltr_file);
         }
         
-        void  Document_DocumentUpdated()
+        void Document_DocumentUpdated()
         {
             ignore_selection_changed = true;
             //TextBox is used to display parse results

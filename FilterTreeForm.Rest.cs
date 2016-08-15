@@ -360,9 +360,9 @@ namespace Cliver.DataSifter
                     d.InitialDirectory = null;
                 if (d.ShowDialog(this) != DialogResult.OK || d.FileName == "")
                     return;
+                LoadFilterTree(d.FileName);
                 Settings.Default.LastFilterTreeFile = d.FileName;
                 Settings.Default.Save();
-                LoadFilterTree(d.FileName);
                 Focus();
             }
             catch(Exception ex)
