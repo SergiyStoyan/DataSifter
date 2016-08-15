@@ -62,7 +62,7 @@ namespace Cliver.DataSifter
             string fltr_file = null;
             foreach (string a in Environment.GetCommandLineArgs())
             {
-                if (Regex.IsMatch(a, @"\.fltr$", RegexOptions.IgnoreCase))
+                if (Regex.IsMatch(a, @"\." + Program.FilterTreeFileExtension + @"$", RegexOptions.IgnoreCase))
                 {
                     fltr_file = a;
                     break;
