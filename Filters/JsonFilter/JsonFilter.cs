@@ -22,7 +22,7 @@ namespace Cliver
     {
         override protected Version get_version()
         {
-            return new Version(1, 0);
+            return new Version(1, 1);
         }
 
         override protected string get_description()
@@ -57,17 +57,20 @@ Countries.USA.Users[0].Phones[0]
                 defintion = get_default_definition();
             if (defintion == null)
                 defintion = "\n";
-            Match m = Regex.Match(defintion, @"(?'JsonPath'.*)\n(?'GroupName'.*)", RegexOptions.Compiled | RegexOptions.Singleline | RegexOptions.IgnoreCase);
+            Match m = Regex.Match(defintion, @"(?'JsonPath'.*?)\n(?'GroupName'.*?)(?:\n(?'TrimQuotation'.*))?$", RegexOptions.Compiled | RegexOptions.Singleline | RegexOptions.IgnoreCase);
             if (!m.Success)
                 throw new Exception("Filter definition could not be parsed:\n" + defintion);
             JsonPath = m.Groups["JsonPath"].Value;
             GroupName = m.Groups["GroupName"].Value;
+            if (!string.IsNullOrEmpty(m.Groups["TrimQuotation"].Value))
+                TrimQuotation = bool.Parse(m.Groups["TrimQuotation"].Value);
             InputGroupName = input_group_name;
             fill_group_index2raw_group_names();
         }
 
         internal string JsonPath;
         internal string GroupName;
+        internal bool TrimQuotation = false;
 
         override public string[] GetGroupRawNames()
         {
@@ -80,12 +83,12 @@ Countries.USA.Users[0].Phones[0]
         {
             if (string.IsNullOrWhiteSpace(GroupName))
                 GroupName = "0";
-            return JsonPath + "\n" + GroupName;
+            return JsonPath + "\n" + GroupName + "\n" + TrimQuotation;
         }
 
         override public FilterMatchCollection Matches(FilterGroup group)
         {
-            return new JsonMatches(group, JsonPath);
+            return new JsonMatches(group, JsonPath, TrimQuotation);
         }
 
         override internal FilterControl CreateControl()
@@ -125,7 +128,7 @@ Countries.USA.Users[0].Phones[0]
 
     public class JsonMatches : FilterMatchCollection
     {
-        public JsonMatches(FilterGroup parent_group, string json_path)
+        public JsonMatches(FilterGroup parent_group, string json_path, bool trim_quotation)
             : base(parent_group)
         {
             json_path = Regex.Replace(json_path, @"\s+", "");
@@ -139,8 +142,11 @@ Countries.USA.Users[0].Phones[0]
             json_path_regex = new Regex(json_path, RegexOptions.IgnoreCase);
             //jt0 = new Newtonsoft.Json.Linq.JObject(parent_group.Text);
             Reset();
+
+            this.trim_quotation = trim_quotation;
         }
         readonly Regex json_path_regex = null;
+        readonly bool trim_quotation;
         Newtonsoft.Json.JsonTextReader reader = null;
 
         override public void Reset()
@@ -179,6 +185,16 @@ Countries.USA.Users[0].Phones[0]
             reader.Skip();
 
             current_end = Regex.Match(ParentGroup.Text, @"(.*?\n){" + (reader.LineNumber - 1) + "}").Value.Length + reader.LinePosition;
+
+            if (trim_quotation)
+            {
+                if (ParentGroup.Text[current_start] == '"' && ParentGroup.Text[current_end - 1] == '"' && current_start - 1 < current_end)
+                {
+                    current_start += 1;
+                    current_end -= 1;
+                }
+            }
+
             return true;
         }
 

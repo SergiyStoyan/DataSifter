@@ -29,6 +29,7 @@ namespace Cliver.DataSifter
 
             JsonPathBox.Text = filter.JsonPath;
             GroupName.Text = filter.GroupName;
+            TrimQuotation.Checked = filter.TrimQuotation;
         }
 
         override internal string GetUpdatedFilterDefinition()
@@ -38,7 +39,7 @@ namespace Cliver.DataSifter
             //d.LoadHtml("<html></html>");
             //HtmlAgilityPack.HtmlNodeCollection nc = d.DocumentNode.SelectNodes(JsonPathBox.Text);
             
-            return JsonPathBox.Text + "\n" + GroupName.Text;
+            return JsonPathBox.Text + "\n" + GroupName.Text + "\n" + TrimQuotation.Checked;
         }
     }
 }
