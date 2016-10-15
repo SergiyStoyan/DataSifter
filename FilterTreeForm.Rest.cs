@@ -298,10 +298,11 @@ namespace Cliver.DataSifter
                     //Settings.Default.Save();
                     file = d.FileName;
 
-                    int p1 = file.LastIndexOf(@"\") + 1;
-                    int p2 = file.LastIndexOf(".");
-                    FilterTreeFileDir.Text = file.Substring(0, p1);
-                    FilterTreeName.Text = file.Substring(p1, p2 - p1);
+                    Match m = Regex.Match(file, @"(?'Directory.*\\)(?'Name'.*)\.", RegexOptions.IgnoreCase | RegexOptions.Singleline);
+                    if (!m.Success)
+                        throw new Exception("Could not parse path: " + file);
+                    FilterTreeFileDir.Text = m.Groups["Directory"].Value;
+                    FilterTreeName.Text = m.Groups["Name"].Value;
                 }
 
                 Parser p = GetFilterTreeParser();
