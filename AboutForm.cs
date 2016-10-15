@@ -19,7 +19,7 @@ namespace Cliver.DataSifter
 	/// <summary>
 	/// Summary description for About.
 	/// </summary>
-	internal class AboutForm : BaseForm
+	internal class AboutForm : BaseForm//Form//
 	{
 		private System.Windows.Forms.Label lAuthor;
         private System.Windows.Forms.Button button1;
@@ -28,10 +28,12 @@ namespace Cliver.DataSifter
         private LinkLabel linkLabel4;
         private Label lProduct;
         private PictureBox pIcon;
-		/// <summary>
-		/// Required designer variable.
-		/// </summary>
-		private System.ComponentModel.Container components = null;
+        private Label version;
+
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.Container components = null;
 
         internal AboutForm()
 		{
@@ -71,6 +73,7 @@ namespace Cliver.DataSifter
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.button1 = new System.Windows.Forms.Button();
             this.lAuthor = new System.Windows.Forms.Label();
+            this.version = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pIcon)).BeginInit();
             this.SuspendLayout();
             // 
@@ -87,7 +90,7 @@ namespace Cliver.DataSifter
             // lProduct
             // 
             this.lProduct.AutoSize = true;
-            this.lProduct.Location = new System.Drawing.Point(110, 62);
+            this.lProduct.Location = new System.Drawing.Point(110, 29);
             this.lProduct.Name = "lProduct";
             this.lProduct.Size = new System.Drawing.Size(54, 13);
             this.lProduct.TabIndex = 26;
@@ -144,10 +147,19 @@ namespace Cliver.DataSifter
             this.lAuthor.TabIndex = 15;
             this.lAuthor.Text = "Copyright: (C) 2006-2015, Sergey Stoyan, CliverSoft";
             // 
+            // version
+            // 
+            this.version.AutoSize = true;
+            this.version.Location = new System.Drawing.Point(110, 62);
+            this.version.Name = "version";
+            this.version.Size = new System.Drawing.Size(54, 13);
+            this.version.TabIndex = 28;
+            this.version.Text = "DataSifter";
+            // 
             // AboutForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.ClientSize = new System.Drawing.Size(405, 256);
+            this.Controls.Add(this.version);
             this.Controls.Add(this.pIcon);
             this.Controls.Add(this.lProduct);
             this.Controls.Add(this.linkLabel4);
@@ -175,6 +187,8 @@ namespace Cliver.DataSifter
             
             AssemblyName an = Assembly.GetExecutingAssembly().GetName();
             lProduct.Text = an.Name + " " + an.Version;
+
+            version.Text = "Compiled: " + AssemblyRoutines.GetAssemblyCompiledTime(Assembly.GetExecutingAssembly()).ToString();
 
             lAuthor.Text = ((AssemblyCopyrightAttribute)Attribute.GetCustomAttribute(Assembly.GetExecutingAssembly(), typeof(AssemblyCopyrightAttribute))).Copyright +
                 ", " + ((AssemblyCompanyAttribute)Attribute.GetCustomAttribute(Assembly.GetExecutingAssembly(), typeof(AssemblyCompanyAttribute))).Company; 		

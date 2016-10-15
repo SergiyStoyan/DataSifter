@@ -13,7 +13,7 @@
     <ApplicationIcon>DataSifter.ico</ApplicationIcon>
     <ManifestCertificateThumbprint>580B8B6430EF633E7498414A889196CCF11C1D7F</ManifestCertificateThumbprint>
     <ManifestKeyFile>RegexTreeer_TemporaryKey.pfx</ManifestKeyFile>
-    <GenerateManifests>true</GenerateManifests>
+    <GenerateManifests>false</GenerateManifests>
     <TargetZone>LocalIntranet</TargetZone>
     <SignManifests>false</SignManifests>
     <IsWebBootstrapper>false</IsWebBootstrapper>

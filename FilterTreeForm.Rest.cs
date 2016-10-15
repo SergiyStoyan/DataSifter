@@ -294,9 +294,14 @@ namespace Cliver.DataSifter
                         d.InitialDirectory = Path.GetDirectoryName(Settings.Default.LastFilterTreeFile);
                     if (d.ShowDialog(this) != DialogResult.OK)
                         return;
-                    Settings.Default.LastFilterTreeFile = d.FileName;
-                    Settings.Default.Save();
+                    //Settings.Default.LastFilterTreeFile = d.FileName;
+                    //Settings.Default.Save();
                     file = d.FileName;
+
+                    int p1 = file.LastIndexOf(@"\") + 1;
+                    int p2 = file.LastIndexOf(".");
+                    FilterTreeFileDir.Text = file.Substring(0, p1);
+                    FilterTreeName.Text = file.Substring(p1, p2 - p1);
                 }
 
                 Parser p = GetFilterTreeParser();
@@ -315,11 +320,6 @@ namespace Cliver.DataSifter
                 }
 
                 p.WriteFilterTreeToXmlFile(file);
-
-                int p1 = file.LastIndexOf(@"\") + 1;
-                int p2 = file.LastIndexOf(".");
-                FilterTreeFileDir.Text = file.Substring(0, p1);
-                FilterTreeName.Text = file.Substring(p1, p2 - p1);
 
                 FilterTreeChanged = false;
 
@@ -361,8 +361,6 @@ namespace Cliver.DataSifter
                 if (d.ShowDialog(this) != DialogResult.OK || d.FileName == "")
                     return;
                 LoadFilterTree(d.FileName);
-                Settings.Default.LastFilterTreeFile = d.FileName;
-                Settings.Default.Save();
                 Focus();
             }
             catch(Exception ex)

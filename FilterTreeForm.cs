@@ -159,9 +159,11 @@ namespace Cliver.DataSifter
                 if (tree_name.EndsWith("." + Program.FilterTreeFileExtension, StringComparison.InvariantCultureIgnoreCase))
                     tree_name = tree_name.Substring(0, tree_name.LastIndexOf("."));
                 FilterTreeName.Text = tree_name;
-                FilterTreeFileDir.Text = Path.GetDirectoryName(Settings.Default.LastFilterTreeFile) + @"\";
+                FilterTreeFileDir.Text = Path.GetDirectoryName(filter_tree_xml_file) + @"\";
                 FilterTreeFileDir.SelectionStart = FilterTreeFileDir.Text.Length;
                 FilterTreeFileDir.ScrollToCaret();
+                Settings.Default.LastFilterTreeFile = filter_tree_xml_file;
+                Settings.Default.Save();
             }
             catch (Exception e)
             {
