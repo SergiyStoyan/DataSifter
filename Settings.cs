@@ -81,7 +81,8 @@ namespace Cliver.DataSifter {
                     _FilterTypeNames2NewFilter.Add(FilterTypeName2NewFilter[type_name]);
                 }
 
-                Settings.Default._FilterTreeFolders2SourceFolder.Clear();
+                if (_FilterTypeNames2NewFilter != null)
+                    Settings.Default._FilterTreeFolders2SourceFolder.Clear();
                 foreach (string ft_file in FilterTreeFolder2SourceFolder.Keys)
                 {
                     _FilterTreeFolders2SourceFolder.Add(ft_file);
