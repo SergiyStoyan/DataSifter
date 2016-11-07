@@ -359,7 +359,7 @@ namespace Cliver.DataSifter
                 d.InitialDirectory = get_corresponding_filter_tree_folder(Settings.Default.LastFilterTreeFile);
                 if (string.IsNullOrWhiteSpace(d.InitialDirectory) || !Directory.Exists(d.InitialDirectory))
                     d.InitialDirectory = null;
-                if (d.ShowDialog(this) != DialogResult.OK || d.FileName == "")
+                if (d.ShowDialog(this) != DialogResult.OK || string.IsNullOrWhiteSpace(d.FileName))
                     return;
                 LoadFilterTree(d.FileName);
                 Focus();

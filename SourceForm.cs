@@ -302,7 +302,7 @@ namespace Cliver.DataSifter
                 d.InitialDirectory = get_corresponding_source_folder(Settings.Default.LastFilterTreeFile);
                 if (string.IsNullOrWhiteSpace(d.InitialDirectory) || !Directory.Exists(d.InitialDirectory))
                     d.InitialDirectory = null;
-                if (d.ShowDialog(this) != DialogResult.OK || d.FileName == "")
+                if (d.ShowDialog(this) != DialogResult.OK || string.IsNullOrWhiteSpace(d.FileName))
                     return;
                 Settings.Default.LastSourceFile = d.FileName;
                 Settings.Default.Save();
