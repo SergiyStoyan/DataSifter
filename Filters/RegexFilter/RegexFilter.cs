@@ -30,7 +30,7 @@ namespace Cliver
         override protected string get_description()
         {
             return @"Based on .NET System.Text.RegularExpressions library.
-Regex can be any supported by the engine. 
+Regex can be any supported by it. 
 However, avoid embedded groups as their captures are displayed hardly and are confusing. Use child regexes instead of embedded groups.";
         }
 

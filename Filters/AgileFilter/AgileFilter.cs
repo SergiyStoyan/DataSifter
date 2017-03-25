@@ -30,7 +30,7 @@ namespace Cliver
         override protected string get_description()
         {
             return @"Based on HtmlAgilityPack.1.4.9.5 library.
-Xpath can be any supported by the engine.";
+Xpath can be any supported by it.";
         }
 
         override internal string HelpUrl
