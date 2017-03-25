@@ -27,16 +27,13 @@ namespace Cliver
 
         override protected string get_description()
         {
-            return @"Based on Newtonsoft.Json.9.0.1 engine.
-
+            return @"Based on Newtonsoft.Json.9.0.1 library.
 Json paths must comply with the following format:
 
-property. ...property{or}array[index]...
+property{or}array[index]<. ...property{or}array[index]...>
 
-where any part of the path string can be substituted by '*'. 
-
-PATH SAMPLES:
-
+where any substring of the path can be replaced by '*'. 
+PATH EXAMPLES:
 Countries.USA.Users[0].Phones[0]
 *.Users[*].Phones
 *hones*";
