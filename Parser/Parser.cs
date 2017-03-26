@@ -123,7 +123,7 @@ namespace Cliver.DataSifter
                 foreach (Filter cf in f.Next)
                 {
                     if (f.GetGroupIndexByRawName(cf.InputGroupName) < 0)
-                        throw new Exception("Input group name '" + cf.InputGroupName + "' does not exists among group names of the parent node.\nParent node: " + f.GetDefinition());
+                        throw new Exception("Input group name '" + cf.InputGroupName + "' does not exists among group names of the parent node.\nParent node: " + f.GetSerializedFilter());
                 }
                 check_input_names_existance(f.Next);
             }
@@ -251,7 +251,7 @@ namespace Cliver.DataSifter
                         input_group_name = input_group_name.Substring(1);
                         int igi = parent_filter.GetGroupIndexByRawName(input_group_name);
                         if (igi < 0)
-                            throw new Exception("Input group name does not exists among group names of parent filter.\nParent filter: " + parent_filter.GetDefinition());
+                            throw new Exception("Input group name does not exists among group names of parent filter.\nParent filter: " + parent_filter.GetSerializedFilter());
                     }
                 }
 
@@ -292,7 +292,7 @@ namespace Cliver.DataSifter
                 xe.SetAttribute("type", tn.GetType().Name);
                 xe.SetAttribute("version", tn.Version.ToString());
                 xe.SetAttribute("input_group", tn.InputGroupName);
-                xe.SetAttribute("definition", tn.GetDefinition());
+                xe.SetAttribute("definition", tn.GetSerializedFilter());
                 xe.SetAttribute("comment", tn.Comment);
                 pxe.AppendChild(xe);
 

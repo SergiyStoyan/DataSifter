@@ -511,7 +511,7 @@ namespace Cliver.DataSifter
             try
             { 
                 Filter f = (Filter)stn.Tag;
-                Settings.Default.FilterTypeName2NewFilter[f.GetType().Name] = f.GetDefinition();
+                Settings.Default.FilterTypeName2NewFilter[f.GetType().Name] = f.GetSerializedFilter();
                 Settings.Default.Save();
             }
             catch(Exception ex)

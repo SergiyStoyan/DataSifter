@@ -627,7 +627,7 @@ namespace Cliver.DataSifter
             if (d2 == null)
                 return;
 
-            if (f1.ReadableTypeName == FilterType.Text && f1.InputGroupName == InputGroupName.Text && f1.GetDefinition() == d2 && f1.Comment == FilterComment.Text)
+            if (f1.ReadableTypeName == FilterType.Text && f1.InputGroupName == InputGroupName.Text && f1.GetSerializedFilter() == d2 && f1.Comment == FilterComment.Text)
                 return;
             
             FilterTreeChanged = true;
