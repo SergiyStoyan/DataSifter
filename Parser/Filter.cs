@@ -108,10 +108,10 @@ namespace Cliver.DataSifter
 
         Dictionary<int, string> group_index2group_raw_names = new Dictionary<int, string>();
         
-        abstract public string GetDefinition();
+        abstract public string GetSerializedFilter();
         abstract public FilterMatchCollection Matches(FilterGroup parent_group);
         
-        protected string get_default_definition()
+        protected string get_default_serialized_filter()
         {
             string d = null;
             Settings.Default.FilterTypeName2NewFilter.TryGetValue(this.GetType().Name, out d);

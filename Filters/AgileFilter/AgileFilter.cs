@@ -41,16 +41,16 @@ Xpath can be any supported by it. See the library's help for more information.";
             }
         }
 
-        public AgileFilter(Version version, string defintion, string input_group_name, string comment)
+        public AgileFilter(Version version, string serialized_filter, string input_group_name, string comment)
             : base(version, input_group_name, comment)
         {
-            if (defintion == null)
-                defintion = get_default_definition();
-            if (defintion == null)
-                defintion = "\n";
-            Match m = Regex.Match(defintion, @"(?'Xpath'.*)\n(?'GroupName'.*)", RegexOptions.Compiled | RegexOptions.Singleline | RegexOptions.IgnoreCase);
+            if (serialized_filter == null)
+                serialized_filter = get_default_serialized_filter();
+            if (serialized_filter == null)
+                serialized_filter = "\n";
+            Match m = Regex.Match(serialized_filter, @"(?'Xpath'.*)\n(?'GroupName'.*)", RegexOptions.Compiled | RegexOptions.Singleline | RegexOptions.IgnoreCase);
             if (!m.Success)
-                throw new Exception("Filter definition could not be parsed:\n" + defintion);
+                throw new Exception("Filter definition could not be parsed:\n" + serialized_filter);
             Xpath = m.Groups["Xpath"].Value;
             GroupName = m.Groups["GroupName"].Value;
             InputGroupName = input_group_name;
@@ -67,7 +67,7 @@ Xpath can be any supported by it. See the library's help for more information.";
             return new string[] { GroupName };
         }
 
-        override public string GetDefinition()
+        override public string GetSerializedFilter()
         {
             if (string.IsNullOrWhiteSpace(GroupName))
                 GroupName = "0";

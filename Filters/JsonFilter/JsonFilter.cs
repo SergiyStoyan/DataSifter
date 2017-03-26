@@ -47,16 +47,16 @@ Countries.USA.Users[0].Phones[0]
             }
         }
 
-        public JsonFilter(Version version, string defintion, string input_group_name, string comment)
+        public JsonFilter(Version version, string serialized_filter, string input_group_name, string comment)
             : base(version, input_group_name, comment)
         {
-            if (defintion == null)
-                defintion = get_default_definition();
-            if (defintion == null)
-                defintion = "\n";
-            Match m = Regex.Match(defintion, @"(?'JsonPath'.*?)\n(?'GroupName'.*?)(?:\n(?'TrimQuotation'.*))?$", RegexOptions.Compiled | RegexOptions.Singleline | RegexOptions.IgnoreCase);
+            if (serialized_filter == null)
+                serialized_filter = get_default_serialized_filter();
+            if (serialized_filter == null)
+                serialized_filter = "\n";
+            Match m = Regex.Match(serialized_filter, @"(?'JsonPath'.*?)\n(?'GroupName'.*?)(?:\n(?'TrimQuotation'.*))?$", RegexOptions.Compiled | RegexOptions.Singleline | RegexOptions.IgnoreCase);
             if (!m.Success)
-                throw new Exception("Filter definition could not be parsed:\n" + defintion);
+                throw new Exception("Filter definition could not be parsed:\n" + serialized_filter);
             JsonPath = m.Groups["JsonPath"].Value;
             GroupName = m.Groups["GroupName"].Value;
             if (!string.IsNullOrEmpty(m.Groups["TrimQuotation"].Value))
@@ -76,7 +76,7 @@ Countries.USA.Users[0].Phones[0]
             return new string[] { GroupName };
         }
 
-        override public string GetDefinition()
+        override public string GetSerializedFilter()
         {
             if (string.IsNullOrWhiteSpace(GroupName))
                 GroupName = "0";

@@ -31,7 +31,7 @@ namespace Cliver
         {
             return @"Based on .NET System.Text.RegularExpressions library.
 Regex can be any supported by it. See the library's help for more information.
-However, avoid embedded groups as their captures are displayed hardly and are confusing. Use child regexes instead of embedded groups.";
+However, avoid embedded groups as their captures are confusing and displayed hardly. Use child regexes instead of embedded groups.";
         }
 
         override internal string HelpUrl
@@ -42,16 +42,16 @@ However, avoid embedded groups as their captures are displayed hardly and are co
             }
         }
 
-        public RegexFilter(Version version, string defintion, string input_group_name, string comment)
+        public RegexFilter(Version version, string serialized_filter, string input_group_name, string comment)
             : base(version, input_group_name, comment)
         {
-            if (defintion == null)
-                defintion = get_default_definition();
-            if (defintion == null)
-                defintion = "\n";
-            Match m = Regex.Match(defintion, @"(?'Regex'.*)\n(?'RegexOptions'.*)", RegexOptions.Compiled | RegexOptions.Singleline | RegexOptions.IgnoreCase);
+            if (serialized_filter == null)
+                serialized_filter = get_default_serialized_filter();
+            if (serialized_filter == null)
+                serialized_filter = "\n";
+            Match m = Regex.Match(serialized_filter, @"(?'Regex'.*)\n(?'RegexOptions'.*)", RegexOptions.Compiled | RegexOptions.Singleline | RegexOptions.IgnoreCase);
             if (!m.Success)
-                throw new Exception("Filter definition could not be parsed:\n" + defintion);
+                throw new Exception("Filter definition could not be parsed:\n" + serialized_filter);
             RegexOptions options = RegexOptions.None;
             Enum.TryParse(m.Groups["RegexOptions"].Value, out options);
             Regex = new Regex(m.Groups["Regex"].Value, options);
@@ -65,7 +65,7 @@ However, avoid embedded groups as their captures are displayed hardly and are co
             return Regex.GetGroupNames();
         }
 
-        override public string GetDefinition()
+        override public string GetSerializedFilter()
         {
             return Regex.ToString() + "\n" + Regex.Options.ToString();
         }
