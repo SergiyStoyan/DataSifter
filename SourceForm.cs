@@ -281,7 +281,10 @@ namespace Cliver.DataSifter
                     fill_NavigateBy(false);
                 });
             }
-            catch (ThreadAbortException) { }
+            catch (ThreadAbortException)
+            {
+                Thread.ResetAbort();
+            }
             catch (Exception ex)
             {
                 Message.Error(ex);
