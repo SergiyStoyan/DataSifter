@@ -28,10 +28,10 @@ namespace Cliver.DataSifter {
     //  The SettingsLoaded event is raised after the setting values are loaded.
     //  The SettingsSaving event is raised before the setting values are saved.
     internal sealed partial class Settings {
-        
-        public Settings() 
+
+        public Settings()
         {
-            this.SettingsLoaded +=new System.Configuration.SettingsLoadedEventHandler(Settings_SettingsLoaded);
+            this.SettingsLoaded += new SettingsLoadedEventHandler(Settings_SettingsLoaded);
             this.SettingsSaving += new SettingsSavingEventHandler(Settings_SettingsSaving);
         }
 
@@ -81,8 +81,8 @@ namespace Cliver.DataSifter {
                     _FilterTypeNames2NewFilter.Add(FilterTypeName2NewFilter[type_name]);
                 }
 
-                if (_FilterTypeNames2NewFilter != null)
-                    Settings.Default._FilterTreeFolders2SourceFolder.Clear();
+                if (_FilterTreeFolders2SourceFolder != null)
+                    _FilterTreeFolders2SourceFolder.Clear();
                 foreach (string ft_file in FilterTreeFolder2SourceFolder.Keys)
                 {
                     _FilterTreeFolders2SourceFolder.Add(ft_file);

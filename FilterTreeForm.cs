@@ -134,7 +134,7 @@ namespace Cliver.DataSifter
                 InputGroupName.Items.Clear();
                 FilterComment.Text = "";
 
-                if (filter_tree_xml_file == null)
+                if (filter_tree_xml_file == null || !File.Exists(filter_tree_xml_file))
                     return;
 
                 this.Text = filter_tree_xml_file.Substring(filter_tree_xml_file.LastIndexOf("\\") + 1) + " " + title;
