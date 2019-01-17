@@ -27,6 +27,7 @@ namespace Cliver.DataSifter
         {
             try
             {
+                Settings.Default.Reload();
                 if (Settings.Default.ApplicationVersion != Application.ProductVersion)
                 {
                     //string HelpFileUri = Settings.Default.HelpFileUri;

@@ -298,7 +298,7 @@ namespace Cliver.DataSifter
                     //Settings.Default.Save();
                     file = d.FileName;
 
-                    Match m = Regex.Match(file, @"(?'Directory.*\\)(?'Name'.*)\.", RegexOptions.IgnoreCase | RegexOptions.Singleline);
+                    Match m = Regex.Match(file, @"(?'Directory'.*\\)(?'Name'.*)\.", RegexOptions.IgnoreCase | RegexOptions.Singleline);
                     if (!m.Success)
                         throw new Exception("Could not parse path: " + file);
                     FilterTreeFileDir.Text = m.Groups["Directory"].Value;
@@ -372,14 +372,25 @@ namespace Cliver.DataSifter
 
         string get_corresponding_filter_tree_folder(string source_file)
         {
-            string s_folder = Path.GetDirectoryName(source_file);
-            foreach (string ft_folder in Settings.Default.FilterTreeFolder2SourceFolder.Keys)
+            try
             {
-                string sf = (string)Settings.Default.FilterTreeFolder2SourceFolder[ft_folder];
-                if (sf == s_folder)
-                    return ft_folder;
+                string s_folder = Path.GetDirectoryName(source_file);
+                foreach (string ft_folder in Settings.Default.FilterTreeFolder2SourceFolder.Keys)
+                {
+                    string sf = (string)Settings.Default.FilterTreeFolder2SourceFolder[ft_folder];
+                    if (sf == s_folder)
+                        return ft_folder;
+                }
             }
-            return Path.GetDirectoryName(Settings.Default.LastFilterTreeFile);
+            catch { }
+            try
+            {
+                return Path.GetDirectoryName(Settings.Default.LastFilterTreeFile);
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         /// <summary>
