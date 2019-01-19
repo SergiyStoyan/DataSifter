@@ -39,6 +39,7 @@ namespace Cliver.DataSifter
             this.PrevMark = new System.Windows.Forms.Button();
             this.NextMark = new System.Windows.Forms.Button();
             this.bSettings = new System.Windows.Forms.Button();
+            this.WrapText = new System.Windows.Forms.CheckBox();
             this.About = new System.Windows.Forms.Button();
             this.Help = new System.Windows.Forms.Button();
             this.File = new System.Windows.Forms.Button();
@@ -65,9 +66,10 @@ namespace Cliver.DataSifter
             this.TextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.TextBox.HideSelection = false;
             this.TextBox.Location = new System.Drawing.Point(0, 0);
+            this.TextBox.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
             this.TextBox.Name = "TextBox";
             this.TextBox.ReadOnly = true;
-            this.TextBox.Size = new System.Drawing.Size(1028, 295);
+            this.TextBox.Size = new System.Drawing.Size(2741, 704);
             this.TextBox.TabIndex = 14;
             this.TextBox.TabStop = false;
             this.TextBox.Text = "";
@@ -88,10 +90,11 @@ namespace Cliver.DataSifter
             this.flowLayoutPanel1.Controls.Add(this.bSettings);
             this.flowLayoutPanel1.Controls.Add(this.About);
             this.flowLayoutPanel1.Controls.Add(this.Help);
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(277, 3);
+            this.flowLayoutPanel1.Controls.Add(this.WrapText);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(739, 7);
             this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(756, 29);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(2016, 107);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
             // FindPrev
@@ -99,10 +102,10 @@ namespace Cliver.DataSifter
             this.FindPrev.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.FindPrev.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.FindPrev.Image = ((System.Drawing.Image)(resources.GetObject("FindPrev.Image")));
-            this.FindPrev.Location = new System.Drawing.Point(0, 3);
-            this.FindPrev.Margin = new System.Windows.Forms.Padding(0, 3, 1, 3);
+            this.FindPrev.Location = new System.Drawing.Point(0, 7);
+            this.FindPrev.Margin = new System.Windows.Forms.Padding(0, 7, 3, 7);
             this.FindPrev.Name = "FindPrev";
-            this.FindPrev.Size = new System.Drawing.Size(35, 23);
+            this.FindPrev.Size = new System.Drawing.Size(93, 55);
             this.FindPrev.TabIndex = 0;
             this.FindPrev.UseVisualStyleBackColor = true;
             this.FindPrev.Click += new System.EventHandler(this.FindPrev_Click);
@@ -112,10 +115,10 @@ namespace Cliver.DataSifter
             this.FindNext.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.FindNext.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.FindNext.Image = ((System.Drawing.Image)(resources.GetObject("FindNext.Image")));
-            this.FindNext.Location = new System.Drawing.Point(36, 3);
-            this.FindNext.Margin = new System.Windows.Forms.Padding(0, 3, 1, 3);
+            this.FindNext.Location = new System.Drawing.Point(96, 7);
+            this.FindNext.Margin = new System.Windows.Forms.Padding(0, 7, 3, 7);
             this.FindNext.Name = "FindNext";
-            this.FindNext.Size = new System.Drawing.Size(35, 23);
+            this.FindNext.Size = new System.Drawing.Size(93, 55);
             this.FindNext.TabIndex = 1;
             this.FindNext.UseVisualStyleBackColor = true;
             this.FindNext.Click += new System.EventHandler(this.FindNext_Click);
@@ -126,10 +129,10 @@ namespace Cliver.DataSifter
             this.cHideFilters.Appearance = System.Windows.Forms.Appearance.Button;
             this.cHideFilters.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.cHideFilters.Image = ((System.Drawing.Image)(resources.GetObject("cHideFilters.Image")));
-            this.cHideFilters.Location = new System.Drawing.Point(72, 3);
-            this.cHideFilters.Margin = new System.Windows.Forms.Padding(0, 3, 1, 3);
+            this.cHideFilters.Location = new System.Drawing.Point(192, 7);
+            this.cHideFilters.Margin = new System.Windows.Forms.Padding(0, 7, 3, 7);
             this.cHideFilters.Name = "cHideFilters";
-            this.cHideFilters.Size = new System.Drawing.Size(35, 23);
+            this.cHideFilters.Size = new System.Drawing.Size(93, 55);
             this.cHideFilters.TabIndex = 18;
             this.cHideFilters.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.cHideFilters.UseVisualStyleBackColor = true;
@@ -138,10 +141,10 @@ namespace Cliver.DataSifter
             // label7
             // 
             this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label7.Location = new System.Drawing.Point(108, 3);
-            this.label7.Margin = new System.Windows.Forms.Padding(0, 3, 1, 3);
+            this.label7.Location = new System.Drawing.Point(288, 7);
+            this.label7.Margin = new System.Windows.Forms.Padding(0, 7, 3, 7);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(67, 23);
+            this.label7.Size = new System.Drawing.Size(179, 55);
             this.label7.TabIndex = 8;
             this.label7.Text = "Navigate by:";
             this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -151,11 +154,11 @@ namespace Cliver.DataSifter
             this.NavigateBy.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.NavigateBy.DropDownWidth = 120;
             this.NavigateBy.FormattingEnabled = true;
-            this.NavigateBy.Location = new System.Drawing.Point(176, 3);
-            this.NavigateBy.Margin = new System.Windows.Forms.Padding(0, 3, 1, 3);
+            this.NavigateBy.Location = new System.Drawing.Point(470, 7);
+            this.NavigateBy.Margin = new System.Windows.Forms.Padding(0, 7, 3, 7);
             this.NavigateBy.MaxDropDownItems = 12;
             this.NavigateBy.Name = "NavigateBy";
-            this.NavigateBy.Size = new System.Drawing.Size(224, 21);
+            this.NavigateBy.Size = new System.Drawing.Size(591, 39);
             this.NavigateBy.TabIndex = 9;
             this.NavigateBy.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.NavigateBy_DrawItem);
             this.NavigateBy.DropDown += new System.EventHandler(this.NavigateBy_DropDown);
@@ -166,10 +169,10 @@ namespace Cliver.DataSifter
             this.PrevMark.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.PrevMark.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.PrevMark.Image = ((System.Drawing.Image)(resources.GetObject("PrevMark.Image")));
-            this.PrevMark.Location = new System.Drawing.Point(401, 3);
-            this.PrevMark.Margin = new System.Windows.Forms.Padding(0, 3, 1, 3);
+            this.PrevMark.Location = new System.Drawing.Point(1064, 7);
+            this.PrevMark.Margin = new System.Windows.Forms.Padding(0, 7, 3, 7);
             this.PrevMark.Name = "PrevMark";
-            this.PrevMark.Size = new System.Drawing.Size(35, 23);
+            this.PrevMark.Size = new System.Drawing.Size(93, 55);
             this.PrevMark.TabIndex = 10;
             this.PrevMark.UseVisualStyleBackColor = true;
             this.PrevMark.Click += new System.EventHandler(this.PrevUserMark_Click);
@@ -179,10 +182,10 @@ namespace Cliver.DataSifter
             this.NextMark.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.NextMark.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.NextMark.Image = ((System.Drawing.Image)(resources.GetObject("NextMark.Image")));
-            this.NextMark.Location = new System.Drawing.Point(437, 3);
-            this.NextMark.Margin = new System.Windows.Forms.Padding(0, 3, 1, 3);
+            this.NextMark.Location = new System.Drawing.Point(1160, 7);
+            this.NextMark.Margin = new System.Windows.Forms.Padding(0, 7, 3, 7);
             this.NextMark.Name = "NextMark";
-            this.NextMark.Size = new System.Drawing.Size(35, 23);
+            this.NextMark.Size = new System.Drawing.Size(93, 55);
             this.NextMark.TabIndex = 11;
             this.NextMark.UseVisualStyleBackColor = true;
             this.NextMark.Click += new System.EventHandler(this.NextUserMark_Click);
@@ -192,24 +195,36 @@ namespace Cliver.DataSifter
             this.bSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.bSettings.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.bSettings.Image = ((System.Drawing.Image)(resources.GetObject("bSettings.Image")));
-            this.bSettings.Location = new System.Drawing.Point(473, 3);
-            this.bSettings.Margin = new System.Windows.Forms.Padding(0, 3, 1, 3);
+            this.bSettings.Location = new System.Drawing.Point(1256, 7);
+            this.bSettings.Margin = new System.Windows.Forms.Padding(0, 7, 3, 7);
             this.bSettings.Name = "bSettings";
-            this.bSettings.Size = new System.Drawing.Size(35, 23);
+            this.bSettings.Size = new System.Drawing.Size(93, 55);
             this.bSettings.TabIndex = 15;
             this.bSettings.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.bSettings.UseVisualStyleBackColor = true;
             this.bSettings.Click += new System.EventHandler(this.bSettings_Click);
+            // 
+            // WrapText
+            // 
+            this.WrapText.Appearance = System.Windows.Forms.Appearance.Button;
+            this.WrapText.Location = new System.Drawing.Point(1544, 7);
+            this.WrapText.Margin = new System.Windows.Forms.Padding(0, 7, 3, 7);
+            this.WrapText.Name = "WrapText";
+            this.WrapText.Size = new System.Drawing.Size(93, 55);
+            this.WrapText.TabIndex = 20;
+            this.WrapText.Text = "W";
+            this.WrapText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.WrapText.UseVisualStyleBackColor = true;
             // 
             // About
             // 
             this.About.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.About.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.About.Image = ((System.Drawing.Image)(resources.GetObject("About.Image")));
-            this.About.Location = new System.Drawing.Point(509, 3);
-            this.About.Margin = new System.Windows.Forms.Padding(0, 3, 1, 3);
+            this.About.Location = new System.Drawing.Point(1352, 7);
+            this.About.Margin = new System.Windows.Forms.Padding(0, 7, 3, 7);
             this.About.Name = "About";
-            this.About.Size = new System.Drawing.Size(35, 23);
+            this.About.Size = new System.Drawing.Size(93, 55);
             this.About.TabIndex = 13;
             this.About.UseVisualStyleBackColor = true;
             this.About.Click += new System.EventHandler(this.About_Click);
@@ -219,10 +234,10 @@ namespace Cliver.DataSifter
             this.Help.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Help.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.Help.Image = ((System.Drawing.Image)(resources.GetObject("Help.Image")));
-            this.Help.Location = new System.Drawing.Point(545, 3);
-            this.Help.Margin = new System.Windows.Forms.Padding(0, 3, 1, 3);
+            this.Help.Location = new System.Drawing.Point(1448, 7);
+            this.Help.Margin = new System.Windows.Forms.Padding(0, 7, 3, 7);
             this.Help.Name = "Help";
-            this.Help.Size = new System.Drawing.Size(35, 23);
+            this.Help.Size = new System.Drawing.Size(93, 55);
             this.Help.TabIndex = 12;
             this.Help.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.Help.UseVisualStyleBackColor = true;
@@ -232,10 +247,10 @@ namespace Cliver.DataSifter
             // 
             this.File.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.File.Image = ((System.Drawing.Image)(resources.GetObject("File.Image")));
-            this.File.Location = new System.Drawing.Point(0, 3);
-            this.File.Margin = new System.Windows.Forms.Padding(0, 3, 1, 3);
+            this.File.Location = new System.Drawing.Point(0, 7);
+            this.File.Margin = new System.Windows.Forms.Padding(0, 7, 3, 7);
             this.File.Name = "File";
-            this.File.Size = new System.Drawing.Size(35, 23);
+            this.File.Size = new System.Drawing.Size(93, 55);
             this.File.TabIndex = 0;
             this.File.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.File.UseVisualStyleBackColor = true;
@@ -243,10 +258,10 @@ namespace Cliver.DataSifter
             // 
             // label8
             // 
-            this.label8.Location = new System.Drawing.Point(36, 3);
-            this.label8.Margin = new System.Windows.Forms.Padding(0, 3, 1, 3);
+            this.label8.Location = new System.Drawing.Point(96, 7);
+            this.label8.Margin = new System.Windows.Forms.Padding(0, 7, 3, 7);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(30, 23);
+            this.label8.Size = new System.Drawing.Size(80, 55);
             this.label8.TabIndex = 1;
             this.label8.Text = "Find:";
             this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -256,28 +271,30 @@ namespace Cliver.DataSifter
             this.FindBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.FindBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.FindBox.Location = new System.Drawing.Point(71, 4);
-            this.FindBox.Margin = new System.Windows.Forms.Padding(0, 3, 1, 3);
+            this.FindBox.Location = new System.Drawing.Point(189, 10);
+            this.FindBox.Margin = new System.Windows.Forms.Padding(0, 7, 3, 7);
             this.FindBox.Name = "FindBox";
-            this.FindBox.Size = new System.Drawing.Size(205, 22);
+            this.FindBox.Size = new System.Drawing.Size(540, 44);
             this.FindBox.TabIndex = 2;
             this.FindBox.TextChanged += new System.EventHandler(this.FindBox_TextChanged);
             // 
             // statusStrip1
             // 
+            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(40, 40);
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.Status});
             this.statusStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
-            this.statusStrip1.Location = new System.Drawing.Point(0, 562);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 1342);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1028, 20);
+            this.statusStrip1.Padding = new System.Windows.Forms.Padding(3, 0, 37, 0);
+            this.statusStrip1.Size = new System.Drawing.Size(2741, 46);
             this.statusStrip1.TabIndex = 17;
             this.statusStrip1.Text = "statusStrip1";
             // 
             // Status
             // 
             this.Status.Name = "Status";
-            this.Status.Size = new System.Drawing.Size(10, 15);
+            this.Status.Size = new System.Drawing.Size(26, 41);
             this.Status.Text = " ";
             // 
             // splitContainer1
@@ -285,6 +302,7 @@ namespace Cliver.DataSifter
             this.splitContainer1.BackColor = System.Drawing.Color.OrangeRed;
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer1.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -298,9 +316,9 @@ namespace Cliver.DataSifter
             // 
             this.splitContainer1.Panel2.AutoScroll = true;
             this.splitContainer1.Panel2.BackColor = System.Drawing.SystemColors.Control;
-            this.splitContainer1.Size = new System.Drawing.Size(1028, 562);
-            this.splitContainer1.SplitterDistance = 326;
-            this.splitContainer1.SplitterWidth = 3;
+            this.splitContainer1.Size = new System.Drawing.Size(2741, 1342);
+            this.splitContainer1.SplitterDistance = 778;
+            this.splitContainer1.SplitterWidth = 7;
             this.splitContainer1.TabIndex = 18;
             // 
             // panel1
@@ -309,9 +327,10 @@ namespace Cliver.DataSifter
             this.panel1.Controls.Add(this.flowLayoutPanel1);
             this.panel1.Controls.Add(this.FindBox);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 295);
+            this.panel1.Location = new System.Drawing.Point(0, 704);
+            this.panel1.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1028, 31);
+            this.panel1.Size = new System.Drawing.Size(2741, 74);
             this.panel1.TabIndex = 1;
             // 
             // flowLayoutPanel2
@@ -319,19 +338,21 @@ namespace Cliver.DataSifter
             this.flowLayoutPanel2.Controls.Add(this.File);
             this.flowLayoutPanel2.Controls.Add(this.label8);
             this.flowLayoutPanel2.Location = new System.Drawing.Point(0, 0);
+            this.flowLayoutPanel2.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(68, 28);
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(181, 67);
             this.flowLayoutPanel2.TabIndex = 0;
             // 
             // SourceForm
             // 
             this.AllowDrop = true;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(16F, 31F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1028, 582);
+            this.ClientSize = new System.Drawing.Size(2741, 1388);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.statusStrip1);
-            this.MinimumSize = new System.Drawing.Size(500, 200);
+            this.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
+            this.MinimumSize = new System.Drawing.Size(1280, 355);
             this.Name = "SourceForm";
             this.Text = "Filter Treeer";
             this.Activated += new System.EventHandler(this.SourceForm_Activated);
@@ -399,5 +420,6 @@ namespace Cliver.DataSifter
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
         private System.Windows.Forms.CheckBox cHideFilters;
+        private System.Windows.Forms.CheckBox WrapText;
     }
 }

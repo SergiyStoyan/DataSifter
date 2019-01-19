@@ -16,11 +16,12 @@ using System.Windows.Forms;
 
 namespace Cliver.DataSifter
 {
-    internal partial class SettingsForm : BaseForm
+    internal partial class SettingsForm :Form
     {
         internal SettingsForm()
         {
             InitializeComponent();
+            Icon = AssemblyRoutines.GetAppIcon();
 
             flagPrintParseLabels.Checked = Settings.Default.PrintCaptureLabels;
             flagHighlightHtmlTags.Checked = Settings.Default.HighlightHtmlTags;

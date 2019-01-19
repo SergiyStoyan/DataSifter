@@ -26,7 +26,7 @@ namespace Cliver.DataSifter
     /// <summary>
     /// Form that hosts parsed text and filter tree editor control
     /// </summary>
-    internal partial class SourceForm : BaseForm//Form//
+    internal partial class SourceForm : Form//
     {        
         #region initializing
 
@@ -37,12 +37,6 @@ namespace Cliver.DataSifter
         static SourceForm()
         {
             This = new SourceForm();
-            This.splitContainer1.Panel2.Controls.Add(FilterTreeForm.This);
-            FilterTreeForm.This.Dock = DockStyle.Fill;
-
-            This.splitContainer1.BackColor = SplitterColor;
-            This.splitContainer1.Panel1.BackColor = SystemColors.Control;
-            This.splitContainer1.Panel2.BackColor = SystemColors.Control;
         }
         
         static internal readonly Color SplitterColor = Color.Gray;
@@ -50,7 +44,24 @@ namespace Cliver.DataSifter
         SourceForm()
         {
             InitializeComponent();
+            
+            Icon = AssemblyRoutines.GetAppIcon();
+
             set_tool_tip();
+
+            splitContainer1.Panel2.Controls.Add(FilterTreeForm.This);
+            FilterTreeForm.This.Dock = DockStyle.Fill;
+
+            splitContainer1.BackColor = SplitterColor;
+            splitContainer1.Panel1.BackColor = SystemColors.Control;
+            splitContainer1.Panel2.BackColor = SystemColors.Control;
+
+            WrapText.CheckedChanged += delegate
+              {
+                  TextBox.WordWrap = WrapText.Checked;
+              };
+            WrapText.Checked = Settings.Default.WrapText;
+            TextBox.WordWrap = WrapText.Checked;
 
             Document.DocumentUpdated += new Document.DocumentUpdatedEventHandler(Document_DocumentUpdated);
             Document.SetTestText();
@@ -369,6 +380,9 @@ namespace Cliver.DataSifter
                 e.Cancel = true;
                 return;
             }
+
+            Settings.Default.WrapText = WrapText.Checked;
+            Settings.Default.Save();
 
             This.Dispose();
         }

@@ -104,5 +104,8 @@ IgnoreCase, Compiled, Singleline&lt;/string&gt;
     <Setting Name="OperatedFilterTypeNames" Type="System.Collections.Specialized.StringCollection" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="WrapText" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
