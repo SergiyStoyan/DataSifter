@@ -21,11 +21,12 @@ namespace Cliver.DataSifter
     /// <summary>
     /// lists group names used in the current filter tree
     /// </summary>
-    internal partial class OutputForm : BaseForm
+    internal partial class OutputForm : Form
     {
         internal OutputForm(List<OutputGroup> all_ogs, List<OutputGroup> captured_ogs)
         {
             InitializeComponent();
+            Icon = AssemblyRoutines.GetAppIcon();
             set_tool_tip();
 
             this.all_ogs = all_ogs;

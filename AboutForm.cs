@@ -19,7 +19,7 @@ namespace Cliver.DataSifter
 	/// <summary>
 	/// Summary description for About.
 	/// </summary>
-	internal class AboutForm : BaseForm//Form//
+	internal class AboutForm : Form
 	{
 		private System.Windows.Forms.Label lAuthor;
         private System.Windows.Forms.Button button1;
@@ -41,7 +41,8 @@ namespace Cliver.DataSifter
 			// Required for Windows Form Designer support
 			//
             InitializeComponent();
-		}
+            Icon = AssemblyRoutines.GetAppIcon();
+        }
 
 		/// <summary>
 		/// Clean up any resources being used.
