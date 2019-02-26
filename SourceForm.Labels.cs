@@ -6,18 +6,9 @@
 //        17 February 2008
 //Copyright: (C) 2008, Sergey Stoyan
 //********************************************************************************************
-using System;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
-using System.IO;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Diagnostics;
-using System.Threading;
 using System.Web;
 
 namespace Cliver.DataSifter

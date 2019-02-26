@@ -10,12 +10,7 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading;
 using System.Text.RegularExpressions;
-using System.Drawing;
-using System.Xml;
-using System.Configuration;
 using Cliver.DataSifter;
 
 namespace Cliver

@@ -8,16 +8,9 @@
 //********************************************************************************************
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
-using System.IO;
 using System.Text.RegularExpressions;
-using System.Collections;
-using System.Configuration;
-using System.Web;
 
 namespace Cliver.DataSifter
 {

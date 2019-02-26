@@ -7,19 +7,16 @@
 //Copyright: (C) 2006, Sergey Stoyan
 //********************************************************************************************
 using System;
-using System.Drawing;
-using System.Collections;
-using System.ComponentModel;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.Reflection;
 
 namespace Cliver.DataSifter
 {
-	/// <summary>
-	/// Summary description for About.
-	/// </summary>
-	internal class AboutForm : Form
+    /// <summary>
+    /// Summary description for About.
+    /// </summary>
+    internal class AboutForm : Form
 	{
 		private System.Windows.Forms.Label lAuthor;
         private System.Windows.Forms.Button button1;

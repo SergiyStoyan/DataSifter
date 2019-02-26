@@ -7,13 +7,11 @@
 //Copyright: (C) 2008, Sergey Stoyan
 //********************************************************************************************
 using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Threading;
-using System.Text.RegularExpressions;
 
 namespace Cliver.DataSifter
 {
