@@ -19,7 +19,7 @@ namespace Cliver.DataSifter
         internal NameForm(string default_file_name)
         {
             InitializeComponent();
-            Icon = AssemblyRoutines.GetAppIcon();
+            Icon = Win.AssemblyRoutines.GetAppIcon();
 
             this.Text = Program.Title;
             boxName.Text = default_file_name;

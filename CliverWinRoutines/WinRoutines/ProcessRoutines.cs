@@ -17,7 +17,7 @@ using System.Security.Principal;
 using System.Management;
 using System.Security.AccessControl;
 
-namespace Cliver
+namespace Cliver.Win
 {
     public static partial class ProcessRoutines
     {

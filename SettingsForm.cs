@@ -18,7 +18,7 @@ namespace Cliver.DataSifter
         internal SettingsForm()
         {
             InitializeComponent();
-            Icon = AssemblyRoutines.GetAppIcon();
+            Icon = Win.AssemblyRoutines.GetAppIcon();
 
             flagPrintParseLabels.Checked = Settings.Default.PrintCaptureLabels;
             flagHighlightHtmlTags.Checked = Settings.Default.HighlightHtmlTags;

@@ -26,9 +26,8 @@ namespace Cliver.DataSifter
             try
             {
                 Message.TopMost = true;
-                LogMessage.DisableStumblingDialogs = false;
-                LogMessage.ShowDialog = ((string title, System.Drawing.Icon icon, string message, string[] buttons, int default_button, Form owner) => { return Message.ShowDialog(title, icon, message, buttons, default_button, owner); });
-                Log.ShowDeleteOldLogsDialog = false;
+                Win.LogMessage.DisableStumblingDialogs = false;
+                //Log.DeleteOldLogsDialog = false;
                 Log.Initialize(Log.Mode.ONLY_LOG, Log.CompanyCommonDataDir, true);
 
                 Settings.Default.Reload();

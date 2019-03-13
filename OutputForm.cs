@@ -24,7 +24,7 @@ namespace Cliver.DataSifter
         internal OutputForm(List<OutputGroup> all_ogs, List<OutputGroup> captured_ogs)
         {
             InitializeComponent();
-            Icon = AssemblyRoutines.GetAppIcon();
+            Icon = Win.AssemblyRoutines.GetAppIcon();
             set_tool_tip();
 
             this.all_ogs = all_ogs;

@@ -39,7 +39,7 @@ namespace Cliver.DataSifter
         {
             InitializeComponent();
             
-            Icon = AssemblyRoutines.GetAppIcon();
+            Icon = Win.AssemblyRoutines.GetAppIcon();
 
             set_tool_tip();
 

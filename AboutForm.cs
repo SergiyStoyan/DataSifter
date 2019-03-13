@@ -38,7 +38,7 @@ namespace Cliver.DataSifter
 			// Required for Windows Form Designer support
 			//
             InitializeComponent();
-            Icon = AssemblyRoutines.GetAppIcon();
+            Icon = Win.AssemblyRoutines.GetAppIcon();
         }
 
 		/// <summary>

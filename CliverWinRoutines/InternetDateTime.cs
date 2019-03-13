@@ -34,7 +34,7 @@ using System.Reflection;
 using System.Diagnostics;
 using System.Threading;
 
-namespace Cliver
+namespace Cliver.Win
 {
     /// <summary>
     /// Get current time from internet. Used to control test period.
@@ -82,7 +82,7 @@ namespace Cliver
                 //    return;
                 //LogMessage.Inform("It is a demo version that is valid until " + year + "-" + month + "-" + day);
                 if (!silently)
-                    Log.Main.Inform("It is a demo version that is valid until " + year + "-" + month + "-" + day);
+                    Cliver.Log.Main.Inform("It is a demo version that is valid until " + year + "-" + month + "-" + day);
                 ThreadRoutines.StartTry(() =>
                 {
                     if (new DateTime(year, month, day) < InternetDateTime.GetOverHttp())
@@ -176,7 +176,7 @@ namespace Cliver
             catch (Exception e)
             {
                 if (silently)
-                    Log.Main.Error("Validation failed.\n\n" + e.Message);
+                    Cliver.Log.Main.Error("Validation failed.\n\n" + e.Message);
                 else
                     LogMessage.Exit("Test period validation failed.\n\n" + e.Message);
                 //Environment.Exit(0);

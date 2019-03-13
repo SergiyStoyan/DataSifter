@@ -12,7 +12,7 @@ using System.Windows.Forms;
 //using System.Configuration;
 
 
-namespace Cliver
+namespace Cliver.Win
 {
     public class LogMessage
     {
@@ -26,13 +26,6 @@ namespace Cliver
                 Output2Console = false;
             }
         }
-
-        public static Func<string, System.Drawing.Icon, string, string[], int, Form, int> ShowDialog = delegate (string title, System.Drawing.Icon icon, string message, string[] buttons, int defaultButtonId, Form owner)
-         {
-             if (!DisableStumblingDialogs)
-                 throw new Exception("Message dialog is not provided!\r\n\r\nMessage to be showed:\r\n" + message);
-             return 0;
-         };
 
         /// <summary>
         /// Defines whether message boxes will be showed (run in manual mode) 
@@ -71,16 +64,15 @@ namespace Cliver
             lock (lock_variable)
             {
                 if (write2log)
-                    Log.Main.Write(message);
+                    Cliver.Log.Main.Write(message);
 
                 if (!DisableStumblingDialogs)
                 {
                     if (!Output2Console)
                     {
-                        //Cliver.MessageForm mf = new Cliver.MessageForm(Application.ProductName, System.Drawing.SystemIcons.Question, message, new string[2] { "Yes", "No" }, automatic_yes ? 0 : 1, Owner);
-                        //mf.ShowInTaskbar = Cliver.Message.ShowInTaskbar;
-                        //return mf.ShowDialog() == 0;
-                        return 0 == ShowDialog(Application.ProductName, System.Drawing.SystemIcons.Question, message, new string[2] { "Yes", "No" }, automatic_yes ? 0 : 1, owner != null ? owner : Owner);
+                        Cliver.MessageForm mf = new Cliver.MessageForm(Application.ProductName, System.Drawing.SystemIcons.Question, message, new string[2] { "Yes", "No" }, automatic_yes ? 0 : 1, Owner);
+                        mf.ShowInTaskbar = Cliver.Message.ShowInTaskbar;
+                        return mf.ShowDialog() == 0;
                     }
                     else
                     {
@@ -115,13 +107,13 @@ namespace Cliver
 
         public static void Error(string message, Form owner = null)
         {
-            Log.Main.Error(message);
+            Cliver.Log.Main.Error(message);
             Error_(message, owner);
         }
 
         public static void Error2(string message, Form owner = null)
         {
-            Log.Main.Error2(message);
+            Cliver.Log.Main.Error2(message);
             Error_(message, owner);
         }
 
@@ -132,7 +124,7 @@ namespace Cliver
                 if (!DisableStumblingDialogs)
                 {
                     if (!Output2Console)
-                        ShowDialog(Application.ProductName, System.Drawing.SystemIcons.Error, message, new string[1] { "OK" }, 0, owner != null ? owner : Owner);
+                        Cliver.Message.Error(message, owner != null ? owner : Owner);
                     else
                         Console.WriteLine("ERROR: " + message);
                 }
@@ -146,24 +138,30 @@ namespace Cliver
 
         public static void Error(Exception e, Form owner = null)
         {
-            Error(Log.GetExceptionMessage(e), owner);
+            string m;
+            string d;
+            Cliver.Log.GetExceptionMessage(e, out m, out d);
+            Error2(m + (e is Exception2 ? null : "\r\n\r\n" + d), owner);
         }
 
         public static void Error2(Exception e, Form owner = null)
         {
-            Error2(Log.GetExceptionMessage(e), owner);
+            string m;
+            string d;
+            Cliver.Log.GetExceptionMessage(e, out m, out d);
+            Error2(m, owner);
         }
 
         public static void Exit(string message, Form owner = null)
         {
             Exit_(message, owner);
-            Log.Main.Exit(message);
+            Cliver.Log.Main.Exit(message);
         }
 
         public static void Exit2(string message, Form owner = null)
         {
             Exit_(message, owner);
-            Log.Main.Exit2(message);
+            Cliver.Log.Main.Exit2(message);
         }
 
         public static void Exit_(string message, Form owner = null)
@@ -173,7 +171,7 @@ namespace Cliver
                 if (!DisableStumblingDialogs)
                 {
                     if (!Output2Console)
-                        ShowDialog(Application.ProductName, System.Drawing.SystemIcons.Error, message, new string[1] { "OK" }, 0, owner != null ? owner : Owner);
+                        Cliver.Message.Error(message, owner != null ? owner : Owner);
                     else
                     {
                         Console.WriteLine("EXIT: " + message);
@@ -191,18 +189,21 @@ namespace Cliver
 
         public static void Exit(Exception e)
         {
-            Exit(Log.GetExceptionMessage(e));
+            string m;
+            string d;
+            Cliver.Log.GetExceptionMessage(e, out m, out d);
+            Exit(m + (e is Exception2 ? null : "\r\n\r\n" + d));
         }
 
         public static void Inform(string message, Form owner = null)
         {
-            Log.Main.Inform(message);
+            Cliver.Log.Main.Inform(message);
             lock (lock_variable)
             {
                 if (!DisableStumblingDialogs)
                 {
                     if (!Output2Console)
-                        ShowDialog(Application.ProductName, System.Drawing.SystemIcons.Information, message, new string[1] { "OK" }, 0, owner != null ? owner : Owner);
+                        Cliver.Message.Inform(message, owner != null ? owner : Owner);
                     else
                         Console.WriteLine(message);
                 }
@@ -221,13 +222,13 @@ namespace Cliver
 
         public static void Warning(string message, Form owner = null)
         {
-            Log.Main.Warning(message);
+            Cliver.Log.Main.Warning(message);
             lock (lock_variable)
             {
                 if (!DisableStumblingDialogs)
                 {
                     if (!Output2Console)
-                        ShowDialog(Application.ProductName, System.Drawing.SystemIcons.Warning, message, new string[1] { "OK" }, 0, owner != null ? owner : Owner);
+                        Cliver.Message.Warning(message, owner != null ? owner : Owner);
                     else
                         Console.WriteLine(message);
                 }
@@ -241,13 +242,13 @@ namespace Cliver
 
         public static void Exclaim(string message, Form owner = null)
         {
-            Log.Main.Warning(message);
+            Cliver.Log.Main.Warning(message);
             lock (lock_variable)
             {
                 if (!DisableStumblingDialogs)
                 {
                     if (!Output2Console)
-                        ShowDialog(Application.ProductName, System.Drawing.SystemIcons.Exclamation, message, new string[1] { "OK" }, 0, owner != null ? owner : Owner);
+                        Cliver.Message.Exclaim(message, owner != null ? owner : Owner);
                     else
                         Console.WriteLine(message);
                 }
@@ -266,13 +267,13 @@ namespace Cliver
 
         public static void Write(string message, Form owner = null)
         {
-            Log.Main.Write(message);
+            Cliver.Log.Main.Write(message);
             lock (lock_variable)
             {
                 if (!DisableStumblingDialogs)
                 {
                     if (!Output2Console)
-                        ShowDialog(Application.ProductName, System.Drawing.SystemIcons.Information, message, new string[1] { "OK" }, 0, owner != null ? owner : Owner);
+                        Cliver.Message.Inform(message, owner != null ? owner : Owner);
                     else
                         Console.WriteLine(message);
                 }

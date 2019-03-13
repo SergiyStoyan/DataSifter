@@ -36,7 +36,7 @@ namespace Cliver
         static Mode mode = Mode.ONLY_LOG;
         static string session_name_prefix = "Session";
 
-        public static bool ShowDeleteOldLogsDialog = true;
+        public static Func<string, bool> DeleteOldLogsDialog = null;
 
         public enum Mode
         {
@@ -211,36 +211,35 @@ namespace Cliver
         /// <returns></returns>
         public static string GetStackString(int startFrame = 0, int frameCount = 1, bool endOnEmptyFile = true)
         {
-            System.Diagnostics.StackTrace st = new StackTrace(true);
-            StackFrame sf;
-            MethodBase mb = null;
-            Type dt = null;
-            int frameI = 2;
+            StackTrace st = new StackTrace(true);
+            int frameI = 1;
             for (; ; frameI++)
             {
-                sf = st.GetFrame(frameI);
+                StackFrame sf = st.GetFrame(frameI);
                 if (sf == null)
                     break;
-                mb = sf.GetMethod();
-                dt = mb.DeclaringType;
-                if (dt != typeof(Log) && dt != typeof(Log.Writer) && dt != typeof(LogMessage))
+                MethodBase mb = sf.GetMethod();
+                Type dt = mb.DeclaringType;
+                if (dt != typeof(Log) && dt != typeof(Log.Writer) && TypesExcludedFromStack?.Find(x => x == dt) == null)
                     break;
             }
             List<string> frameSs = new List<string>();
             if (frameCount < 0)
                 frameCount = 1000;
+            frameI += startFrame;
             int endFrameI = frameI + frameCount - 1;
-            for (frameI += startFrame; frameI <= endFrameI; frameI++)
+            for (; frameI <= endFrameI; frameI++)
             {
-                sf = st.GetFrame(frameI);
+                StackFrame sf = st.GetFrame(frameI);
                 if (sf == null || endOnEmptyFile && frameSs.Count > 0 && string.IsNullOrEmpty(sf.GetFileName()))//it seems to be passing out of the application
                     break;
-                mb = sf.GetMethod();
-                dt = mb.DeclaringType;
+                MethodBase mb = sf.GetMethod();
+                Type dt = mb.DeclaringType;
                 frameSs.Add("method: " + dt?.ToString() + "::" + mb?.Name + " \r\nfile: " + sf.GetFileName() + " \r\nline: " + sf.GetFileLineNumber());
             }
             return string.Join("\r\n<=", frameSs);
         }
+        static List<Type> TypesExcludedFromStack = null;
 
         public static string GetExceptionMessage(Exception e)
         {
@@ -313,12 +312,20 @@ namespace Cliver
         //}
     }
 
-    public class TerminatingException : Exception
+    //public class TerminatingException : Exception
+    //{
+    //    public TerminatingException(string message)
+    //        : base(message)
+    //    {
+    //        LogMessage.Exit(message);
+    //    }
+    //}
+
+    public class Exception2 : Exception
     {
-        public TerminatingException(string message)
+        public Exception2(string message)
             : base(message)
         {
-            LogMessage.Exit(message);
         }
     }
 }
