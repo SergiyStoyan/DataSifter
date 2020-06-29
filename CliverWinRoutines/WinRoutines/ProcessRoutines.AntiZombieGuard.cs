@@ -10,7 +10,7 @@ using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 
-namespace Cliver
+namespace Cliver.Win
 {
     public static partial class ProcessRoutines
     {
@@ -76,7 +76,7 @@ namespace Cliver
                 if (jobHandle == IntPtr.Zero)
                     initialize();
                 if (!WinApi.Kernel32.AssignProcessToJobObject(jobHandle, process.Handle))
-                    throw new Exception("!AssignProcessToJobObject. " + ErrorRoutines.GetLastError());
+                    throw new Exception("!AssignProcessToJobObject()", ErrorRoutines.GetLastError());
             }
 
             public static AntiZombieGuard This = new AntiZombieGuard();

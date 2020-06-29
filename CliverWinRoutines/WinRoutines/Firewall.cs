@@ -10,9 +10,9 @@ using System;
 using System.Diagnostics;
 
 
-namespace Cliver
+namespace Cliver.Win
 {
-    public static class WindowsFirewall
+    public static class Firewall
     {
         public enum Direction
         {

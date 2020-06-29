@@ -6,6 +6,20 @@ namespace Cliver
 {
     public class FileSystemRoutines
     {
+        public static bool IsCaseSensitive
+        {
+            get
+            {
+                if (isCaseSensitive == null)
+                {
+                    var tmp = Path.GetTempPath();
+                    isCaseSensitive = !Directory.Exists(tmp.ToUpper()) || !Directory.Exists(tmp.ToLower());
+                }
+                return (bool)isCaseSensitive;
+            }
+        }
+        static bool? isCaseSensitive = null;
+
         static public List<string> GetFiles(string directory, bool include_subfolders = true)
         {
             List<string> fs = Directory.EnumerateFiles(directory).ToList();
@@ -61,15 +75,44 @@ namespace Cliver
             Directory.Delete(directory, false);
         }
 
+        public static bool DeleteDirectorySteadfastly(string directory, bool recursive = true)
+        {
+            bool error = false;
+            foreach (string file in Directory.GetFiles(directory))
+            {
+                try
+                {
+                    File.SetAttributes(file, FileAttributes.Normal);
+                    File.Delete(file);
+                }
+                catch
+                {
+                    error = true;
+                }
+            }
+            if (recursive)
+                foreach (string d in Directory.GetDirectories(directory))
+                    DeleteDirectorySteadfastly(d, recursive);
+            try
+            {
+                Directory.Delete(directory, false);
+            }
+            catch
+            {
+                error = true;
+            }
+            return !error;
+        }
+
         public static void CopyFile(string file1, string file2, bool overwrite = false)
         {
-            CreateDirectory(PathRoutines.GetDirFromPath(file2), false);
+            CreateDirectory(PathRoutines.GetFileDir(file2), false);
             File.Copy(file1, file2, overwrite);
         }
 
         public static void MoveFile(string file1, string file2, bool overwrite = true)
         {
-            CreateDirectory(PathRoutines.GetDirFromPath(file2), false);
+            CreateDirectory(PathRoutines.GetFileDir(file2), false);
             if (File.Exists(file2))
             {
                 if (!overwrite)

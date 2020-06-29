@@ -7,12 +7,21 @@
 //Copyright: (C) 2006, Sergey Stoyan
 //********************************************************************************************
 using System;
+using System.Linq;
 using System.Reflection;
+using System.Diagnostics;
 
 namespace Cliver
 {
     public static class AssemblyRoutines
     {
+        public static Assembly GetPreviousAssemblyInCallStack()
+        {
+            Assembly thisAssembly = Assembly.GetExecutingAssembly();
+            StackTrace stackTrace = new StackTrace();
+            return stackTrace.GetFrames().Select(f => f.GetMethod().DeclaringType.Assembly).Where(a => a != thisAssembly).FirstOrDefault();
+        }
+
         public static DateTime GetAssemblyCompiledTime(Assembly assembly)
         {
             byte[] bs = new byte[2048];
@@ -26,12 +35,24 @@ namespace Cliver
             return dt.ToLocalTime();
         }
 
-        public static string GetAppVersion()
+        public static string GetAppCompilationVersion()
         {
             DateTime dt = AssemblyRoutines.GetAssemblyCompiledTime(Assembly.GetEntryAssembly());
             DateTime dt2 = AssemblyRoutines.GetAssemblyCompiledTime(Assembly.GetCallingAssembly());
             dt = dt > dt2 ? dt : dt2;
             return dt.ToString("yy-MM-dd-HH-mm-ss");
+        }
+
+        public static Version GetExecutingAssemblyVersion()
+        {
+            AssemblyInfo ai = new AssemblyInfo(Assembly.GetCallingAssembly());
+            return ai.Version;
+        }
+
+        public static string GetExecutingAssemblyName()
+        {
+            AssemblyInfo ai = new AssemblyInfo(Assembly.GetCallingAssembly());
+            return ai.Name;
         }
 
         //public static System.Drawing.Icon GetAppIcon(Assembly assembly = null)
@@ -49,7 +70,7 @@ namespace Cliver
             public AssemblyInfo(string file)
             {
                 if (file == null)
-                    a = Assembly.GetEntryAssembly();
+                    a = Assembly.GetCallingAssembly();
                 else
                     a = Assembly.LoadFile(file);
             }
@@ -58,12 +79,12 @@ namespace Cliver
             public AssemblyInfo(Assembly a = null)
             {
                 if (a == null)
-                    this.a = Assembly.GetEntryAssembly();
+                    this.a = Assembly.GetCallingAssembly();
                 else
                     this.a = a;
             }
 
-            public string AssemblyCompilationVersion
+            public string CompilationVersion
             {
                 get
                 {
@@ -72,7 +93,7 @@ namespace Cliver
                 }
             }
 
-            public string AssemblyTitle
+            public string Title
             {
                 get
                 {
@@ -89,28 +110,43 @@ namespace Cliver
                 }
             }
 
-            public string AssemblyVersion
+            //public string AssemblyVersion//does not give auto build part
+            //{
+            //    get
+            //    {
+            //        return a.GetName().Version.ToString();
+            //    }
+            //}
+
+            public Version Version
             {
                 get
                 {
-                    return a.GetName().Version.ToString();
+                    return a.GetName().Version;
                 }
             }
 
-            public string AssemblyDescription
+            public Version FileVersion
+            {
+                get
+                {
+                    FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(a.Location);
+                    return new Version(fvi.ProductVersion);
+                }
+            }
+
+            public string Description
             {
                 get
                 {
                     object[] attributes = a.GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false);
                     if (attributes.Length == 0)
-                    {
                         return "";
-                    }
                     return ((AssemblyDescriptionAttribute)attributes[0]).Description;
                 }
             }
 
-            public string AssemblyProduct
+            public string Product
             {
                 get
                 {
@@ -123,7 +159,7 @@ namespace Cliver
                 }
             }
 
-            public string AssemblyCopyright
+            public string Copyright
             {
                 get
                 {
@@ -136,7 +172,7 @@ namespace Cliver
                 }
             }
 
-            public string AssemblyCompany
+            public string Company
             {
                 get
                 {
@@ -146,6 +182,14 @@ namespace Cliver
                         return "";
                     }
                     return ((AssemblyCompanyAttribute)attributes[0]).Company;
+                }
+            }
+
+            public string Name
+            {
+                get
+                {
+                    return a.GetName().Name;
                 }
             }
         }

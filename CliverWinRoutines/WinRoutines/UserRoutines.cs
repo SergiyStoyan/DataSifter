@@ -12,9 +12,9 @@ using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.DirectoryServices.AccountManagement;
 
-namespace Cliver
+namespace Cliver.Win
 {
-    public static class WindowsUserRoutines
+    public static class UserRoutines
     {
         public static string GetUserNameBySessionId(uint sessionId, bool prependDomain = false)
         {

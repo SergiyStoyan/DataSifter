@@ -46,7 +46,7 @@ namespace Cliver
 
             public static void Save(string file, object o, bool indented = true, bool polymorphic = true, bool ignoreNullProperties = true)
             {
-                FileSystemRoutines.CreateDirectory(PathRoutines.GetDirFromPath(file));
+                FileSystemRoutines.CreateDirectory(PathRoutines.GetFileDir(file));
                 File.WriteAllText(file, Serialize(o, indented, polymorphic, ignoreNullProperties));
             }
 
@@ -60,15 +60,35 @@ namespace Cliver
                 return Deserialize(type, File.ReadAllText(file));
             }
 
-            public static T Clone<T>(T o)
+            public static O Clone<O>(O o)
             {
-                return Deserialize<T>(Serialize(o, false, true));
+                return Deserialize<O>(Serialize(o, false, true));
             }
 
             public static object Clone(Type type, object o)
             {
                 return Deserialize(type, Serialize(o, false, true));
             }
+
+            public static bool IsEqual(object a, object b)
+            {
+                return Serialize(a, false, true) == Serialize(b, false, true);
+            }
+        }
+
+        public static O CreateCloneByJson<O>(this O o)
+        {
+            return Json.Clone<O>(o);
+        }
+
+        public static object CreateCloneByJson(this object o, Type type)
+        {
+            return Json.Clone(type, o);
+        }
+
+        public static bool IsEqualByJson(this object a, object b)
+        {
+            return Json.IsEqual(a, b);
         }
     }
 }

@@ -28,7 +28,7 @@ namespace Cliver.DataSifter
                 Message.TopMost = true;
                 Win.LogMessage.DisableStumblingDialogs = false;
                 //Log.DeleteOldLogsDialog = false;
-                Log.Initialize(Log.Mode.ONLY_LOG, Log.CompanyCommonDataDir, true);
+                Log.Initialize(Log.Mode.ALL_LOGS_ARE_IN_SAME_FOLDER, new System.Collections.Generic.List<string> { Log.CompanyCommonDataDir }, Log.Level.ALL);
 
                 Settings.Default.Reload();
                 if (Settings.Default.ApplicationVersion != Application.ProductVersion)
