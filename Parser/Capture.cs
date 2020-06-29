@@ -19,7 +19,7 @@ namespace Cliver.DataSifter
     public class Capture
     {
         /// <summary>
-        /// Child Capture's for the key. 
+        /// Child Captures for the key. 
         /// </summary>
         /// <param name="key">group name of child filter</param>
         /// <returns>child Capture's</returns>
@@ -85,17 +85,17 @@ namespace Cliver.DataSifter
         //}
 
         /// <summary>
-        /// Capture string of this Capture.
+        /// Captured string for this Capture.
         /// </summary>
         public readonly string Value;
 
         /// <summary>
-        /// Text position of the capture string of this Capture.
+        /// Text position of the captured string which is Value.
         /// </summary>
         public readonly int Index;
 
         /// <summary>
-        /// Length of the capture string of this Capture.
+        /// Length of the captured string which is Value.
         /// </summary>
         public readonly int Length;
 
@@ -105,7 +105,7 @@ namespace Cliver.DataSifter
         public readonly string Key;
 
         /// <summary>
-        /// Keys of child Capture's. (Group names of child filters.)
+        /// Keys of child Captures. (Group names of child filters.)
         /// </summary>
         public string[] Keys
         {
@@ -115,24 +115,8 @@ namespace Cliver.DataSifter
             }
         }
 
-        ///// <summary>
-        ///// Values of child Capture's for the key. These are captured strings of named group of child filter.
-        ///// </summary>
-        ///// <param name="key">group name of child filter</param>
-        ///// <returns>values of child Capture's</returns>
-        //public string[] ValuesOf(string key)
-        //{
-        //    Capture[] gcs = this[key];
-        //    string[] vs = new string[gcs.Length];
-        //    int i = 0;
-        //    foreach (Capture gc in gcs)
-        //        vs[i++] = gc.Value;
-
-        //    return vs;
-        //}
-
         /// <summary>
-        /// Value of child Capture's for the key and the index. It is captured string of named group of child filter.
+        /// Value of the child Capture defined by the key and index. It is the captured string of the named group of the child filter.
         /// </summary>
         /// <param name="key">group name of child filter</param>
         /// <param name="index">index within array of captures</param>
@@ -146,7 +130,7 @@ namespace Cliver.DataSifter
         }
 
         /// <summary>
-        /// Values of last descendant GroupCaptures for the path. These are captured strings of named group of last descendant filter.
+        /// Values of the last descendant GroupCaptures for the path. These are captured strings of the named group of the last descendant filter.
         /// It is almost the same like this.[key][index]...[key] but more efficient and safe.
         /// It is safe: ignores if some key is empty or some index is out of range in the path.
         /// </summary>
@@ -165,8 +149,8 @@ namespace Cliver.DataSifter
         }
 
         /// <summary>
-        /// First value of last-descendant Capture for the path. It is captured string of named group of last descendant filter.
-        /// Used when an only value needed. If the path specifies array of values, the first one is returned.
+        /// First value of the last-descendant Capture for the path. It is the captured string of the named group of the last descendant filter.
+        /// Used when the only value needed. If the path specifies array of values, the first one is returned.
         /// It is almost the same like this.[key][index]....Value but more efficient and safe.
         /// It returns null if some key is empty or some index is out of range.
         /// </summary>
@@ -181,27 +165,9 @@ namespace Cliver.DataSifter
             return gcs[0].Value;
         }
 
-        ///// <summary>
-        ///// Value of last descendant Capture for the path and the index. It is captured string of named group of last descendant filter.
-        ///// Designed for the case when the path is a key.
-        ///// It is almost the same like this.[key][index]....Value but more efficient.
-        ///// It is safe in path use: returns null if some key is empty or some index is out of range.
-        ///// </summary>
-        ///// <param name="path">path specified in the following manner: "key[, index][/ key[, index]]...", 
-        ///// where key is a group name of child filter, index is integer or '*'</param>
-        ///// <param name="index">index within array of captures</param>
-        ///// <returns>value of last descendant Capture</returns>
-        //public string ValueOf(string path, int index)
-        //{
-        //    List<string> gcs = get_GroupCaptures_by_path(path);
-        //    if (gcs.Count <= index || index < 0)
-        //        return null;
-        //    return ((Capture)gcs[index]).Value;
-        //}
-
         /// <summary>
-        /// Last value of last-descendant Capture for the path. It is captured string of named group of last descendant filter.
-        /// Used when an only value needed. If the path specifies array of values, the first one is returned.
+        /// Last value of the last-descendant Capture for the path. It is the captured string of the named group of the last descendant filter.
+        /// Used when the only value needed. If the path specifies array of values, the first one is returned.
         /// It is almost the same like this.[key][index]....Value but more efficient and safe.
         /// It returns null if some key is empty or some index is out of range.
         /// </summary>
@@ -217,7 +183,7 @@ namespace Cliver.DataSifter
         }
 
         /// <summary>
-        /// Array of last descendant GroupCaptures for the path. These are captures of named group of last descendant filter.
+        /// Array of the last descendant GroupCaptures for the path. These are captures of the named group of the last descendant filter.
         /// It is almost the same like this.[key][index]...[key] but more efficient and safe.
         /// It is safe: ignores if some key is empty or some index is out of range in the path.
         /// </summary>
