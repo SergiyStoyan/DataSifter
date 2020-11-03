@@ -66,9 +66,6 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CliverRoutines, Version=5.7.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\HawkeyeParser\packages\CliverRoutines.5.7.1\lib\netstandard2.0\CliverRoutines.dll</HintPath>
-    </Reference>
     <Reference Include="HtmlAgilityPack, Version=1.11.24.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <HintPath>..\HawkeyeParser\packages\HtmlAgilityPack.1.11.24\lib\Net45\HtmlAgilityPack.dll</HintPath>
     </Reference>
@@ -195,19 +192,11 @@
     <EmbeddedResource Include="SourceForm.resx">
       <DependentUpon>SourceForm.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="app.config" />
     <None Include="app.manifest" />
     <None Include="packages.config" />
-    <None Include="Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <Compile Include="Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-    <Compile Include="Settings.cs" />
+    <Compile Include="Settings\History.cs" />
+    <Compile Include="Settings\General.cs" />
+    <Compile Include="Settings\Appearance.cs" />
     <Compile Include="SourceForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -243,7 +232,11 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="CliverWinRoutines\CliverWinRoutines.csproj">
+    <ProjectReference Include="..\PdfDocumentParser\CliverRoutines\CliverRoutines.csproj">
+      <Project>{e88444ba-1b07-40e6-96d1-922d27965f91}</Project>
+      <Name>CliverRoutines</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PdfDocumentParser\CliverWinRoutines\CliverWinRoutines.csproj">
       <Project>{51f2df13-41f1-4f22-890f-c3b50c813909}</Project>
       <Name>CliverWinRoutines</Name>
     </ProjectReference>

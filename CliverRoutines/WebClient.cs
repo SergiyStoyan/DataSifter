@@ -1,21 +1,20 @@
-﻿//********************************************************************************************
-//Author: Sergey Stoyan
-//        sergey.stoyan@gmail.com
-//        sergey_stoyan@yahoo.com
-//        http://www.cliversoft.com
-//        26 September 2006
-//Copyright: (C) 2006, Sergey Stoyan
-//********************************************************************************************
+﻿/********************************************************************************************
+        Author: Sergey Stoyan
+        sergey.stoyan@gmail.com
+        sergey.stoyan@hotmail.com
+        stoyan@cliversoft.com
+        http://www.cliversoft.com
+********************************************************************************************/
 using System;
 using System.Net;
 
 namespace Cliver
 {
-    class WebClient : System.Net.WebClient
+    public class WebClient : System.Net.WebClient
     {
         protected override WebResponse GetWebResponse(WebRequest request, IAsyncResult asyncResult)
         {
-            WebResponse response = null;
+            WebResponse response;
             try
             {
                 response = base.GetWebResponse(request, asyncResult);
@@ -29,7 +28,7 @@ namespace Cliver
         }
         protected override WebResponse GetWebResponse(WebRequest request)
         {
-            WebResponse response = null;
+            WebResponse response;
             try
             {
                 response = base.GetWebResponse(request);

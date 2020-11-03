@@ -1,10 +1,9 @@
 //********************************************************************************************
 //Author: Sergey Stoyan
 //        sergey.stoyan@gmail.com
-//        sergey_stoyan@yahoo.com
+//        sergey.stoyan@hotmail.com
+//        stoyan@cliversoft.com
 //        http://www.cliversoft.com
-//        26 September 2006
-//Copyright: (C) 2006-2013, Sergey Stoyan
 //********************************************************************************************
 using System;
 using System.IO;
@@ -48,10 +47,17 @@ namespace Cliver
             void Error2(string message);
 
             /// <summary>
-            /// Write message with the stack information.
+            /// Write error with exception and without trace details.
             /// </summary>
             /// <param name="message"></param>
-            void Trace(object message = null);
+            /// <param name="e"></param>
+            void Error2(string message, Exception e);
+
+            /// <summary>
+            /// Write object with the stack information.
+            /// </summary>
+            /// <param name="object_"></param>
+            void Trace(object object_ = null);
 
             /// <summary>
             /// Write error with details and terminate the process.
@@ -91,6 +97,13 @@ namespace Cliver
             void Warning2(string message);
 
             /// <summary>
+            /// Write warning with exception and without details.
+            /// </summary>
+            /// <param name="message"></param>
+            /// <param name="e"></param>
+            void Warning2(string message, Exception e);
+
+            /// <summary>
             /// Write exception with details.
             /// </summary>
             /// <param name="e"></param>
@@ -103,22 +116,16 @@ namespace Cliver
             void Warning2(Exception e);
 
             /// <summary>
-            /// Write message without details.
-            /// </summary>
-            /// <param name="message"></param>
-            void Inform(string message);
-
-            /// <summary>
             /// Write message with details.
             /// </summary>
             /// <param name="message"></param>
             void Inform0(string message);
 
             /// <summary>
-            /// Write debug message without details.
+            /// Write message without details.
             /// </summary>
             /// <param name="message"></param>
-            void Debug(string message);
+            void Inform(string message);
 
             /// <summary>
             /// Write debug message with details.
@@ -127,10 +134,10 @@ namespace Cliver
             void Debug0(string message);
 
             /// <summary>
-            /// Write message without type and without details.
+            /// Write debug message without details.
             /// </summary>
             /// <param name="message"></param>
-            void Write(string message);
+            void Debug(string message);
 
             /// <summary>
             /// Write message without type and with details.
@@ -139,7 +146,13 @@ namespace Cliver
             void Write0(string message);
 
             /// <summary>
-            /// General writting log method.
+            /// Write message without type and without details.
+            /// </summary>
+            /// <param name="message"></param>
+            void Write(string message);
+
+            /// <summary>
+            /// Base writting log method.
             /// </summary>
             /// <param name="messageType"></param>
             /// <param name="message"></param>

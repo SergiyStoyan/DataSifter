@@ -1,11 +1,34 @@
-﻿using System.Collections.Generic;
+﻿//********************************************************************************************
+//Author: Sergey Stoyan
+//        sergey.stoyan@gmail.com
+//        sergey.stoyan@hotmail.com
+//        stoyan@cliversoft.com
+//        http://www.cliversoft.com
+//********************************************************************************************
+using System.Collections.Generic;
 using System.Linq;
 using System.IO;
+using System;
 
 namespace Cliver
 {
     public class FileSystemRoutines
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <param name="PATHs">dirs listes like environmentVariable PATH</param>
+        /// <param name="PATHEXTs">extensions listed like environmentVariable PATHEXT</param>
+        /// <returns></returns>
+        public static string FindFullCommandLinePath(string fileName, string PATHs, string PATHEXTs)
+        {
+            var paths = new[] { Environment.CurrentDirectory }.Concat(PATHs.Split(';'));
+            var extensions = new[] { string.Empty }.Concat(PATHEXTs.Split(';').Where(e => e.StartsWith(".")));
+            var combinations = paths.SelectMany(x => extensions, (path, extension) => Path.Combine(path, fileName + extension));
+            return combinations.FirstOrDefault(File.Exists);
+        }
+
         public static bool IsCaseSensitive
         {
             get
@@ -31,22 +54,25 @@ namespace Cliver
 
         public static string CreateDirectory(string directory, bool unique = false)
         {
-            if (!Directory.Exists(directory))
-                Directory.CreateDirectory(directory);
+            DirectoryInfo di = new DirectoryInfo(directory);
+            if (!di.Exists)
+                di.Create();
             else if (unique)
             {
-                int i = 1;
-                string p = directory + "_" + i;
-                for (; Directory.Exists(p); p = directory + "_" + (++i)) ;
-                directory = p;
-                Directory.CreateDirectory(directory);
+                int i = 0;
+                do
+                {
+                    di = new DirectoryInfo(directory + "_" + (++i));
+                }
+                while (di.Exists);
+                di.Create();
             }
-            return directory;
+            return di.FullName;
         }
 
         public static void ClearDirectory(string directory, bool recursive = true)
         {
-            if(!Directory.Exists(directory))
+            if (!Directory.Exists(directory))
             {
                 Directory.CreateDirectory(directory);
                 return;

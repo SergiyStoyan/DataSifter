@@ -2,25 +2,26 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <AssemblyVersion>5.7.0.0</AssemblyVersion>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <AssemblyVersion>6.1.1.0</AssemblyVersion>
     <RepositoryUrl>https://github.com/sergeystoyan/CliverRoutines.git</RepositoryUrl>
-    <FileVersion>5.7.0.0</FileVersion>
+    <FileVersion>6.1.1.0</FileVersion>
     <!--PackageLicenseFile>LICENSE</PackageLicenseFile-->
-	<PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
+	<PackageLicenseExpression></PackageLicenseExpression>
     <Copyright>Sergey Stoyan</Copyright>
     <Authors>Sergey Stoyan</Authors>
     <Company>CliverSoft</Company>
-    <Version>5.7.0</Version>
+    <Version>6.1.1</Version>
     <PackageProjectUrl>https://github.com/sergeystoyan/CliverRoutines</PackageProjectUrl>
-    <Description>Cross-platform routines:
-- serializing which replaces .NET settings for desktop applications;
-- logging with threading and session support;
+    <Description>Cross-platform routines needed in the most applications:
+- settings manager that supersedes .NET ConfigurationManager;
+- logger with multi-threading and session support;
 - auxiliary routines;</Description>
     <PackageTags>serialize, log, settings</PackageTags>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -29,9 +30,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="CliverRoutinesExample\**" />
+    <Compile Remove="CliverRoutinesTests\**" />
     <Compile Remove="Example\**" />
+    <EmbeddedResource Remove="CliverRoutinesExample\**" />
+    <EmbeddedResource Remove="CliverRoutinesTests\**" />
     <EmbeddedResource Remove="Example\**" />
+    <None Remove="CliverRoutinesExample\**" />
+    <None Remove="CliverRoutinesTests\**" />
     <None Remove="Example\**" />
+    <None Include="LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

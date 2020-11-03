@@ -1,27 +1,31 @@
 ﻿/********************************************************************************************
         Author: Sergey Stoyan
         sergey.stoyan@gmail.com
+        sergey.stoyan@hotmail.com
+        stoyan@cliversoft.com
         http://www.cliversoft.com
 ********************************************************************************************/
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Cliver
 {
     /// <summary>
     /// Features:
     /// - auto-generating values;
-    /// - auto-disposing IDisposable values;
+    /// - auto-disposing IDisposable values that have left the dictionary;
     /// </summary>
-    /// <typeparam name="KT"></typeparam>
-    /// <typeparam name="VT"></typeparam>
+    /// <typeparam name="KT">key type</typeparam>
+    /// <typeparam name="VT">value type</typeparam>
     public class HandyDictionary<KT, VT> : IDisposable, IEnumerable<KeyValuePair<KT, VT>> //where VT: class
     {
         /// <summary>
         /// Create HandyDictionary with auto-generating value function.
         /// </summary>
-        /// <param name="getValue"></param>
+        /// <param name="getValue">method creating an object for a key</param>
         public HandyDictionary(GetValue getValue)
         {
             this.getValue = getValue;
@@ -32,13 +36,16 @@ namespace Cliver
         /// <summary>
         /// Create HandyDictionary without auto-generating value function.
         /// </summary>
-        /// <param name="defaultValue"></param>
+        /// <param name="defaultValue">the default value returned for an unset key</param>
         public HandyDictionary(VT defaultValue)
         {
             this.defaultValue = defaultValue;
         }
         protected VT defaultValue;
 
+        /// <summary>
+        /// Create HandyDictionary without auto-generating value function.
+        /// </summary>
         public HandyDictionary()
         {
             defaultValue = default;
@@ -55,61 +62,65 @@ namespace Cliver
             {
                 if (keys2value != null)
                 {
-                    if (IsDisposable(typeof(VT)))
-                        foreach (VT v in keys2value.Values)
-                            if (v != null)
-                                ((IDisposable)v).Dispose();
+                    Clear();
                     keys2value = null;
                 }
             }
         }
 
-        static bool IsDisposable(Type type)
-        {
-            return typeof(IDisposable).IsAssignableFrom(type);
-        }
-
+        /// <summary>
+        /// Clear the dictionary and dispose disposable elements.
+        /// </summary>
         virtual public void Clear()
         {
             lock (this)
             {
-                if (IsDisposable(typeof(VT)))
-                    foreach (VT v in keys2value.Values)
-                        if (v != null)
-                            ((IDisposable)v).Dispose();
+                foreach (VT v in keys2value.Values)
+                    if (v != null && v is IDisposable)
+                        ((IDisposable)v).Dispose();
                 keys2value.Clear();
             }
         }
 
-        public void Unset(KT key)
+        /// <summary>
+        /// Remove the element by the key and dispose it if disposable.
+        /// </summary>
+        public void Remove(KT key)
         {
             lock (this)
             {
-                if (IsDisposable(typeof(VT)))
-                {
-                    VT v;
-                    if (keys2value.TryGetValue(key, out v))
-                        if (v != null)
-                            ((IDisposable)v).Dispose();
-                }
+                if (keys2value.TryGetValue(key, out VT v))
+                    dispose(v);
                 keys2value.Remove(key);
             }
         }
 
+        void dispose(VT value)
+        {
+            lock (this)
+            {
+                if (value == null || !(value is IDisposable))
+                    return;
+                int vKeyCount = 0;
+                keys2value.Values.Where(a => a.Equals(value)).TakeWhile(a => ++vKeyCount < 2);
+                if (vKeyCount < 2)//make sure it is the only inclusion of the object
+                    ((IDisposable)value).Dispose();
+            }
+        }
+
+        /// <summary>
+        /// It is safe: returns default if does not exists.
+        /// To check for existance, use TryGetValue().
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
         public VT this[KT key]
         {
             get
             {
                 lock (this)
                 {
-                    VT v;
-                    if (!keys2value.TryGetValue(key, out v))
-                    {
-                        if (getValue == null)
-                            return defaultValue;
-                        v = getValue(key);
-                        keys2value[key] = v;
-                    }
+                    TryGetValue(key, out VT v);
                     return v;
                 }
             }
@@ -117,6 +128,13 @@ namespace Cliver
             {
                 lock (this)
                 {
+                    if (keys2value.TryGetValue(key, out VT v) && v != null && !v.Equals(value))
+                    {
+                        int vKeyCount = 0;
+                        keys2value.Values.Where(a => a.Equals(v)).TakeWhile(a => ++vKeyCount < 2);
+                        if (vKeyCount < 2)//make sure it is the only inclusion of the object
+                            dispose(v);
+                    }
                     keys2value[key] = value;
                 }
             }
@@ -162,6 +180,22 @@ namespace Cliver
                 keys2value[key] = value;
             }
             return true;
+        }
+
+        public void Add(KT key, VT value)
+        {
+            this[key] = value;
+        }
+
+        /// <summary>
+        /// Attention: the count can be implicitly changed due to auto-generating value function
+        /// </summary>
+        public int Count
+        {
+            get
+            {
+                return keys2value.Count;
+            }
         }
     }
 }

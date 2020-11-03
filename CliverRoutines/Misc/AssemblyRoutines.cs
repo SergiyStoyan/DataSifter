@@ -1,10 +1,9 @@
 ﻿//********************************************************************************************
 //Author: Sergey Stoyan
 //        sergey.stoyan@gmail.com
-//        sergey_stoyan@yahoo.com
+//        sergey.stoyan@hotmail.com
+//        stoyan@cliversoft.com
 //        http://www.cliversoft.com
-//        26 September 2006
-//Copyright: (C) 2006, Sergey Stoyan
 //********************************************************************************************
 using System;
 using System.Linq;
@@ -70,25 +69,26 @@ namespace Cliver
             public AssemblyInfo(string file)
             {
                 if (file == null)
-                    a = Assembly.GetCallingAssembly();
+                    Assembly = Assembly.GetCallingAssembly();
                 else
-                    a = Assembly.LoadFile(file);
+                    Assembly = Assembly.LoadFile(file);
             }
-            readonly Assembly a;
+
+            public Assembly Assembly { get; }
 
             public AssemblyInfo(Assembly a = null)
             {
                 if (a == null)
-                    this.a = Assembly.GetCallingAssembly();
+                    Assembly = Assembly.GetCallingAssembly();
                 else
-                    this.a = a;
+                    Assembly = a;
             }
 
             public string CompilationVersion
             {
                 get
                 {
-                    DateTime dt = AssemblyRoutines.GetAssemblyCompiledTime(a);
+                    DateTime dt = GetAssemblyCompiledTime(Assembly);
                     return dt.ToString("yy-MM-dd-HH-mm-ss");
                 }
             }
@@ -97,16 +97,10 @@ namespace Cliver
             {
                 get
                 {
-                    object[] attributes = a.GetCustomAttributes(typeof(AssemblyTitleAttribute), false);
-                    if (attributes.Length > 0)
-                    {
-                        AssemblyTitleAttribute titleAttribute = (AssemblyTitleAttribute)attributes[0];
-                        if (titleAttribute.Title != "")
-                        {
-                            return titleAttribute.Title;
-                        }
-                    }
-                    return System.IO.Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().CodeBase);
+                    object[] attributes = Assembly.GetCustomAttributes(typeof(AssemblyTitleAttribute), false);
+                    if (attributes.Length < 1)
+                        return null;
+                    return ((AssemblyTitleAttribute)attributes[0]).Title;
                 }
             }
 
@@ -122,7 +116,7 @@ namespace Cliver
             {
                 get
                 {
-                    return a.GetName().Version;
+                    return Assembly.GetName().Version;
                 }
             }
 
@@ -130,7 +124,7 @@ namespace Cliver
             {
                 get
                 {
-                    FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(a.Location);
+                    FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(Assembly.Location);
                     return new Version(fvi.ProductVersion);
                 }
             }
@@ -139,9 +133,9 @@ namespace Cliver
             {
                 get
                 {
-                    object[] attributes = a.GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false);
-                    if (attributes.Length == 0)
-                        return "";
+                    object[] attributes = Assembly.GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false);
+                    if (attributes.Length <1)
+                        return null;
                     return ((AssemblyDescriptionAttribute)attributes[0]).Description;
                 }
             }
@@ -150,11 +144,9 @@ namespace Cliver
             {
                 get
                 {
-                    object[] attributes = a.GetCustomAttributes(typeof(AssemblyProductAttribute), false);
-                    if (attributes.Length == 0)
-                    {
-                        return "";
-                    }
+                    object[] attributes = Assembly.GetCustomAttributes(typeof(AssemblyProductAttribute), false);
+                    if (attributes.Length < 1)
+                        return null;
                     return ((AssemblyProductAttribute)attributes[0]).Product;
                 }
             }
@@ -163,11 +155,9 @@ namespace Cliver
             {
                 get
                 {
-                    object[] attributes = a.GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false);
-                    if (attributes.Length == 0)
-                    {
-                        return "";
-                    }
+                    object[] attributes = Assembly.GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false);
+                    if (attributes.Length < 1)
+                        return null;
                     return ((AssemblyCopyrightAttribute)attributes[0]).Copyright;
                 }
             }
@@ -176,11 +166,9 @@ namespace Cliver
             {
                 get
                 {
-                    object[] attributes = a.GetCustomAttributes(typeof(AssemblyCompanyAttribute), false);
-                    if (attributes.Length == 0)
-                    {
-                        return "";
-                    }
+                    object[] attributes = Assembly.GetCustomAttributes(typeof(AssemblyCompanyAttribute), false);
+                    if (attributes.Length < 1)
+                        return null;
                     return ((AssemblyCompanyAttribute)attributes[0]).Company;
                 }
             }
@@ -189,7 +177,7 @@ namespace Cliver
             {
                 get
                 {
-                    return a.GetName().Name;
+                    return Assembly.GetName().Name;
                 }
             }
         }

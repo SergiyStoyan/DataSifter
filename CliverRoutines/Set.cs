@@ -1,11 +1,10 @@
-﻿//********************************************************************************************
-//Author: Sergey Stoyan
-//        sergey.stoyan@gmail.com
-//        sergey_stoyan@yahoo.com
-//        http://www.cliversoft.com
-//        26 September 2006
-//Copyright: (C) 2006, Sergey Stoyan
-//********************************************************************************************
+﻿/********************************************************************************************
+        Author: Sergey Stoyan
+        sergey.stoyan@gmail.com
+        sergey.stoyan@hotmail.com
+        stoyan@cliversoft.com
+        http://www.cliversoft.com
+********************************************************************************************/
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -119,7 +118,7 @@ namespace Cliver
         {
             SetExample empty = new SetExample(EnumExample.EMPTY);
             SetExample v1 = new SetExample(EnumExample.VALUE1);
-            SetExample v2 = new SetExample(EnumExample.VALUE2, EnumExample.VALUE3);
+            SetExample v23 = new SetExample(EnumExample.VALUE2, EnumExample.VALUE3);
             SetExample v123 = new SetExample(EnumExample.VALUE1, EnumExample.VALUE2, EnumExample.VALUE3);
             SetExample se = empty.Append(v123).Remove<SetExample>(EnumExample.VALUE3);
         }

@@ -1,10 +1,9 @@
 ﻿//********************************************************************************************
 //Author: Sergey Stoyan
 //        sergey.stoyan@gmail.com
-//        sergey_stoyan@yahoo.com
+//        sergey.stoyan@hotmail.com
+//        stoyan@cliversoft.com
 //        http://www.cliversoft.com
-//        26 September 2006
-//Copyright: (C) 2006, Sergey Stoyan
 //********************************************************************************************
 using System;
 using System.Collections.Generic;
@@ -17,21 +16,15 @@ namespace Cliver
 {
     public static class ReflectionRoutines
     {
-        static public bool IsSubclassOfRawGeneric(this Type type, Type generic_type)
+        static public bool IsSubclassOfRawGeneric(Type type, Type genericType)
         {
-            while (type != null && type != typeof(object))
-            {
-                var cur = type.IsGenericType ? type.GetGenericTypeDefinition() : type;
-                if (generic_type == cur)
-                {
+            for (; type != null && type != typeof(object); type = type.BaseType)
+                if (genericType == (type.IsGenericType ? type.GetGenericTypeDefinition() : type))
                     return true;
-                }
-                type = type.BaseType;
-            }
             return false;
         }
 
-        public static Dictionary<string, FieldInfo> GetFields(this object o, BindingFlags bindingFlags = BindingFlags.Public)
+        public static Dictionary<string, FieldInfo> GetFields(object o, BindingFlags bindingFlags = BindingFlags.Public)
         {
             Dictionary<string, FieldInfo> ns2fi = new Dictionary<string, FieldInfo>();
             foreach (FieldInfo fi in o.GetType().GetFields(bindingFlags))
@@ -52,7 +45,7 @@ namespace Cliver
         //        });
         //} public Dictionary<string, string> nameOfAlreadyAcessed = new Dictionary<string, string>();
 
-        public static string GetNameOfVariablePassedInAsParameter(string parameterName, int level = 1)//!!!not debugged! It will not work for Release
+        public static string GetNameOfVariablePassedInAsParameter(string parameterName, int frame = 1)//!!!not debugged! It will not work for Release
         {
             MethodBase mb = System.Reflection.MethodBase.GetCurrentMethod();
             int parameterNumber = 0;
@@ -62,7 +55,7 @@ namespace Cliver
                     break;
                 parameterNumber++;
             }
-            StackFrame stackFrame = new StackTrace(true).GetFrame(level);
+            StackFrame stackFrame = new StackTrace(true).GetFrame(frame);
             string fileName = stackFrame.GetFileName();
             int lineNumber = stackFrame.GetFileLineNumber();
             System.IO.StreamReader file = new System.IO.StreamReader(fileName);

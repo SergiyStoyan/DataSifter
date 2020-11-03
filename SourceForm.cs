@@ -21,7 +21,7 @@ namespace Cliver.DataSifter
     /// Form that hosts parsed text and filter tree editor control
     /// </summary>
     internal partial class SourceForm : Form//
-    {        
+    {
         #region initializing
 
         string title = Program.Title;
@@ -32,13 +32,13 @@ namespace Cliver.DataSifter
         {
             This = new SourceForm();
         }
-        
+
         static internal readonly Color SplitterColor = Color.Gray;
 
         SourceForm()
         {
             InitializeComponent();
-            
+
             Icon = Win.AssemblyRoutines.GetAppIcon();
 
             set_tool_tip();
@@ -54,15 +54,15 @@ namespace Cliver.DataSifter
               {
                   TextBox.WordWrap = WrapText.Checked;
               };
-            WrapText.Checked = Settings.Default.WrapText;
+            WrapText.Checked = Settings1.General.WrapText;
             TextBox.WordWrap = WrapText.Checked;
 
             Document.DocumentUpdated += new Document.DocumentUpdatedEventHandler(Document_DocumentUpdated);
             Document.SetTestText();
             //TreeForm_Click(null, null);
 
-            if (System.IO.File.Exists(Settings.Default.LastSourceFile))
-                Document.LoadFromFile(Settings.Default.LastSourceFile);
+            if (System.IO.File.Exists(Settings1.History.LastSourceFile))
+                Document.LoadFromFile(Settings1.History.LastSourceFile);
 
             string fltr_file = null;
             foreach (string a in Environment.GetCommandLineArgs())
@@ -75,12 +75,12 @@ namespace Cliver.DataSifter
             }
             if (fltr_file == null)
             {
-                if (System.IO.File.Exists(Settings.Default.LastFilterTreeFile))
-                    fltr_file = Settings.Default.LastFilterTreeFile;
+                if (System.IO.File.Exists(Settings1.History.LastFilterTreeFile))
+                    fltr_file = Settings1.History.LastFilterTreeFile;
             }
             FilterTreeForm.This.LoadFilterTree(fltr_file);
         }
-        
+
         void Document_DocumentUpdated()
         {
             ignore_selection_changed = true;
@@ -111,12 +111,12 @@ namespace Cliver.DataSifter
             //head += colortb;
             //rtf.Remove(0, RtfEditor.IndexOf(rtf, "\r\n"));
             //rtf.Insert(0, head);
-            if (Settings.Default.HighlightHtmlTags)
+            if (Settings1.Appearance.HighlightHtmlTags)
             {  //set rtf header   
                 StringBuilder rtf = new StringBuilder(TextBox.Rtf);
-                Color html_tags_color = Settings.Default.HtmlTagsColor;
-                Color html_comment_color = Settings.Default.HtmlCommentColor;
-                Color html_javascript_color = Settings.Default.HtmlJavascriptColor;
+                Color html_tags_color = Settings1.Appearance.HtmlTagsColor;
+                Color html_comment_color = Settings1.Appearance.HtmlCommentColor;
+                Color html_javascript_color = Settings1.Appearance.HtmlJavascriptColor;
                 string colortb = string.Format(@"{{\colortbl;\red{0}\green{1}\blue{2};\red{3}\green{4}\blue{5};\red{6}\green{7}\blue{8};}}",
                     html_comment_color.R, html_comment_color.G, html_comment_color.B,
                     html_tags_color.R, html_tags_color.G, html_tags_color.B,
@@ -174,7 +174,7 @@ namespace Cliver.DataSifter
 
             ignore_selection_changed = false;
         }
-        
+
         /// <summary>
         /// RichTextBox takes '\r\n' as a single char so it counts them to restore a correct position
         /// </summary>
@@ -187,7 +187,7 @@ namespace Cliver.DataSifter
                     positions_ignored_by_rich_text_box.Add(m.Index + 1);
         }
         List<int> positions_ignored_by_rich_text_box = new List<int>();
-        
+
         private void SourceForm_Load(object sender, EventArgs e)
         {
             try
@@ -203,7 +203,7 @@ namespace Cliver.DataSifter
             }
         }
 
-#endregion
+        #endregion
 
         #region parsing
 
@@ -297,7 +297,7 @@ namespace Cliver.DataSifter
             ignore_selection_changed = false;
         }
 
-#endregion
+        #endregion
 
         #region handlers
 
@@ -307,12 +307,12 @@ namespace Cliver.DataSifter
             {
                 OpenFileDialog d = new OpenFileDialog();
                 d.Title = "Pick a file to be parsed";
-                d.InitialDirectory = get_corresponding_source_folder(Settings.Default.LastFilterTreeFile);
+                d.InitialDirectory = get_corresponding_source_folder(Settings1.History.LastFilterTreeFile);
                 if (string.IsNullOrWhiteSpace(d.InitialDirectory) || !Directory.Exists(d.InitialDirectory))
                     d.InitialDirectory = null;
                 if (d.ShowDialog(this) != DialogResult.OK || string.IsNullOrWhiteSpace(d.FileName))
                     return;
-                Settings.Default.LastSourceFile = d.FileName;
+                Settings1.History.LastSourceFile = d.FileName;
                 Settings.Default.Save();
                 Document.LoadFromFile(d.FileName);
             }
@@ -327,9 +327,9 @@ namespace Cliver.DataSifter
             if (string.IsNullOrWhiteSpace(filter_tree_file))
                 return "";
             string ft_folder = Path.GetDirectoryName(filter_tree_file);
-            if (Settings.Default.FilterTreeFolder2SourceFolder.Contains(ft_folder))
-                return (string)Settings.Default.FilterTreeFolder2SourceFolder[ft_folder];
-            return Path.GetDirectoryName(Settings.Default.LastSourceFile);
+            if (Settings1.History.FilterTreeFolders2SourceFolder.Contains(ft_folder))
+                return (string)Settings1.History.FilterTreeFolders2SourceFolder[ft_folder];
+            return Path.GetDirectoryName(Settings1.History.LastSourceFile);
         }
 
         private void About_Click(object sender, EventArgs e)
@@ -375,7 +375,7 @@ namespace Cliver.DataSifter
                 return;
             }
 
-            Settings.Default.WrapText = WrapText.Checked;
+            Settings1.General.WrapText = WrapText.Checked;
             Settings.Default.Save();
 
             This.Dispose();
@@ -405,7 +405,7 @@ namespace Cliver.DataSifter
 
             set_status_by_position(TextBox.SelectionStart, TextBox.SelectionLength);
 
-            if (!Settings.Default.CopySelectionToClipboard)
+            if (!Settings1.General.CopySelectionToClipboard)
                 return;
 
             TextBox.Copy();
@@ -435,7 +435,7 @@ namespace Cliver.DataSifter
         {
             if (CaptureLabels == null)
                 return;
-            
+
             if (current_capture_label_index < 0 || current_capture_label_index >= CaptureLabels.Count)
             {
                 SetStatus("");
@@ -455,7 +455,7 @@ namespace Cliver.DataSifter
                 return;
 
             TextBox.SelectionStart = owner_cl.start3;
-            TextBox.SelectionLength = owner_cl.end3 - owner_cl.start3;           
+            TextBox.SelectionLength = owner_cl.end3 - owner_cl.start3;
         }
 
         static ThreadRunner tw;
@@ -481,7 +481,7 @@ namespace Cliver.DataSifter
                 return;
             Brush brush;
             OutputGroup og = (OutputGroup)output_groups[e.Index];
-            brush = new SolidBrush(Settings.Default.GetFilterBackColor(og.Level));
+            brush = new SolidBrush(Settings1.Appearance.GetFilterBackColor(og.Level));
             e.Graphics.FillRectangle(brush, e.Bounds);
             brush = new SolidBrush(e.ForeColor);
             e.Graphics.DrawString((string)((ComboBox)sender).Items[e.Index], e.Font, brush, e.Bounds);

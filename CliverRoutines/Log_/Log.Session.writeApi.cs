@@ -1,6 +1,8 @@
 //********************************************************************************************
 //Author: Sergey Stoyan
 //        sergey.stoyan@gmail.com
+//        sergey.stoyan@hotmail.com
+//        stoyan@cliversoft.com
 //        http://www.cliversoft.com
 //********************************************************************************************
 
@@ -31,14 +33,14 @@ namespace Cliver
                 Default.Error(message);
             }
 
-            public void Trace(object message = null)
+            public void Trace(object object_ = null)
             {
-                Default.Trace(message);
+                Default.Trace(object_);
             }
 
             public void Exit(string message)
             {
-                Default.Error(message);
+                Default.Exit(message);
             }
 
             public void Exit(Exception e)
@@ -68,7 +70,7 @@ namespace Cliver
 
             public void Write(string message)
             {
-                Default.Write(MessageType.LOG, message);
+                Default.Write(message);
             }
 
             public void Error2(Exception e)
@@ -79,6 +81,11 @@ namespace Cliver
             public void Error2(string message)
             {
                 Default.Error2(message);
+            }
+
+            public void Error2(string message, Exception e)
+            {
+                Default.Error2(message, e);
             }
 
             public void Exit2(string message)
@@ -101,6 +108,11 @@ namespace Cliver
                 Default.Warning2(e);
             }
 
+            public void Warning2(string message, Exception e)
+            {
+                Default.Warning2(message, e);
+            }
+
             public void Inform0(string message)
             {
                 Default.Inform0(message);
@@ -113,12 +125,12 @@ namespace Cliver
 
             public void Debug(string message)
             {
-                Default.Write(MessageType.DEBUG, message);
+                Default.Debug(message);
             }
 
             public void Debug0(string message)
             {
-                Default.Write(MessageType.DEBUG, message, GetStackString());
+                Default.Debug0(message);
             }
         }
     }

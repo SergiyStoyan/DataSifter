@@ -157,7 +157,7 @@ namespace Cliver.DataSifter
                 FilterTreeFileDir.Text = Path.GetDirectoryName(filter_tree_xml_file) + @"\";
                 FilterTreeFileDir.SelectionStart = FilterTreeFileDir.Text.Length;
                 FilterTreeFileDir.ScrollToCaret();
-                Settings.Default.LastFilterTreeFile = filter_tree_xml_file;
+                Settings1.History.LastFilterTreeFile = filter_tree_xml_file;
                 Settings.Default.Save();
             }
             catch (Exception e)
@@ -204,7 +204,7 @@ namespace Cliver.DataSifter
         {
             TreeNode tn = new TreeNode();
             set_tree_node(tn, f);
-            tn.BackColor = Settings.Default.GetFilterBackColor(level);
+            tn.BackColor = Settings1.Appearance.GetFilterBackColor(level);
             return tn;
         }
 
@@ -281,7 +281,7 @@ namespace Cliver.DataSifter
         /// <param name="tn"></param>
         void set_tree_node_color(TreeNode tn)
         {
-            tn.BackColor = Settings.Default.GetFilterBackColor(tn.Level);
+            tn.BackColor = Settings1.Appearance.GetFilterBackColor(tn.Level);
             foreach (TreeNode n in tn.Nodes)
                 set_tree_node_color(n);
         }
@@ -466,16 +466,16 @@ namespace Cliver.DataSifter
         {
             if (last_operated_filter_type_name != null)
             {
-                Settings.Default.OperatedFilterTypeNames.Add(last_operated_filter_type_name);
-                if (Settings.Default.OperatedFilterTypeNames.Count > 10)
-                    Settings.Default.OperatedFilterTypeNames.RemoveAt(0);
+                Settings1.History.OperatedFilterTypeNames.Add(last_operated_filter_type_name);
+                if (Settings1.History.OperatedFilterTypeNames.Count > 10)
+                    Settings1.History.OperatedFilterTypeNames.RemoveAt(0);
             }
 
             Dictionary<FilterTypesItem, int> ftis2frequency = new Dictionary<FilterTypesItem, int>();
             foreach (FilterTypesItem fti in FilterTypes.Items)
             {
                 int count = 0;
-                foreach (string ftn in Settings.Default.OperatedFilterTypeNames)
+                foreach (string ftn in Settings1.History.OperatedFilterTypeNames)
                     if (ftn == fti.Name)
                         count++;
                 ftis2frequency[fti] = count;
@@ -696,7 +696,7 @@ namespace Cliver.DataSifter
 
             if (is_tree_node_within_checked_path(e.Node))
             {
-                e.Node.BackColor = Settings.Default.GetFilterBackColor(e.Node.Level);
+                e.Node.BackColor = Settings1.Appearance.GetFilterBackColor(e.Node.Level);
                 if (FilterTree.SelectedNode == e.Node)
                     FilterTree_AfterSelect(null, null);
                 return;
@@ -708,7 +708,7 @@ namespace Cliver.DataSifter
             for (TreeNode tn = e.Node; tn != null; tn = tn.Parent)
             {
                 tn.Checked = true;
-                tn.BackColor = Settings.Default.GetFilterBackColor(tn.Level);
+                tn.BackColor = Settings1.Appearance.GetFilterBackColor(tn.Level);
             }
             highest_checked_node = e.Node;
 
@@ -822,8 +822,8 @@ namespace Cliver.DataSifter
                 Brush back_brush = new SolidBrush(e.Node.BackColor);
                 e.Graphics.FillRectangle(back_brush, e.Bounds);
                 def_brush = new SolidBrush(FilterTree.ForeColor);
-                rc_brush = new SolidBrush(Settings.Default.FilterCommentColor);
-                rgn_brush = new SolidBrush(Settings.Default.FilterGroupNameColor);
+                rc_brush = new SolidBrush(Settings1.Appearance.FilterCommentColor);
+                rgn_brush = new SolidBrush(Settings1.Appearance.FilterGroupNameColor);
             }
             int p1 = text.IndexOf(NODE_SEPARATOR);
             if (p1 < 0)
