@@ -135,7 +135,7 @@ namespace Cliver.DataSifter
                 return;
             }
             OutputGroup og = (OutputGroup)output_groups[NavigateBy.SelectedIndex];
-            NavigateBy.BackColor = Settings1.Appearance.GetFilterBackColor(og.Level);
+            NavigateBy.BackColor = Settings.Appearance.GetFilterBackColor(og.Level);
             
             if (current_capture_label_index >= 0 && current_capture_label_index < CaptureLabels.Count)
                 unmark_capture_branch(CaptureLabels[current_capture_label_index]);
@@ -272,7 +272,7 @@ namespace Cliver.DataSifter
                     continue;
                 c.start3 = c.start2 + total_label_length;
                 c.end3 = c.end2 + total_label_length + c.label.Length;
-                if (Settings1.Appearance.PrintCaptureLabels)
+                if (Settings.Appearance.PrintCaptureLabels)
                 {
                     print_capture_label(c);
                     total_label_length += c.label.Length;

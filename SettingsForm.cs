@@ -20,16 +20,16 @@ namespace Cliver.DataSifter
             InitializeComponent();
             Icon = Win.AssemblyRoutines.GetAppIcon();
 
-            flagPrintParseLabels.Checked = Settings1.Appearance.PrintCaptureLabels;
-            flagHighlightHtmlTags.Checked = Settings1.Appearance.HighlightHtmlTags;
-            flagStripParsedTextInStatusBarFromHtmlTags.Checked = Settings1.Appearance.StripParsedTextInStatusBarFromHtmlTags;
-            bHtmlTagsColor.ForeColor = Settings1.Appearance.HtmlTagsColor;
-            bHtmlCommentColor.ForeColor = Settings1.Appearance.HtmlCommentColor;
-            bHtmlJavascriptColor.ForeColor = Settings1.Appearance.HtmlJavascriptColor;
-            flagCopySelectionToClipboard.Checked = Settings1.General.CopySelectionToClipboard;
+            flagPrintParseLabels.Checked = Settings.Appearance.PrintCaptureLabels;
+            flagHighlightHtmlTags.Checked = Settings.Appearance.HighlightHtmlTags;
+            flagStripParsedTextInStatusBarFromHtmlTags.Checked = Settings.Appearance.StripParsedTextInStatusBarFromHtmlTags;
+            bHtmlTagsColor.ForeColor = Settings.Appearance.HtmlTagsColor;
+            bHtmlCommentColor.ForeColor = Settings.Appearance.HtmlCommentColor;
+            bHtmlJavascriptColor.ForeColor = Settings.Appearance.HtmlJavascriptColor;
+            flagCopySelectionToClipboard.Checked = Settings.General.CopySelectionToClipboard;
             //HelpFileUri.Text = Settings.Default.HelpFileUri;
 
-            label_colors = new List<Color>(Settings1.Appearance.FilterBackColors);
+            label_colors = new List<Color>(Settings.Appearance.FilterBackColors);
             fill_color_list();
         }
 
@@ -47,18 +47,18 @@ namespace Cliver.DataSifter
 
         private void OK_Click(object sender, EventArgs e)
         {
-            Settings1.Appearance.PrintCaptureLabels = flagPrintParseLabels.Checked;
-            Settings1.Appearance.HighlightHtmlTags = flagHighlightHtmlTags.Checked;
-            Settings1.Appearance.FilterBackColors = label_colors;
-            Settings1.Appearance.HtmlTagsColor = bHtmlTagsColor.ForeColor;
-            Settings1.Appearance.HtmlCommentColor = bHtmlCommentColor.ForeColor;
-            Settings1.Appearance.HtmlJavascriptColor = bHtmlJavascriptColor.ForeColor;
-            Settings1.Appearance.StripParsedTextInStatusBarFromHtmlTags = flagStripParsedTextInStatusBarFromHtmlTags.Checked;
-            Settings1.General.CopySelectionToClipboard = flagCopySelectionToClipboard.Checked;
+            Settings.Appearance.PrintCaptureLabels = flagPrintParseLabels.Checked;
+            Settings.Appearance.HighlightHtmlTags = flagHighlightHtmlTags.Checked;
+            Settings.Appearance.FilterBackColors = label_colors;
+            Settings.Appearance.HtmlTagsColor = bHtmlTagsColor.ForeColor;
+            Settings.Appearance.HtmlCommentColor = bHtmlCommentColor.ForeColor;
+            Settings.Appearance.HtmlJavascriptColor = bHtmlJavascriptColor.ForeColor;
+            Settings.Appearance.StripParsedTextInStatusBarFromHtmlTags = flagStripParsedTextInStatusBarFromHtmlTags.Checked;
+            Settings.General.CopySelectionToClipboard = flagCopySelectionToClipboard.Checked;
             //Settings.Default.HelpFileUri = HelpFileUri.Text;
 
-            Settings.Default.Save();
-            Settings.Default.Reload();
+            Settings.Appearance.Save();
+            Settings.General.Save();
             this.Close();
         }
 
@@ -72,13 +72,13 @@ namespace Cliver.DataSifter
             if (!Message.YesNo("After resetting you cannot return back to your previous settings. Proceed?"))
                 return;
 
-            Settings.Default.Reset();
-            Settings.Default.Reload();
+            Settings.General.Reset();
+            Settings.Appearance.Reload();
         }
 
         private void flagPrintParseLabels_CheckedChanged(object sender, EventArgs e)
         {
-            Settings1.Appearance.PrintCaptureLabels = flagPrintParseLabels.Checked;
+            Settings.Appearance.PrintCaptureLabels = flagPrintParseLabels.Checked;
         }
 
         private void SettingsForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -95,7 +95,7 @@ namespace Cliver.DataSifter
 
         private void StripParsedTextInStatucFromHtmlTags_CheckedChanged(object sender, EventArgs e)
         {
-            Settings1.Appearance.StripParsedTextInStatusBarFromHtmlTags = flagStripParsedTextInStatusBarFromHtmlTags.Checked;
+            Settings.Appearance.StripParsedTextInStatusBarFromHtmlTags = flagStripParsedTextInStatusBarFromHtmlTags.Checked;
         }
 
         void listBoxLabelColors_DrawItem(object sender, DrawItemEventArgs e)
@@ -163,10 +163,6 @@ namespace Cliver.DataSifter
             if (d.ShowDialog(this) != DialogResult.OK)
                 return;
             bHtmlCommentColor.ForeColor = d.Color;
-        }
-
-        private void flagDisableBrowserWindow_CheckedChanged(object sender, EventArgs e)
-        {
         }
 
         private void bHtmlJavascriptColor_Click(object sender, EventArgs e)

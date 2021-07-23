@@ -286,8 +286,8 @@ namespace Cliver.DataSifter
                     d.AddExtension = true;
                     d.DefaultExt = Program.FilterTreeFileExtension;
                     d.Filter = "Filter tree files (*." + Program.FilterTreeFileExtension + ")|*." + Program.FilterTreeFileExtension + "|All files (*.*)|*.*";
-                    if (!string.IsNullOrEmpty(Settings1.History.LastFilterTreeFile))
-                        d.InitialDirectory = Path.GetDirectoryName(Settings1.History.LastFilterTreeFile);
+                    if (!string.IsNullOrEmpty(Settings.History.LastFilterTreeFile))
+                        d.InitialDirectory = Path.GetDirectoryName(Settings.History.LastFilterTreeFile);
                     if (d.ShowDialog(this) != DialogResult.OK)
                         return;
                     //Settings.Default.LastFilterTreeFile = d.FileName;
@@ -323,12 +323,12 @@ namespace Cliver.DataSifter
                 if (!string.IsNullOrWhiteSpace(Document.File))
                 {
                     string ft_folder = Path.GetDirectoryName(file);
-                    if (Settings1.History.FilterTreeFolders2SourceFolder.Contains(ft_folder))
-                        Settings1.History.FilterTreeFolders2SourceFolder.Remove(ft_folder);
-                    Settings1.History.FilterTreeFolders2SourceFolder.Add(ft_folder, Path.GetDirectoryName(Document.File));
-                    if (Settings1.History.FilterTreeFolders2SourceFolder.Count > 30)
-                        Settings1.History.FilterTreeFolders2SourceFolder.RemoveAt(0);
-                    Settings.Default.Save();
+                    if (Settings.History.FilterTreeFolders2SourceFolder.Contains(ft_folder))
+                        Settings.History.FilterTreeFolders2SourceFolder.Remove(ft_folder);
+                    Settings.History.FilterTreeFolders2SourceFolder.Add(ft_folder, Path.GetDirectoryName(Document.File));
+                    if (Settings.History.FilterTreeFolders2SourceFolder.Count > 30)
+                        Settings.History.FilterTreeFolders2SourceFolder.RemoveAt(0);
+                    Settings.History.Save();
                 }
             }
             catch (Exception ex)
@@ -352,7 +352,7 @@ namespace Cliver.DataSifter
                 OpenFileDialog d = new OpenFileDialog();
                 d.Title = "Pick a filter tree file to open within DataSifter";
                 d.Filter = "Filter tree files (*." + Program.FilterTreeFileExtension + ")|*." + Program.FilterTreeFileExtension + "|All files (*.*)|*.*";
-                d.InitialDirectory = get_corresponding_filter_tree_folder(Settings1.History.LastFilterTreeFile);
+                d.InitialDirectory = get_corresponding_filter_tree_folder(Settings.History.LastFilterTreeFile);
                 if (string.IsNullOrWhiteSpace(d.InitialDirectory) || !Directory.Exists(d.InitialDirectory))
                     d.InitialDirectory = null;
                 if (d.ShowDialog(this) != DialogResult.OK || string.IsNullOrWhiteSpace(d.FileName))
@@ -371,9 +371,9 @@ namespace Cliver.DataSifter
             try
             {
                 string s_folder = Path.GetDirectoryName(source_file);
-                foreach (string ft_folder in Settings1.History.FilterTreeFolders2SourceFolder.Keys)
+                foreach (string ft_folder in Settings.History.FilterTreeFolders2SourceFolder.Keys)
                 {
-                    string sf = (string)Settings1.History.FilterTreeFolders2SourceFolder[ft_folder];
+                    string sf = (string)Settings.History.FilterTreeFolders2SourceFolder[ft_folder];
                     if (sf == s_folder)
                         return ft_folder;
                 }
@@ -381,7 +381,7 @@ namespace Cliver.DataSifter
             catch { }
             try
             {
-                return Path.GetDirectoryName(Settings1.History.LastFilterTreeFile);
+                return Path.GetDirectoryName(Settings.History.LastFilterTreeFile);
             }
             catch
             {
@@ -518,8 +518,8 @@ namespace Cliver.DataSifter
             try
             {
                 Filter f = (Filter)stn.Tag;
-                Settings1.General.FilterTypeNames2NewFilter[f.GetType().Name] = f.GetSerializedFilter();
-                Settings.Default.Save();
+                Settings.General.FilterTypeNames2NewFilter[f.GetType().Name] = f.GetSerializedFilter();
+                Settings.General.Save();
             }
             catch (Exception ex)
             {

@@ -14,7 +14,7 @@ using System.Drawing;
 
 namespace Cliver.DataSifter
 {
-    public partial class Settings1
+    public partial class Settings
     {
         public static AppearanceSettings Appearance;
     }

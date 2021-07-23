@@ -63,16 +63,12 @@ namespace Cliver.DataSifter
                 Message.TopMost = true;
                 Win.LogMessage.DisableStumblingDialogs = false;
 
-                //Log.Inform(Log.Main.File);
-
-                Settings.Default.Reload();
-
                 Application.EnableVisualStyles();
                 //Application.SetCompatibleTextRenderingDefault(false);
                 
                 Application.Run(SourceForm.This);
 
-                Settings.Default.Save();
+                Config.Save();
             }
             catch (Exception e)
             {
@@ -90,10 +86,10 @@ namespace Cliver.DataSifter
         {
             try
             {
-                if (File.Exists(AppDir + Settings1.General.HelpFile))
-                    Process.Start(Settings1.General.HelpFile);
+                if (File.Exists(AppDir + Settings.General.HelpFile))
+                    Process.Start(Settings.General.HelpFile);
                 else
-                    Process.Start(Settings1.General.HelpFileUri);
+                    Process.Start(Settings.General.HelpFileUri);
             }
             catch (Exception ex)
             {

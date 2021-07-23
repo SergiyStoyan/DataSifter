@@ -112,7 +112,7 @@ namespace Cliver.DataSifter
         protected string get_default_serialized_filter()
         {
             string d = null;
-            Settings1.General.FilterTypeNames2NewFilter.TryGetValue(this.GetType().Name, out d);
+            Settings.General.FilterTypeNames2NewFilter.TryGetValue(this.GetType().Name, out d);
             return d;
         }
 

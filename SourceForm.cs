@@ -54,15 +54,15 @@ namespace Cliver.DataSifter
               {
                   TextBox.WordWrap = WrapText.Checked;
               };
-            WrapText.Checked = Settings1.General.WrapText;
+            WrapText.Checked = Settings.General.WrapText;
             TextBox.WordWrap = WrapText.Checked;
 
             Document.DocumentUpdated += new Document.DocumentUpdatedEventHandler(Document_DocumentUpdated);
             Document.SetTestText();
             //TreeForm_Click(null, null);
 
-            if (System.IO.File.Exists(Settings1.History.LastSourceFile))
-                Document.LoadFromFile(Settings1.History.LastSourceFile);
+            if (System.IO.File.Exists(Settings.History.LastSourceFile))
+                Document.LoadFromFile(Settings.History.LastSourceFile);
 
             string fltr_file = null;
             foreach (string a in Environment.GetCommandLineArgs())
@@ -75,8 +75,8 @@ namespace Cliver.DataSifter
             }
             if (fltr_file == null)
             {
-                if (System.IO.File.Exists(Settings1.History.LastFilterTreeFile))
-                    fltr_file = Settings1.History.LastFilterTreeFile;
+                if (System.IO.File.Exists(Settings.History.LastFilterTreeFile))
+                    fltr_file = Settings.History.LastFilterTreeFile;
             }
             FilterTreeForm.This.LoadFilterTree(fltr_file);
         }
@@ -111,12 +111,12 @@ namespace Cliver.DataSifter
             //head += colortb;
             //rtf.Remove(0, RtfEditor.IndexOf(rtf, "\r\n"));
             //rtf.Insert(0, head);
-            if (Settings1.Appearance.HighlightHtmlTags)
+            if (Settings.Appearance.HighlightHtmlTags)
             {  //set rtf header   
                 StringBuilder rtf = new StringBuilder(TextBox.Rtf);
-                Color html_tags_color = Settings1.Appearance.HtmlTagsColor;
-                Color html_comment_color = Settings1.Appearance.HtmlCommentColor;
-                Color html_javascript_color = Settings1.Appearance.HtmlJavascriptColor;
+                Color html_tags_color = Settings.Appearance.HtmlTagsColor;
+                Color html_comment_color = Settings.Appearance.HtmlCommentColor;
+                Color html_javascript_color = Settings.Appearance.HtmlJavascriptColor;
                 string colortb = string.Format(@"{{\colortbl;\red{0}\green{1}\blue{2};\red{3}\green{4}\blue{5};\red{6}\green{7}\blue{8};}}",
                     html_comment_color.R, html_comment_color.G, html_comment_color.B,
                     html_tags_color.R, html_tags_color.G, html_tags_color.B,
@@ -307,13 +307,13 @@ namespace Cliver.DataSifter
             {
                 OpenFileDialog d = new OpenFileDialog();
                 d.Title = "Pick a file to be parsed";
-                d.InitialDirectory = get_corresponding_source_folder(Settings1.History.LastFilterTreeFile);
+                d.InitialDirectory = get_corresponding_source_folder(Settings.History.LastFilterTreeFile);
                 if (string.IsNullOrWhiteSpace(d.InitialDirectory) || !Directory.Exists(d.InitialDirectory))
                     d.InitialDirectory = null;
                 if (d.ShowDialog(this) != DialogResult.OK || string.IsNullOrWhiteSpace(d.FileName))
                     return;
-                Settings1.History.LastSourceFile = d.FileName;
-                Settings.Default.Save();
+                Settings.History.LastSourceFile = d.FileName;
+                Settings.History.Save();
                 Document.LoadFromFile(d.FileName);
             }
             catch (Exception ex)
@@ -327,9 +327,9 @@ namespace Cliver.DataSifter
             if (string.IsNullOrWhiteSpace(filter_tree_file))
                 return "";
             string ft_folder = Path.GetDirectoryName(filter_tree_file);
-            if (Settings1.History.FilterTreeFolders2SourceFolder.Contains(ft_folder))
-                return (string)Settings1.History.FilterTreeFolders2SourceFolder[ft_folder];
-            return Path.GetDirectoryName(Settings1.History.LastSourceFile);
+            if (Settings.History.FilterTreeFolders2SourceFolder.Contains(ft_folder))
+                return (string)Settings.History.FilterTreeFolders2SourceFolder[ft_folder];
+            return Path.GetDirectoryName(Settings.History.LastSourceFile);
         }
 
         private void About_Click(object sender, EventArgs e)
@@ -375,8 +375,8 @@ namespace Cliver.DataSifter
                 return;
             }
 
-            Settings1.General.WrapText = WrapText.Checked;
-            Settings.Default.Save();
+            Settings.General.WrapText = WrapText.Checked;
+            Settings.General.Save();
 
             This.Dispose();
         }
@@ -405,7 +405,7 @@ namespace Cliver.DataSifter
 
             set_status_by_position(TextBox.SelectionStart, TextBox.SelectionLength);
 
-            if (!Settings1.General.CopySelectionToClipboard)
+            if (!Settings.General.CopySelectionToClipboard)
                 return;
 
             TextBox.Copy();
@@ -481,7 +481,7 @@ namespace Cliver.DataSifter
                 return;
             Brush brush;
             OutputGroup og = (OutputGroup)output_groups[e.Index];
-            brush = new SolidBrush(Settings1.Appearance.GetFilterBackColor(og.Level));
+            brush = new SolidBrush(Settings.Appearance.GetFilterBackColor(og.Level));
             e.Graphics.FillRectangle(brush, e.Bounds);
             brush = new SolidBrush(e.ForeColor);
             e.Graphics.DrawString((string)((ComboBox)sender).Items[e.Index], e.Font, brush, e.Bounds);

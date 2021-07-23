@@ -14,7 +14,7 @@ using System.Collections.Generic;
 
 namespace Cliver.DataSifter
 {
-    public partial class Settings1
+    public partial class Settings
     {
         public static HistorySettings History;
     }

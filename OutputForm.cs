@@ -30,7 +30,7 @@ namespace Cliver.DataSifter
             this.all_ogs = all_ogs;
             this.captured_ogs = captured_ogs;
                         
-            CaptureSeparator.Text = Settings1.General.OutputDataSeparator;
+            CaptureSeparator.Text = Settings.General.OutputDataSeparator;
             
             if (captured_ogs == null)
             {
@@ -39,8 +39,8 @@ namespace Cliver.DataSifter
             }
             else
             {
-                radioGroupNames.Checked = Settings1.General.OutputGroupNames;
-                radioCaptures.Checked = !Settings1.General.OutputGroupNames;
+                radioGroupNames.Checked = Settings.General.OutputGroupNames;
+                radioCaptures.Checked = !Settings.General.OutputGroupNames;
             }
 
             radioGroupNames_CheckedChanged(null, null);
@@ -212,10 +212,10 @@ namespace Cliver.DataSifter
 
         private void bSaveAsDefault_Click(object sender, EventArgs e)
         {
-            Settings1.General.OutputGroupNames = radioGroupNames.Checked;
-            Settings1.General.OutputDataSeparator = CaptureSeparator.Text;
+            Settings.General.OutputGroupNames = radioGroupNames.Checked;
+            Settings.General.OutputDataSeparator = CaptureSeparator.Text;
 
-            Settings.Default.Save();
+            Settings.General.Save();
         }
 
         private void GroupNames_DrawItem(object sender, DrawItemEventArgs e)
@@ -224,7 +224,7 @@ namespace Cliver.DataSifter
                 return;
             if ((e.State & DrawItemState.Selected) != DrawItemState.Selected)
             {
-                Brush brush = new SolidBrush(Settings1.Appearance.GetFilterBackColor(ogs_[e.Index].Level));
+                Brush brush = new SolidBrush(Settings.Appearance.GetFilterBackColor(ogs_[e.Index].Level));
                 e.Graphics.FillRectangle(brush, e.Bounds);
             }
             else
