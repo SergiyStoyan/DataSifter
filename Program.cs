@@ -76,12 +76,6 @@ namespace Cliver.DataSifter
             }
         }
 
-        //static readonly internal System.Windows.Forms.ToolTip ToolTip = new ToolTip();
-        
-        static readonly internal string AppTitle = Application.ProductName;
-
-        static readonly internal string Title = AppTitle;
-
         static internal void Help()
         {
             try

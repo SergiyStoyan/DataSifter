@@ -51,7 +51,7 @@ namespace Cliver.DataSifter
 
         static readonly string prepared_filter_tree_dir = Program.AppDir + "\\PreparedFilterTrees";
         static readonly string deleted_prepared_filter_tree_dir = prepared_filter_tree_dir + "\\deleted";
-        static readonly string title = "- FILTER TREE - " + Program.Title;
+        static readonly string title = "- FILTER TREE - " + Program.FullName;
 
         private FilterTreeForm()
         {

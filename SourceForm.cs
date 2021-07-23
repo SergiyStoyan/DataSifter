@@ -24,7 +24,7 @@ namespace Cliver.DataSifter
     {
         #region initializing
 
-        string title = Program.Title;
+        string title = Program.FullName;
 
         internal static readonly SourceForm This;
 
