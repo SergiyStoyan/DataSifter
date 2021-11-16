@@ -11,6 +11,7 @@ using System;
 using System.Reflection;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Text.RegularExpressions;
 
 namespace Cliver
 {
@@ -145,7 +146,7 @@ namespace Cliver
         /// <summary>
         /// Read the storage file as a JObject in order to migrate to the current format.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>storage file content presented as JObject</returns>
         public Newtonsoft.Json.Linq.JObject ReadStorageFileAsJObject()
         {
             lock (this)
@@ -165,12 +166,15 @@ namespace Cliver
         /// <summary>
         /// Write the JObject to the storage file in order to migrate to the current format.
         /// </summary>
-        /// <returns></returns>
-        public void WriteStorageFileAsJObject(Newtonsoft.Json.Linq.JObject o)
+        /// <param name="o">JObject presenting Settings field serialized as JSON</param>
+        /// <param name="indented">whether the storage file content be indented</param>
+        public void WriteStorageFileAsJObject(Newtonsoft.Json.Linq.JObject o, bool? indented = null)
         {
             lock (this)
             {
-                string s = o.ToString();
+                if (indented == null)
+                    indented = Indented;
+                string s = o.ToString(indented.Value ? Newtonsoft.Json.Formatting.Indented : Newtonsoft.Json.Formatting.None);
                 if (Endec != null)
                     s = Endec.Decrypt(s);
                 System.IO.File.WriteAllText(File, s);
@@ -180,7 +184,7 @@ namespace Cliver
         /// <summary>
         /// Read the storage file as a string in order to migrate to the current format.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>storage file content</returns>
         public string ReadStorageFileAsString()
         {
             lock (this)
@@ -200,7 +204,7 @@ namespace Cliver
         /// <summary>
         /// Write the string to the storage file in order to migrate to the current format.
         /// </summary>
-        /// <returns></returns>
+        /// <param name="s">serialized Settings field</param>
         public void WriteStorageFileAsString(string s)
         {
             lock (this)
@@ -209,6 +213,16 @@ namespace Cliver
                     s = Endec.Decrypt(s);
                 System.IO.File.WriteAllText(File, s);
             }
+        }
+
+        /// <summary>
+        /// Update __TypeVersion value in the storage file content. __TypeVersion must exist in it to be updated. 
+        /// </summary>
+        /// <param name="typeVersion">new __TypeVersion</param>
+        /// <param name="s">serialized Settings field</param>
+        public void UpdateTypeVersionInStorageFileString(uint typeVersion, ref string s)
+        {
+            s = Regex.Replace(s, @"(?<=\""__TypeVersion\""\:\s*)\d+(?=\s*(,|)})", typeVersion.ToString(), RegexOptions.Singleline);
         }
 
         #endregion

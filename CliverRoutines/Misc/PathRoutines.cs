@@ -54,7 +54,7 @@ namespace Cliver
         }
 
         /// <summary>
-        /// Convert illegal characters from the path.
+        /// Convert illegal characters in the path.
         /// </summary>
         /// <param name="path"></param>
         /// <param name="webDecode"></param>
@@ -88,7 +88,14 @@ namespace Cliver
             return Regex.Replace(file.Substring(file.LastIndexOf(Path.DirectorySeparatorChar) + 1), invalidFileNameChars, illegalCharReplacement);
         }
         static string invalidFileNameChars = "[" + Regex.Escape(new string(Path.GetInvalidFileNameChars())) + "]";
-        
+
+        /// <summary>
+        /// Convert illegal characters in the directory and in the file name.
+        /// </summary>
+        /// <param name="file"></param>
+        /// <param name="webDecode"></param>
+        /// <param name="illegalCharReplacement"></param>
+        /// <returns></returns>
         public static string GetLegalizedFile(string file, bool webDecode = false, string illegalCharReplacement = "")
         {
             if (webDecode)
@@ -145,7 +152,8 @@ namespace Cliver
         }
 
         /// <summary>
-        /// Works for any length path unlike Path.GetDir()
+        /// Get the parent dir of a file or dir.
+        /// Works for any length path unlike Path.GetDir().
         /// </summary>
         /// <param name="file"></param>
         /// <returns></returns>        

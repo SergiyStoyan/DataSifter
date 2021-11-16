@@ -219,9 +219,9 @@ namespace Cliver.DataSifter
                 
                 return get_filters(xn, null);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                throw new Exception("Could not load '" + filter_file + "'\r\n\r\n" + e.Message);
+                throw new Exception("Could not load '" + filter_file + "'\r\n\r\n" + ex.Message);
             }
             //catch (Exception e)
             //{

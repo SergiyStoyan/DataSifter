@@ -17,8 +17,8 @@ namespace Cliver.DataSifter
     /// Summary description for About.
     /// </summary>
     internal class AboutForm : Form
-	{
-		private System.Windows.Forms.Label lAuthor;
+    {
+        private System.Windows.Forms.Label lAuthor;
         private System.Windows.Forms.Button button1;
         private LinkLabel linkLabel1;
         private LinkLabel linkLabel2;
@@ -33,36 +33,36 @@ namespace Cliver.DataSifter
         private System.ComponentModel.Container components = null;
 
         internal AboutForm()
-		{
-			//
-			// Required for Windows Form Designer support
-			//
+        {
+            //
+            // Required for Windows Form Designer support
+            //
             InitializeComponent();
             Icon = Win.AssemblyRoutines.GetAppIcon();
         }
 
-		/// <summary>
-		/// Clean up any resources being used.
-		/// </summary>
-		protected override void Dispose( bool disposing )
-		{
-			if( disposing )
-			{
-				if(components != null)
-				{
-					components.Dispose();
-				}
-			}
-			base.Dispose( disposing );
-		}
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (components != null)
+                {
+                    components.Dispose();
+                }
+            }
+            base.Dispose(disposing);
+        }
 
-		#region Windows Form Designer generated code
-		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
-		/// </summary>
-		private void InitializeComponent()
-		{
+        #region Windows Form Designer generated code
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AboutForm));
             this.pIcon = new System.Windows.Forms.PictureBox();
             this.lProduct = new System.Windows.Forms.Label();
@@ -175,27 +175,27 @@ namespace Cliver.DataSifter
             this.ResumeLayout(false);
             this.PerformLayout();
 
-		}
-		#endregion
+        }
+        #endregion
 
-		private void About_Load(object sender, System.EventArgs e)
+        private void About_Load(object sender, System.EventArgs e)
         {
             //lProduct.Text = ((AssemblyProductAttribute)Attribute.GetCustomAttribute(Assembly.GetExecutingAssembly(), typeof(AssemblyProductAttribute))).Product +
-              //  ", " + ((AssemblyVersionAttribute)Attribute.GetCustomAttribute(Assembly.GetExecutingAssembly(), typeof(AssemblyVersionAttribute))).Version;
-            
+            //  ", " + ((AssemblyVersionAttribute)Attribute.GetCustomAttribute(Assembly.GetExecutingAssembly(), typeof(AssemblyVersionAttribute))).Version;
+
             AssemblyName an = Assembly.GetExecutingAssembly().GetName();
             lProduct.Text = an.Name + " " + an.Version;
 
             version.Text = "Compiled: " + AssemblyRoutines.GetAssemblyCompiledTime(Assembly.GetExecutingAssembly()).ToString();
 
             lAuthor.Text = ((AssemblyCopyrightAttribute)Attribute.GetCustomAttribute(Assembly.GetExecutingAssembly(), typeof(AssemblyCopyrightAttribute))).Copyright +
-                ", " + ((AssemblyCompanyAttribute)Attribute.GetCustomAttribute(Assembly.GetExecutingAssembly(), typeof(AssemblyCompanyAttribute))).Company; 		
-		}
+                ", " + ((AssemblyCompanyAttribute)Attribute.GetCustomAttribute(Assembly.GetExecutingAssembly(), typeof(AssemblyCompanyAttribute))).Company;
+        }
 
-		private void close(object sender, System.EventArgs e)
-		{
-			this.Close();
-		}
+        private void close(object sender, System.EventArgs e)
+        {
+            this.Close();
+        }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
@@ -204,7 +204,7 @@ namespace Cliver.DataSifter
 
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start("mailto:sergey.stoyan@gmail.com");            
+            Process.Start("mailto:sergey.stoyan@gmail.com");
         }
 
         //private void linkLabel3_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -214,12 +214,12 @@ namespace Cliver.DataSifter
 
         private void linkLabel4_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start("mailto:stoyan@cliversoft.com");            
+            Process.Start("mailto:stoyan@cliversoft.com");
         }
 
         private void linkLabel5_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process.Start("http://itwriting.com/htmleditor/index.php");
         }
-	}
+    }
 }

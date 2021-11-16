@@ -232,11 +232,11 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PdfDocumentParser\CliverRoutines\CliverRoutines.csproj">
-      <Project>{e88444ba-1b07-40e6-96d1-922d27965f91}</Project>
+    <ProjectReference Include="CliverRoutines\CliverRoutines.csproj">
+      <Project>{aca94788-bed1-4b8e-94ef-e54293e8d139}</Project>
       <Name>CliverRoutines</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PdfDocumentParser\CliverWinRoutines\CliverWinRoutines.csproj">
+    <ProjectReference Include="CliverWinRoutines\CliverWinRoutines.csproj">
       <Project>{51f2df13-41f1-4f22-890f-c3b50c813909}</Project>
       <Name>CliverWinRoutines</Name>
     </ProjectReference>
