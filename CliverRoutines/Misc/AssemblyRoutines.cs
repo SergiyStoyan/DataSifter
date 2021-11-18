@@ -9,6 +9,7 @@ using System;
 using System.Linq;
 using System.Reflection;
 using System.Diagnostics;
+using System.Collections.Generic;
 
 namespace Cliver
 {
@@ -36,8 +37,8 @@ namespace Cliver
 
         public static string GetAppCompilationVersion()
         {
-            DateTime dt = AssemblyRoutines.GetAssemblyCompiledTime(Assembly.GetEntryAssembly());
-            DateTime dt2 = AssemblyRoutines.GetAssemblyCompiledTime(Assembly.GetCallingAssembly());
+            DateTime dt = GetAssemblyCompiledTime(Assembly.GetEntryAssembly());
+            DateTime dt2 = GetAssemblyCompiledTime(Assembly.GetCallingAssembly());
             dt = dt > dt2 ? dt : dt2;
             return dt.ToString("yy-MM-dd-HH-mm-ss");
         }
@@ -53,16 +54,6 @@ namespace Cliver
             AssemblyInfo ai = new AssemblyInfo(Assembly.GetCallingAssembly());
             return ai.Name;
         }
-
-        //public static System.Drawing.Icon GetAppIcon(Assembly assembly = null)
-        //{
-        //    return System.Drawing.Icon.ExtractAssociatedIcon((assembly != null ? assembly : Assembly.GetEntryAssembly()).Location);
-        //}
-
-        //public static System.Windows.Media.ImageSource GetAppIconImageSource()
-        //{
-        //    return GetAppIcon().ToImageSource();
-        //}
 
         public class AssemblyInfo
         {
@@ -134,7 +125,7 @@ namespace Cliver
                 get
                 {
                     object[] attributes = Assembly.GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false);
-                    if (attributes.Length <1)
+                    if (attributes.Length < 1)
                         return null;
                     return ((AssemblyDescriptionAttribute)attributes[0]).Description;
                 }
@@ -180,6 +171,56 @@ namespace Cliver
                     return Assembly.GetName().Name;
                 }
             }
+        }
+
+        public static IEnumerable<Assembly> GetAssemblyBranch(Assembly assembly, System.Text.RegularExpressions.Regex assemblyNameFilter)
+        {
+            if (!assemblyNameFilter.IsMatch(assembly.FullName))
+                yield break;
+            HashSet<string> afns = new HashSet<string>();
+            afns.Add(assembly.FullName);
+            yield return assembly;
+            foreach (AssemblyName an in assembly.GetReferencedAssemblies())
+                foreach (Assembly aa in getAssemblyBranch(an, assemblyNameFilter, afns))
+                    yield return aa;
+        }
+        static IEnumerable<Assembly> getAssemblyBranch(AssemblyName assemblyName, System.Text.RegularExpressions.Regex assemblyNameFilter, HashSet<string> assemblyFuleNames)
+        {
+            if (assemblyFuleNames.Contains(assemblyName.FullName))
+                yield break;
+            if (!assemblyNameFilter.IsMatch(assemblyName.FullName))
+                yield break;
+            Assembly assembly = Assembly.Load(assemblyName);
+            assemblyFuleNames.Add(assembly.FullName);
+            yield return assembly;
+            foreach (AssemblyName an in assembly.GetReferencedAssemblies())
+                foreach (Assembly a in getAssemblyBranch(an, assemblyNameFilter, assemblyFuleNames))
+                    yield return a;
+        }
+
+        public static IEnumerable<Assembly> GetAssemblyBranchByNamespace(Assembly assembly, System.Text.RegularExpressions.Regex assemblyNamespaceFilter)
+        {
+            if (assembly.GetTypes().FirstOrDefault(a => assemblyNamespaceFilter.IsMatch(a.FullName)) == null)
+                yield break;
+            HashSet<string> afns = new HashSet<string>();
+            afns.Add(assembly.FullName);
+            yield return assembly;
+            foreach (AssemblyName an in assembly.GetReferencedAssemblies())
+                foreach (Assembly aa in getAssemblyBranchByNamespace(an, assemblyNamespaceFilter, afns))
+                    yield return aa;
+        }
+        static IEnumerable<Assembly> getAssemblyBranchByNamespace(AssemblyName assemblyName, System.Text.RegularExpressions.Regex assemblyNamespaceFilter, HashSet<string> assemblyFuleNames)
+        {
+            if (assemblyFuleNames.Contains(assemblyName.FullName))
+                yield break;
+            Assembly assembly = Assembly.Load(assemblyName);
+            if (assembly.GetTypes().FirstOrDefault(a => assemblyNamespaceFilter.IsMatch(a.FullName)) == null)
+                yield break;
+            assemblyFuleNames.Add(assembly.FullName);
+            yield return assembly;
+            foreach (AssemblyName an in assembly.GetReferencedAssemblies())
+                foreach (Assembly a in getAssemblyBranchByNamespace(an, assemblyNamespaceFilter, assemblyFuleNames))
+                    yield return a;
         }
     }
 }
