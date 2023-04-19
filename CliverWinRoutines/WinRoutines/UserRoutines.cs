@@ -1,16 +1,15 @@
-﻿//********************************************************************************************
-//Author: Sergey Stoyan
-//        sergey.stoyan@gmail.com
-//        sergey_stoyan@yahoo.com
-//        http://www.cliversoft.com
-//        26 September 2006
-//Copyright: (C) 2006, Sergey Stoyan
-//********************************************************************************************
+﻿/********************************************************************************************
+        Author: Sergey Stoyan
+        sergey.stoyan@gmail.com
+        sergey.stoyan@hotmail.com
+        stoyan@cliversoft.com
+        http://www.cliversoft.com
+********************************************************************************************/
 using System;
 using System.Text.RegularExpressions;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
-using System.DirectoryServices.AccountManagement;
+//using System.DirectoryServices.AccountManagement;
 
 namespace Cliver.Win
 {
@@ -69,10 +68,10 @@ namespace Cliver.Win
             return Regex.Replace(WindowsIdentity.GetCurrent().Name, @".*\\", "");
         }
 
-        static public string GetCurrentUserName4()
-        {
-            return UserPrincipal.Current.DisplayName;//runs unacceptably long time
-        }
+        //static public string GetCurrentUserName4()
+        //{
+        //    return UserPrincipal.Current.DisplayName;//runs unacceptably long time
+        //}
 
         public static bool CurrentUserHasElevatedPrivileges()
         {

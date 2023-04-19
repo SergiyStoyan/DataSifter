@@ -1,17 +1,19 @@
 //********************************************************************************************
 //Author: Sergey Stoyan
 //        sergey.stoyan@gmail.com
-//        sergey_stoyan@yahoo.com
+//        sergey.stoyan@hotmail.com
+//        stoyan@cliversoft.com
 //        http://www.cliversoft.com
-//        26 September 2006
-//Copyright: (C) 2006-2013, Sergey Stoyan
 //********************************************************************************************
 
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Cliver
 {
@@ -25,78 +27,79 @@ namespace Cliver
         /// </summary>
         public static void DeleteOldLogs(int deleteLogsOlderDays, Func<string, bool> askYesNo = null)
         {
-            lock (lockObject)//TEST!!!! if avoid interlock when writing to log from here
+            lock (lockObject)//TEST??? to avoid interlock when writing to log from here
             {
                 try
                 {
-                    if (deleteLogsOlderDays > 0)
+                    if (deleteLogsOlderDays < 0)
+                        return;
+                    DateTime firstLogTime = DateTime.Now.AddDays(-deleteLogsOlderDays);
+                    //!!!sometimes no session is created yet by this moment or this function is called without log at all, so the session list can be empty
+                    DateTime currentLogTime = Session.GetAll().Select(a => a.CreatedTime).DefaultIfEmpty(DateTime.Now.AddHours(-1)).Min();
+                    if (firstLogTime > currentLogTime)
+                        firstLogTime = currentLogTime;
+
+                    DirectoryInfo di = new DirectoryInfo(Log.RootDir);
+                    if (!di.Exists)
+                        return;
+
+                    string alert;
+                    if (Log.mode.HasFlag(Mode.FOLDER_PER_SESSION))
                     {
-                        DateTime FirstLogDate = DateTime.Now.AddDays(-deleteLogsOlderDays);
-
-                        DirectoryInfo di = new DirectoryInfo(Log.WorkDir);
-                        if (!di.Exists)
-                            return;
-
-                        string alert;
-                        switch (Log.mode)
+                        alert = "Session data including caches and logs older than " + firstLogTime.ToString() + " are to be deleted.\r\nDelete?";
+                        foreach (DirectoryInfo d in di.GetDirectories())
                         {
-                            case Mode.EACH_SESSION_IS_IN_OWN_FORLDER:
-                                alert = "Session data including caches and logs older than " + FirstLogDate.ToString() + " are to be deleted.\r\nDelete?";
-                                foreach (DirectoryInfo d in di.GetDirectories())
-                                {
-                                    if (headSession != null && d.FullName.StartsWith(headSession.Dir, StringComparison.InvariantCultureIgnoreCase))
-                                        continue;
-                                    if (d.LastWriteTime >= FirstLogDate)
-                                        continue;
-                                    if (alert != null)
-                                    {
-                                        if (askYesNo == null)
-                                            Log.Main.Inform("Deleting session data including caches and logs older than " + FirstLogDate.ToString());
-                                        else
-                                        if (!askYesNo(alert))
-                                            return;
-                                        alert = null;
-                                    }
-                                    Log.Main.Inform("Deleting old directory: " + d.FullName);
-                                    try
-                                    {
-                                        d.Delete(true);
-                                    }
-                                    catch (Exception e)
-                                    {
-                                        Log.Error(e);
-                                    }
-                                }
-                                break;
-                            case Mode.ALL_LOGS_ARE_IN_SAME_FOLDER:
-                                alert = "Logs older than " + FirstLogDate.ToString() + " are to be deleted.\r\nDelete?";
-                                foreach (FileInfo f in di.GetFiles())
-                                {
-                                    if (f.LastWriteTime >= FirstLogDate)
-                                        continue;
-                                    if (alert != null)
-                                    {
-                                        if (askYesNo == null)
-                                            Log.Main.Inform("Deleting logs older than " + FirstLogDate.ToString());
-                                        else
-                                        if (!askYesNo(alert))
-                                            return;
-                                        alert = null;
-                                    }
-                                    Log.Main.Inform("Deleting old file: " + f.FullName);
-                                    try
-                                    {
-                                        f.Delete();
-                                    }
-                                    catch (Exception e)
-                                    {
-                                        Log.Error(e);
-                                    }
-                                }
-                                break;
-                            default:
-                                throw new Exception("Unknown LOGGING_MODE:" + Log.mode);
+                            if (headSession != null && d.FullName.StartsWith(headSession.Dir, StringComparison.InvariantCultureIgnoreCase))
+                                continue;
+                            if (d.LastWriteTime >= firstLogTime)
+                                continue;
+                            if (alert != null)
+                            {
+                                if (askYesNo == null)
+                                    Log.Main.Inform("Deleting session data including caches and logs older than " + firstLogTime.ToString());
+                                else
+                                if (!askYesNo(alert))
+                                    return;
+                                alert = null;
+                            }
+                            Log.Main.Inform("Deleting old directory: " + d.FullName);
+                            try
+                            {
+                                d.Delete(true);
+                            }
+                            catch (Exception e)
+                            {
+                                Log.Error(e);
+                            }
                         }
+                    }
+                    else //if (Log.mode.HasFlag(Mode.ONE_FOLDER))//default
+                    {
+                        alert = "Logs older than " + firstLogTime.ToString() + " are to be deleted.\r\nDelete?";
+                        foreach (FileInfo f in di.GetFiles())
+                        {
+                            if (f.LastWriteTime >= firstLogTime)
+                                continue;
+                            if (alert != null)
+                            {
+                                if (askYesNo == null)
+                                    Log.Main.Inform("Deleting logs older than " + firstLogTime.ToString());
+                                else
+                                if (!askYesNo(alert))
+                                    return;
+                                alert = null;
+                            }
+                            Log.Main.Inform("Deleting old file: " + f.FullName);
+                            try
+                            {
+                                f.Delete();
+                            }
+                            catch (Exception e)
+                            {
+                                Log.Error(e);
+                            }
+                        }
+
                     }
                 }
                 finally
@@ -106,9 +109,12 @@ namespace Cliver
         }
 
         /// <summary>
-        /// Return stack information for the caller.
+        /// Returns stack information for the caller.
         /// </summary>
-        /// <returns></returns>
+        /// <param name="startFrame">frame to start with</param>
+        /// <param name="frameCount">number of frames to take. If negative then retrieve all frames</param>
+        /// <param name="endOnEmptyFile">if true, stop when going out of the app</param>
+        /// <returns>stack info</returns>
         public static string GetStackString(int startFrame = 0, int frameCount = 1, bool endOnEmptyFile = true)
         {
             StackTrace st = new StackTrace(true);
@@ -120,7 +126,7 @@ namespace Cliver
                     break;
                 MethodBase mb = sf.GetMethod();
                 Type dt = mb.DeclaringType;
-                if (dt != typeof(Log) && dt != typeof(Log.Writer) && TypesExcludedFromStack?.Find(x => x == dt) == null)
+                if (dt != typeof(Log) && dt != typeof(Log.Writer) && dt != typeof(Log.Session) && TypesExcludedFromStack?.Find(x => x == dt) == null)
                     break;
             }
             List<string> frameSs = new List<string>();
@@ -142,55 +148,34 @@ namespace Cliver
         static List<Type> TypesExcludedFromStack = null;
 
         /// <summary>
-        /// Get exception message with details.
+        /// Returns exception message without stack info.
         /// </summary>
-        /// <param name="e"></param>
-        /// <returns></returns>
-        public static string GetExceptionMessage(Exception e)
-        {
-            GetExceptionMessage(e, out string m, out string d);
-            return m + " \r\n\r\n" + d;
-        }
-
-        /// <summary>
-        /// Get exception message without details.
-        /// </summary>
-        /// <param name="e"></param>
-        /// <returns></returns>
+        /// <param name="e">exception</param>
+        /// <returns>exception message chain</returns>
         public static string GetExceptionMessage2(Exception e)
         {
-            GetExceptionMessage(e, out string m, out string d);
-            return m;
+            return GetExceptionMessage(e, false);
         }
 
-        //        static public void GetExceptionMessage(Exception e, out string message, out string details)
-        //        {
-        //            for (; e.InnerException != null; e = e.InnerException) ;
-        //            message = "Exception: \r\n" + e.Message;
-        //#if DEBUG            
-        //            details = "Module:" + e.TargetSite.Module + " \r\n\r\nStack:" + e.StackTrace;
-        //#else       
-        //            details = ""; //"Module:" + e.TargetSite.Module + " \r\n\r\nStack:" + e.StackTrace;
-        //#endif
-        //        }
-
         /// <summary>
-        /// Get exception message and details.
+        /// Returns the exception message chain.
         /// </summary>
-        /// <param name="e"></param>
-        /// <returns></returns>
-        static public void GetExceptionMessage(Exception e, out string message, out string details)
+        /// <param name="e">exception</param>
+        /// <param name="withDetails">add stack info</param>
+        /// <returns>exception message chain</returns>
+        static public string GetExceptionMessage(Exception e, bool withDetails = true)
         {
             Exception lastInterestingE = null;
             bool passedOutOfApp = false;
-            List<string> ms = new List<string>();
+            List<string> messages = new List<string>();
             for (; e != null; e = e.InnerException)
             {
+                string m = e.Message + (withDetails ? " [" + e.GetType().FullName + "]" : "");
                 AggregateException ae = e as AggregateException;
                 if (ae != null && ae.InnerExceptions.Count > 1)
-                    ms.Add("More than 1 exception aggregated! Show only [0]:" + e.Message);
+                    messages.Add("More than 1 exception aggregated! Show only [0]:" + m);
                 else
-                    ms.Add(e.Message);
+                    messages.Add(m);
                 if (!passedOutOfApp)
                 {
                     if (lastInterestingE != null && (e.StackTrace == null || e.TargetSite == null))//it seems to be passing out of the application
@@ -199,8 +184,10 @@ namespace Cliver
                         lastInterestingE = e;
                 }
             }
-            message = string.Join("\r\n<= ", ms);
-            details = "Module: " + lastInterestingE?.TargetSite?.Module + " \r\n\r\nStack:" + lastInterestingE?.StackTrace;
+            StringBuilder sb = new StringBuilder(string.Join("\r\n<= ", messages));
+            if (withDetails)
+                sb.Append("\r\n\r\nModule: " + lastInterestingE?.TargetSite?.Module + " \r\n\r\nStack:" + lastInterestingE?.StackTrace);
+            return sb.ToString();
         }
         //static void getExceptionMessage(Exception e, ref string message, ref string details)
         //{
@@ -221,5 +208,47 @@ namespace Cliver
         //    }    
         //    details += "\r\n\r\nModule:" + e.TargetSite?.Module + " \r\n\r\nStack:" + e.StackTrace;
         //}
+
+        /// <summary>
+        /// Return name of the method which called this function
+        /// </summary>
+        /// <param name="name">don't change it</param>
+        /// <returns>name of the calling method</returns>
+        static public string GetThisMethodName([System.Runtime.CompilerServices.CallerMemberName] string name = "undefined")
+        {
+            return name;
+        }
+
+        /// <summary>
+        /// Return the full name of the calling method together with the passed parameters.
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        static public string GetThisMethodInfo(params object[] parameters)
+        {
+            MethodBase method = new StackFrame(1, false).GetMethod();
+            string s = method.DeclaringType.FullName + "::" + method.Name;
+            if (parameters.Length > 0)
+            {
+                List<string> ps = new List<string>();
+                foreach (object p in parameters)
+                    ps.Add(p.ToStringByJson());
+                s += "(\r\n" + string.Join(",\r\n", ps) + "\r\n)";
+            }
+            return s;
+        }
+
+        static public string GetAssembliesInfo(IEnumerable<string> namespaces)
+        {
+            StackTrace stackTrace = new StackTrace();
+            Assembly logAssembly = Assembly.GetExecutingAssembly();
+            Assembly callingAssembly = stackTrace.GetFrames().Select(f => f.GetMethod().DeclaringType.Assembly).Where(a => a != logAssembly).FirstOrDefault();
+            if (callingAssembly == null)
+                callingAssembly = Assembly.GetEntryAssembly();
+            return string.Join("\r\n",
+                AssemblyRoutines.GetAssemblyBranchByNamespace(callingAssembly, new Regex(string.Join("|", namespaces.Select(a => Regex.Escape(a)))))
+                    .Select(a => a.GetName()).Select(a => a.Name + " - " + a.Version)
+                );
+        }
     }
 }

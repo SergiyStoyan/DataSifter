@@ -1,10 +1,9 @@
 ﻿//********************************************************************************************
 //Author: Sergey Stoyan
 //        sergey.stoyan@gmail.com
-//        sergey_stoyan@yahoo.com
+//        sergey.stoyan@hotmail.com
+//        stoyan@cliversoft.com
 //        http://www.cliversoft.com
-//        26 September 2006
-//Copyright: (C) 2006, Sergey Stoyan
 //********************************************************************************************
 using System;
 using System.Collections.Generic;
@@ -17,25 +16,36 @@ namespace Cliver
 {
     public static class ReflectionRoutines
     {
-        static public bool IsSubclassOfRawGeneric(this Type type, Type generic_type)
+        public static object GetDefault(this Type type)
         {
-            while (type != null && type != typeof(object))
-            {
-                var cur = type.IsGenericType ? type.GetGenericTypeDefinition() : type;
-                if (generic_type == cur)
-                {
+            return typeof(ReflectionRoutines).GetRuntimeMethod(nameof(getDefaultGeneric), new Type[] { }).MakeGenericMethod(type).Invoke(null, null);
+        }
+        static T getDefaultGeneric<T>()
+        {
+            return default(T);
+        }
+
+        static public bool IsSubclassOfRawGeneric(Type type, Type genericType)
+        {
+            for (; type != null && type != typeof(object); type = type.BaseType)
+                if (genericType == (type.IsGenericType ? type.GetGenericTypeDefinition() : type))
                     return true;
-                }
-                type = type.BaseType;
-            }
             return false;
         }
 
-        public static Dictionary<string, FieldInfo> GetFields(this object o, BindingFlags bindingFlags = BindingFlags.Public)
+        public static Dictionary<string, FieldInfo> GetFieldInfos(object o, BindingFlags bindingFlags)
         {
             Dictionary<string, FieldInfo> ns2fi = new Dictionary<string, FieldInfo>();
             foreach (FieldInfo fi in o.GetType().GetFields(bindingFlags))
                 ns2fi[fi.Name] = fi;
+            return ns2fi;
+        }
+
+        public static Dictionary<string, object> GetFieldValues(object o, BindingFlags bindingFlags)
+        {
+            Dictionary<string, object> ns2fi = new Dictionary<string, object>();
+            foreach (FieldInfo fi in o.GetType().GetFields(bindingFlags))
+                ns2fi[fi.Name] = fi.GetValue(o);
             return ns2fi;
         }
 
@@ -52,7 +62,13 @@ namespace Cliver
         //        });
         //} public Dictionary<string, string> nameOfAlreadyAcessed = new Dictionary<string, string>();
 
-        public static string GetNameOfVariablePassedInAsParameter(string parameterName, int level = 1)//!!!not debugged! It will not work for Release
+        /// <summary>
+        /// !!!not debugged! It will not work for Release
+        /// </summary>
+        /// <param name="parameterName"></param>
+        /// <param name="frame"></param>
+        /// <returns></returns>
+        public static string GetNameOfVariablePassedInAsParameter(string parameterName, int frame = 1)
         {
             MethodBase mb = System.Reflection.MethodBase.GetCurrentMethod();
             int parameterNumber = 0;
@@ -62,7 +78,7 @@ namespace Cliver
                     break;
                 parameterNumber++;
             }
-            StackFrame stackFrame = new StackTrace(true).GetFrame(level);
+            StackFrame stackFrame = new StackTrace(true).GetFrame(frame);
             string fileName = stackFrame.GetFileName();
             int lineNumber = stackFrame.GetFileLineNumber();
             System.IO.StreamReader file = new System.IO.StreamReader(fileName);
@@ -76,5 +92,39 @@ namespace Cliver
             }
             return null;
         }
+
+        //public static MethodInfo GetCallingStackMethodInfo(Regex namespaceRegex)
+        //{
+        //    Type myType = typeof(MyClass);
+        //    var n = myType.Namespace;
+        //    StackTrace st = new StackTrace(true);
+        //    int frameI = 1;
+        //    for (; ; frameI++)
+        //    {
+        //        StackFrame sf = st.GetFrame(frameI);
+        //        if (sf == null)
+        //            break;
+        //        MethodBase mb = sf.GetMethod();
+        //        Type dt = mb.DeclaringType;
+        //        if (dt != typeof(Log) && dt != typeof(Log.Writer) && dt != typeof(Log.Session) && TypesExcludedFromStack?.Find(x => x == dt) == null)
+        //            break;
+        //    }
+        //    List<string> frameSs = new List<string>();
+        //    if (frameCount < 0)
+        //        frameCount = 1000;
+        //    frameI += startFrame;
+        //    int endFrameI = frameI + frameCount - 1;
+        //    for (; frameI <= endFrameI; frameI++)
+        //    {
+        //        StackFrame sf = st.GetFrame(frameI);
+        //        if (sf == null || endOnEmptyFile && frameSs.Count > 0 && string.IsNullOrEmpty(sf.GetFileName()))//it seems to be passing out of the application
+        //            break;
+        //        MethodBase mb = sf.GetMethod();
+        //        Type dt = mb.DeclaringType;
+        //        frameSs.Add("method: " + dt?.ToString() + "::" + mb?.Name + " \r\nfile: " + sf.GetFileName() + " \r\nline: " + sf.GetFileLineNumber());
+        //    }
+        //    return string.Join("\r\n<=", frameSs);
+        //}
+        //static List<Type> TypesExcludedFromStack = null;
     }
 }

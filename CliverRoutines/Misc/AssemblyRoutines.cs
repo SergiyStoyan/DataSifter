@@ -1,15 +1,15 @@
 ﻿//********************************************************************************************
 //Author: Sergey Stoyan
 //        sergey.stoyan@gmail.com
-//        sergey_stoyan@yahoo.com
+//        sergey.stoyan@hotmail.com
+//        stoyan@cliversoft.com
 //        http://www.cliversoft.com
-//        26 September 2006
-//Copyright: (C) 2006, Sergey Stoyan
 //********************************************************************************************
 using System;
 using System.Linq;
 using System.Reflection;
 using System.Diagnostics;
+using System.Collections.Generic;
 
 namespace Cliver
 {
@@ -37,8 +37,8 @@ namespace Cliver
 
         public static string GetAppCompilationVersion()
         {
-            DateTime dt = AssemblyRoutines.GetAssemblyCompiledTime(Assembly.GetEntryAssembly());
-            DateTime dt2 = AssemblyRoutines.GetAssemblyCompiledTime(Assembly.GetCallingAssembly());
+            DateTime dt = GetAssemblyCompiledTime(Assembly.GetEntryAssembly());
+            DateTime dt2 = GetAssemblyCompiledTime(Assembly.GetCallingAssembly());
             dt = dt > dt2 ? dt : dt2;
             return dt.ToString("yy-MM-dd-HH-mm-ss");
         }
@@ -55,40 +55,31 @@ namespace Cliver
             return ai.Name;
         }
 
-        //public static System.Drawing.Icon GetAppIcon(Assembly assembly = null)
-        //{
-        //    return System.Drawing.Icon.ExtractAssociatedIcon((assembly != null ? assembly : Assembly.GetEntryAssembly()).Location);
-        //}
-
-        //public static System.Windows.Media.ImageSource GetAppIconImageSource()
-        //{
-        //    return GetAppIcon().ToImageSource();
-        //}
-
         public class AssemblyInfo
         {
             public AssemblyInfo(string file)
             {
                 if (file == null)
-                    a = Assembly.GetCallingAssembly();
+                    Assembly = Assembly.GetCallingAssembly();
                 else
-                    a = Assembly.LoadFile(file);
+                    Assembly = Assembly.LoadFile(file);
             }
-            readonly Assembly a;
+
+            public Assembly Assembly { get; }
 
             public AssemblyInfo(Assembly a = null)
             {
                 if (a == null)
-                    this.a = Assembly.GetCallingAssembly();
+                    Assembly = Assembly.GetCallingAssembly();
                 else
-                    this.a = a;
+                    Assembly = a;
             }
 
             public string CompilationVersion
             {
                 get
                 {
-                    DateTime dt = AssemblyRoutines.GetAssemblyCompiledTime(a);
+                    DateTime dt = GetAssemblyCompiledTime(Assembly);
                     return dt.ToString("yy-MM-dd-HH-mm-ss");
                 }
             }
@@ -97,16 +88,10 @@ namespace Cliver
             {
                 get
                 {
-                    object[] attributes = a.GetCustomAttributes(typeof(AssemblyTitleAttribute), false);
-                    if (attributes.Length > 0)
-                    {
-                        AssemblyTitleAttribute titleAttribute = (AssemblyTitleAttribute)attributes[0];
-                        if (titleAttribute.Title != "")
-                        {
-                            return titleAttribute.Title;
-                        }
-                    }
-                    return System.IO.Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().CodeBase);
+                    object[] attributes = Assembly.GetCustomAttributes(typeof(AssemblyTitleAttribute), false);
+                    if (attributes.Length < 1)
+                        return null;
+                    return ((AssemblyTitleAttribute)attributes[0]).Title;
                 }
             }
 
@@ -122,7 +107,7 @@ namespace Cliver
             {
                 get
                 {
-                    return a.GetName().Version;
+                    return Assembly.GetName().Version;
                 }
             }
 
@@ -130,7 +115,7 @@ namespace Cliver
             {
                 get
                 {
-                    FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(a.Location);
+                    FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(Assembly.Location);
                     return new Version(fvi.ProductVersion);
                 }
             }
@@ -139,9 +124,9 @@ namespace Cliver
             {
                 get
                 {
-                    object[] attributes = a.GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false);
-                    if (attributes.Length == 0)
-                        return "";
+                    object[] attributes = Assembly.GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false);
+                    if (attributes.Length < 1)
+                        return null;
                     return ((AssemblyDescriptionAttribute)attributes[0]).Description;
                 }
             }
@@ -150,11 +135,9 @@ namespace Cliver
             {
                 get
                 {
-                    object[] attributes = a.GetCustomAttributes(typeof(AssemblyProductAttribute), false);
-                    if (attributes.Length == 0)
-                    {
-                        return "";
-                    }
+                    object[] attributes = Assembly.GetCustomAttributes(typeof(AssemblyProductAttribute), false);
+                    if (attributes.Length < 1)
+                        return null;
                     return ((AssemblyProductAttribute)attributes[0]).Product;
                 }
             }
@@ -163,11 +146,9 @@ namespace Cliver
             {
                 get
                 {
-                    object[] attributes = a.GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false);
-                    if (attributes.Length == 0)
-                    {
-                        return "";
-                    }
+                    object[] attributes = Assembly.GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false);
+                    if (attributes.Length < 1)
+                        return null;
                     return ((AssemblyCopyrightAttribute)attributes[0]).Copyright;
                 }
             }
@@ -176,11 +157,9 @@ namespace Cliver
             {
                 get
                 {
-                    object[] attributes = a.GetCustomAttributes(typeof(AssemblyCompanyAttribute), false);
-                    if (attributes.Length == 0)
-                    {
-                        return "";
-                    }
+                    object[] attributes = Assembly.GetCustomAttributes(typeof(AssemblyCompanyAttribute), false);
+                    if (attributes.Length < 1)
+                        return null;
                     return ((AssemblyCompanyAttribute)attributes[0]).Company;
                 }
             }
@@ -189,9 +168,59 @@ namespace Cliver
             {
                 get
                 {
-                    return a.GetName().Name;
+                    return Assembly.GetName().Name;
                 }
             }
+        }
+
+        public static IEnumerable<Assembly> GetAssemblyBranch(Assembly assembly, System.Text.RegularExpressions.Regex assemblyNameFilter)
+        {
+            if (!assemblyNameFilter.IsMatch(assembly.FullName))
+                yield break;
+            HashSet<string> afns = new HashSet<string>();
+            afns.Add(assembly.FullName);
+            yield return assembly;
+            foreach (AssemblyName an in assembly.GetReferencedAssemblies())
+                foreach (Assembly aa in getAssemblyBranch(an, assemblyNameFilter, afns))
+                    yield return aa;
+        }
+        static IEnumerable<Assembly> getAssemblyBranch(AssemblyName assemblyName, System.Text.RegularExpressions.Regex assemblyNameFilter, HashSet<string> assemblyFuleNames)
+        {
+            if (assemblyFuleNames.Contains(assemblyName.FullName))
+                yield break;
+            if (!assemblyNameFilter.IsMatch(assemblyName.FullName))
+                yield break;
+            Assembly assembly = Assembly.Load(assemblyName);
+            assemblyFuleNames.Add(assembly.FullName);
+            yield return assembly;
+            foreach (AssemblyName an in assembly.GetReferencedAssemblies())
+                foreach (Assembly a in getAssemblyBranch(an, assemblyNameFilter, assemblyFuleNames))
+                    yield return a;
+        }
+
+        public static IEnumerable<Assembly> GetAssemblyBranchByNamespace(Assembly assembly, System.Text.RegularExpressions.Regex assemblyNamespaceFilter)
+        {
+            if (assembly.GetTypes().FirstOrDefault(a => assemblyNamespaceFilter.IsMatch(a.FullName)) == null)
+                yield break;
+            HashSet<string> afns = new HashSet<string>();
+            afns.Add(assembly.FullName);
+            yield return assembly;
+            foreach (AssemblyName an in assembly.GetReferencedAssemblies())
+                foreach (Assembly aa in getAssemblyBranchByNamespace(an, assemblyNamespaceFilter, afns))
+                    yield return aa;
+        }
+        static IEnumerable<Assembly> getAssemblyBranchByNamespace(AssemblyName assemblyName, System.Text.RegularExpressions.Regex assemblyNamespaceFilter, HashSet<string> assemblyFuleNames)
+        {
+            if (assemblyFuleNames.Contains(assemblyName.FullName))
+                yield break;
+            Assembly assembly = Assembly.Load(assemblyName);
+            if (assembly.GetTypes().FirstOrDefault(a => assemblyNamespaceFilter.IsMatch(a.FullName)) == null)
+                yield break;
+            assemblyFuleNames.Add(assembly.FullName);
+            yield return assembly;
+            foreach (AssemblyName an in assembly.GetReferencedAssemblies())
+                foreach (Assembly a in getAssemblyBranchByNamespace(an, assemblyNamespaceFilter, assemblyFuleNames))
+                    yield return a;
         }
     }
 }

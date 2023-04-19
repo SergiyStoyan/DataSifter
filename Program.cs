@@ -17,9 +17,44 @@ namespace Cliver.DataSifter
 {
     static class Program
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
+        static Program()
+        {
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+
+            AppDomain.CurrentDomain.UnhandledException += delegate (object sender, UnhandledExceptionEventArgs args)
+            {
+                Exception e = (Exception)args.ExceptionObject;
+                Log.Error(e);
+                if (e.InnerException != null)
+                    Message.Error("UnhandledException", e.InnerException);
+                else
+                    Message.Error(e);
+                Environment.Exit(0);
+            };
+
+            //SetProcessDpiAwareness((int)DpiAwareness.PerMonitorAware);
+
+            AssemblyRoutines.AssemblyInfo ai = new AssemblyRoutines.AssemblyInfo();
+            Name = ai.Product;
+            Version = ai.Version;
+            FullVersion = Version.ToString(3);
+            FullName = Name + " " + FullVersion;
+
+            Message.TopMost = true;
+            Win.LogMessage.DisableStumblingDialogs = false;
+            //Win.LogMessage.ShowDialog = ((string title, Icon icon, string message, string[] buttons, int default_button, Form owner) => { return Message.ShowDialog(title, icon, message, buttons, default_button, owner); });
+
+            Config.Reload();
+
+            Log.Initialize(Log.Mode.ONE_FOLDER, new System.Collections.Generic.List<string> { Log.CompanyUserDataDir });
+        }
+
+        public static readonly string Name;
+        public static readonly Version Version;
+        public static readonly string FullName;
+        public static readonly string FullVersion;
+
         [STAThread]
         static void Main(string [] args)
         {
@@ -27,61 +62,13 @@ namespace Cliver.DataSifter
             {
                 Message.TopMost = true;
                 Win.LogMessage.DisableStumblingDialogs = false;
-                //Log.DeleteOldLogsDialog = false;
-                Log.Initialize(Log.Mode.ALL_LOGS_ARE_IN_SAME_FOLDER/*, new System.Collections.Generic.List<string> { Log.CompanyUserDataDir }, Log.Level.ALL*/);
-
-                //Log.Inform(Log.Main.File);
-
-                Settings.Default.Reload();
-                if (Settings.Default.ApplicationVersion != Application.ProductVersion)
-                {
-                    //string HelpFileUri = Settings.Default.HelpFileUri;
-                    Settings.Default.Upgrade();
-                    //Settings.Default.HelpFileUri = HelpFileUri;
-                    Settings.Default.ApplicationVersion = Application.ProductVersion;
-                    Settings.Default.Save();
-                }
 
                 Application.EnableVisualStyles();
                 //Application.SetCompatibleTextRenderingDefault(false);
                 
                 Application.Run(SourceForm.This);
 
-                Settings.Default.Save();
-            }
-            catch (Exception e)
-            {
-                Message.Error(e);
-            }
-        }
-
-        //static readonly internal System.Windows.Forms.ToolTip ToolTip = new ToolTip();
-        
-        static readonly internal string AppTitle = Application.ProductName;
-
-        static readonly internal string Title = AppTitle;
-
-        static Program()
-        {
-            Application.ThreadException += delegate (object sender, System.Threading.ThreadExceptionEventArgs e)
-            {
-                Message.Error(e.Exception);
-            };
-            Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
-            AppDomain.CurrentDomain.UnhandledException += delegate (object sender, UnhandledExceptionEventArgs e)
-            {
-                if (e.IsTerminating || e.ExceptionObject is ThreadAbortException)
-                    return;
-                if (e.ExceptionObject is Exception)
-                    Message.Error((Exception)e.ExceptionObject);
-            };
-
-            try
-            {
-                AssemblyName ean = Assembly.GetEntryAssembly().GetName();
-                AppTitle = ean.Name;
-                if (ean.Version.Major > 0 || ean.Version.Minor > 0)
-                    AppTitle += ean.Version.Major + "." + ean.Version.Minor;
+                Config.Save();
             }
             catch (Exception e)
             {
@@ -93,10 +80,10 @@ namespace Cliver.DataSifter
         {
             try
             {
-                if (File.Exists(AppDir + Settings.Default.HelpFile))
-                    Process.Start(Settings.Default.HelpFile);
+                if (File.Exists(AppDir + Settings.General.HelpFile))
+                    Process.Start(Settings.General.HelpFile);
                 else
-                    Process.Start(Settings.Default.HelpFileUri);
+                    Process.Start(Settings.General.HelpFileUri);
             }
             catch (Exception ex)
             {

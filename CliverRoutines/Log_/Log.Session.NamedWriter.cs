@@ -1,10 +1,9 @@
 //********************************************************************************************
 //Author: Sergey Stoyan
 //        sergey.stoyan@gmail.com
-//        sergey_stoyan@yahoo.com
+//        sergey.stoyan@hotmail.com
+//        stoyan@cliversoft.com
 //        http://www.cliversoft.com
-//        26 September 2006
-//Copyright: (C) 2006-2013, Sergey Stoyan
 //********************************************************************************************
 using System;
 using System.Collections.Generic;
@@ -15,6 +14,12 @@ namespace Cliver
     {
         partial class Session
         {
+            /// <summary>
+            /// Get log by name.
+            /// It will be created if not exists.
+            /// </summary>
+            /// <param name="name">log name that can not be a number</param>
+            /// <returns>named log</returns>
             public NamedWriter this[string name]
             {
                 get
@@ -40,19 +45,23 @@ namespace Cliver
 
             Dictionary<string, NamedWriter> names2NamedWriter = new Dictionary<string, NamedWriter>();
 
+            /// <summary>
+            /// Named log
+            /// </summary>
             public class NamedWriter : Writer
             {
                 NamedWriter(Session session, string name)
                     : base(name, session)
                 {
+                    if (int.TryParse(name, out int _))//to make NamedWriter files differ from ThreadWriter files
+                        throw new Exception("Name of a " + typeof(NamedWriter).FullName + " cannot be a number.");
                 }
 
                 static internal NamedWriter Get(Session session, string name)
                 {
                     lock (session.names2NamedWriter)
                     {
-                        NamedWriter nw = null;
-                        if (!session.names2NamedWriter.TryGetValue(name, out nw))
+                        if (!session.names2NamedWriter.TryGetValue(name, out NamedWriter nw))
                         {
                             nw = new NamedWriter(session, name);
                             session.names2NamedWriter.Add(name, nw);

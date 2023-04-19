@@ -1,13 +1,13 @@
 ﻿//********************************************************************************************
 //Author: Sergey Stoyan
 //        sergey.stoyan@gmail.com
-//        sergey_stoyan@yahoo.com
+//        sergey.stoyan@hotmail.com
+//        stoyan@cliversoft.com
 //        http://www.cliversoft.com
-//        26 September 2006
-//Copyright: (C) 2006, Sergey Stoyan
 //********************************************************************************************
 using System;
 using System.Threading;
+using System.Collections.Generic;
 
 
 namespace Cliver
@@ -29,15 +29,13 @@ namespace Cliver
             return o;
         }
 
-        public static bool WaitForCondition(Func<bool> check_condition, int mss, int spin_sleep_in_mss = 10)
+        public static bool WaitForCondition(Func<bool> condition, int timeoutMss, int pollTimeSpanMss = 10)
         {
-            DateTime dt = DateTime.Now + new TimeSpan(0, 0, 0, 0, mss);
-            while (dt > DateTime.Now)
+            for (DateTime timeout = DateTime.Now.AddMilliseconds(timeoutMss); DateTime.Now < timeout; Thread.Sleep(pollTimeSpanMss))
             {
-                if (check_condition())
+                if (condition())
                     return true;
                 //Application.DoEvents();
-                Thread.Sleep(spin_sleep_in_mss);
             }
             return false;
         }
@@ -50,7 +48,71 @@ namespace Cliver
                 //Application.DoEvents();
                 Thread.Sleep(spin_sleep_in_mss);
             }
-        }        
+        }
+    }
+
+    public class Tryer
+    {
+        public Tryer(int tryMaxCount, int retryDelayInSecs, List<Type> exceptionTypes = null)
+        {
+            TryMaxCount = tryMaxCount;
+            RetryDelayInSecs = retryDelayInSecs;
+            ExceptionTypes = exceptionTypes;
+        }
+        public int TryMaxCount;
+        public int RetryDelayInSecs;
+        public List<Type> ExceptionTypes;
+        //public Func<T> Function;
+
+        public delegate string OnRetryDelegate(Exception exception, int tryCount);
+        public OnRetryDelegate OnRetry;
+
+        //public T Perform<T>()
+        //{
+        //    return Perform(Function);
+        //}
+
+        public T Perform<T>(Func<T> function)
+        {
+            for (int tryCount = 1; ; tryCount++)
+                try
+                {
+                    return function();
+                }
+                catch (Exception e)
+                {
+                    if (ExceptionTypes != null && ExceptionTypes.Find(a => e.GetType() == a) == null)
+                    {
+                        //throw new Exception("Caller stack: " + Log.GetStackString(1, -1), e);
+                        //Log.Warning2("Caller stack for the following error: " + Log.GetStackString(1, -1));
+                        throw;
+                    }
+                    if (tryCount >= TryMaxCount)
+                        throw new Exception("Try count exeeded: " + tryCount, e);
+                    if (OnRetry != null)
+                        OnRetry(e, tryCount);
+                    System.Threading.Thread.Sleep(RetryDelayInSecs * 1000);
+                }
+        }
+
+        //public static T Perform<T>(Func<T> function, int tryMaxCount, int retryDelayInSecs, List<Type> exceptionTypes = null, OnRetryDelegate onRetry = null)
+        //{
+        //    for (int tryCount = 0; ; tryCount++)
+        //        try
+        //        {
+        //            return function();
+        //        }
+        //        catch (Exception e)
+        //        {
+        //            if (exceptionTypes != null && exceptionTypes.Find(a => e.GetType() == a) == null)
+        //                throw;
+        //            if (tryCount++ >= tryMaxCount)
+        //                throw new Exception("Try count exeeded: " + tryCount, e);
+        //            if (onRetry != null)
+        //                onRetry(e, tryCount);
+        //            System.Threading.Thread.Sleep(retryDelayInSecs * 1000);
+        //        }
+        //}
     }
 }
 

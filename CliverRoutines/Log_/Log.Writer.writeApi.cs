@@ -1,10 +1,9 @@
 //********************************************************************************************
 //Author: Sergey Stoyan
 //        sergey.stoyan@gmail.com
-//        sergey_stoyan@yahoo.com
+//        sergey.stoyan@hotmail.com
+//        stoyan@cliversoft.com
 //        http://www.cliversoft.com
-//        26 September 2006
-//Copyright: (C) 2006-2013, Sergey Stoyan
 //********************************************************************************************
 using System;
 using System.IO;
@@ -14,26 +13,16 @@ namespace Cliver
 {
     public partial class Log
     {
-        public abstract partial class Writer : IWriteApi
+        public partial class Writer : IWriteApi
         {
-            /// <summary>
-            /// Write the error to the current thread's log
-            /// </summary>
-            /// <param name="e"></param>
             public void Error(Exception e)
             {
-                string m;
-                string d;
-                GetExceptionMessage(e, out m, out d);
-                Write(Log.MessageType.ERROR, m, e is Exception2 ? null : d);
+                Write(MessageType.ERROR, GetExceptionMessage(e, !(e is Exception2)));
             }
 
             public void Error2(Exception e)
             {
-                string m;
-                string d;
-                GetExceptionMessage(e, out m, out d);
-                Write(MessageType.ERROR, m);
+                Write(MessageType.ERROR, GetExceptionMessage2(e));
             }
 
             public void Error(string message)
@@ -43,10 +32,7 @@ namespace Cliver
 
             public void Error(string message, Exception e)
             {
-                string m;
-                string d;
-                GetExceptionMessage(e, out m, out d);
-                Write(MessageType.ERROR, message, m + (e is Exception2 ? null : "\r\n\r\n" + d));
+                Write(MessageType.ERROR, message, GetExceptionMessage(e, !(e is Exception2)));
             }
 
             public void Error2(string message)
@@ -54,117 +40,59 @@ namespace Cliver
                 Write(MessageType.ERROR, message);
             }
 
-            /// <summary>
-            /// Write the stack information for the caller.
-            /// </summary>
-            /// <param name="e"></param>
-            public void Trace(object message = null)
+            public void Error2(string message, Exception e)
             {
-                Write(MessageType.TRACE, message == null ? null : message.ToString(), GetStackString());
+                Write(MessageType.ERROR, message, GetExceptionMessage2(e));
             }
 
-            /// <summary>
-            /// Write the error to the log and terminate the process.
-            /// </summary>
-            /// <param name="e"></param>
-            public void Exit(string message)
+            public void Trace(object object_ = null)
             {
-                lock (this)
-                {
-                    if (Name != MAIN_THREAD_LOG_NAME)
-                        Main.Write("EXITING: due to thread #" + Name + ". See the respective Log");
-                    Write(MessageType.EXIT, message, GetStackString());
-                }
+                Write(MessageType.TRACE, object_?.ToString(), GetStackString());
             }
 
-            public void Exit2(string message)
+            virtual public void Exit(string message)
             {
-                lock (this)
-                {
-                    if (Name != MAIN_THREAD_LOG_NAME)
-                        Main.Write("EXITING: due to thread #" + Name + ". See the respective Log");
-                    Write(MessageType.EXIT, message);
-                }
+                Write(MessageType.EXIT, message, GetStackString());
             }
 
-            /// <summary>
-            /// Write the error to the log and terminate the process.
-            /// </summary>
-            /// <param name="e"></param>
-            public void Exit(Exception e)
+            virtual public void Exit2(string message)
             {
-                lock (this)
-                {
-                    if (Name != MAIN_THREAD_LOG_NAME)
-                        Main.Write("EXITING: due to thread #" + Name + ". See the respective Log");
-                    string m;
-                    string d;
-                    GetExceptionMessage(e, out m, out d);
-                    Write(MessageType.EXIT, m, e is Exception2 ? null : d);
-                }
+                Write(MessageType.EXIT, message);
             }
 
-            public delegate void OnExitig(string message);
-            static public event OnExitig Exitig = null;
+            virtual public void Exit(Exception e)
+            {
+                Write(MessageType.EXIT, GetExceptionMessage(e, !(e is Exception2)));
+            }
 
-            /// <summary>
-            /// Write warning with stack details.
-            /// </summary>
-            /// <param name="message"></param>
             public void Warning(string message)
             {
                 Write(MessageType.WARNING, message, GetStackString());
             }
 
-            /// <summary>
-            /// Write warning with exception with details.
-            /// </summary>
-            /// <param name="message"></param>
-            /// <param name="e"></param>
             public void Warning(string message, Exception e)
             {
-                string m;
-                string d;
-                GetExceptionMessage(e, out m, out d);
-                Write(MessageType.WARNING, message, m + (e is Exception2 ? null : "\r\n\r\n" + d));
+                Write(MessageType.WARNING, message, GetExceptionMessage(e, !(e is Exception2)));
             }
 
-            /// <summary>
-            /// Write warning without stack details.
-            /// </summary>
-            /// <param name="message"></param>
             public void Warning2(string message)
             {
                 Write(MessageType.WARNING, message);
             }
 
-            /// <summary>
-            /// Write exception with details.
-            /// </summary>
-            /// <param name="e"></param>
+            public void Warning2(string message, Exception e)
+            {
+                Write(MessageType.WARNING, message, GetExceptionMessage2(e));
+            }
+
             public void Warning(Exception e)
             {
-                string m;
-                string d;
-                GetExceptionMessage(e, out m, out d);
-                Write(MessageType.WARNING, m, e is Exception2 ? null : d);
+                Write(MessageType.WARNING, GetExceptionMessage(e, !(e is Exception2)));
             }
 
-            /// <summary>
-            /// Write exception without details.
-            /// </summary>
-            /// <param name="e"></param>
             public void Warning2(Exception e)
             {
-                string m;
-                string d;
-                GetExceptionMessage(e, out m, out d);
-                Write(MessageType.WARNING, m);
-            }
-
-            public void Inform(string message)
-            {
-                Write(MessageType.INFORM, message);
+                Write(MessageType.WARNING, GetExceptionMessage2(e));
             }
 
             public void Inform0(string message)
@@ -172,14 +100,14 @@ namespace Cliver
                 Write(MessageType.INFORM, message, GetStackString());
             }
 
-            public void Write(string message)
+            public void Inform(string message)
             {
-                Write(MessageType.LOG, message);
+                Write(MessageType.INFORM, message);
             }
 
-            public void Write0(string message)
+            public void Debug0(string message)
             {
-                Write(MessageType.LOG, message, GetStackString());
+                Write(MessageType.DEBUG, message, GetStackString());
             }
 
             public void Debug(string message)
@@ -187,9 +115,14 @@ namespace Cliver
                 Write(MessageType.DEBUG, message);
             }
 
-            public void Debug0(string message)
+            public void Write0(string message)
             {
-                Write(MessageType.DEBUG, message, GetStackString());
+                Write(MessageType.LOG, message, GetStackString());
+            }
+
+            public void Write(string message)
+            {
+                Write(MessageType.LOG, message);
             }
         }
     }

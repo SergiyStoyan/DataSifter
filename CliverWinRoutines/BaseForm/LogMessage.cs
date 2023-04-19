@@ -1,11 +1,10 @@
 //********************************************************************************************
 //Author: Sergey Stoyan
 //        sergey.stoyan@gmail.com
-//        sergey_stoyan@yahoo.com
+//        sergey.stoyan@hotmail.com
 //        http://www.cliversoft.com
-//        26 September 2006
-//Copyright: (C) 2006, Sergey Stoyan
 //********************************************************************************************
+
 
 using System;
 using System.Windows.Forms;
@@ -20,11 +19,6 @@ namespace Cliver.Win
 
         static LogMessage()
         {
-            if (ProgramRoutines.IsWebContext)
-            {
-                DisableStumblingDialogs = true;
-                Output2Console = false;
-            }
         }
 
         /// <summary>
@@ -138,18 +132,12 @@ namespace Cliver.Win
 
         public static void Error(Exception e, Form owner = null)
         {
-            string m;
-            string d;
-            Cliver.Log.GetExceptionMessage(e, out m, out d);
-            Error2(m + (e is Exception2 ? null : "\r\n\r\n" + d), owner);
+            Error2(Log.GetExceptionMessage(e, !(e is Exception2)), owner);
         }
 
         public static void Error2(Exception e, Form owner = null)
         {
-            string m;
-            string d;
-            Cliver.Log.GetExceptionMessage(e, out m, out d);
-            Error2(m, owner);
+            Error2(Log.GetExceptionMessage2(e), owner);
         }
 
         public static void Exit(string message, Form owner = null)
@@ -189,10 +177,7 @@ namespace Cliver.Win
 
         public static void Exit(Exception e)
         {
-            string m;
-            string d;
-            Cliver.Log.GetExceptionMessage(e, out m, out d);
-            Exit(m + (e is Exception2 ? null : "\r\n\r\n" + d));
+            Exit(Log.GetExceptionMessage(e, !(e is Exception2)));
         }
 
         public static void Inform(string message, Form owner = null)

@@ -91,8 +91,8 @@ namespace Cliver.DataSifter
                 return;
             }
 
-            Settings.Default.LastSourceFile = file;
-            Settings.Default.Save();
+            Settings.History.LastSourceFile = file;
+            Settings.History.Save();
 
             try
             {

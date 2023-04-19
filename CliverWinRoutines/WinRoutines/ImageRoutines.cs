@@ -1,8 +1,10 @@
-//********************************************************************************************
-//Author: Sergey Stoyan
-//        sergey.stoyan@gmail.com
-//        http://www.cliversoft.com
-//********************************************************************************************
+/********************************************************************************************
+        Author: Sergey Stoyan
+        sergey.stoyan@gmail.com
+        sergey.stoyan@hotmail.com
+        stoyan@cliversoft.com
+        http://www.cliversoft.com
+********************************************************************************************/
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -52,6 +54,7 @@ namespace Cliver.Win
                 g.CompositingQuality = CompositingQuality.HighQuality;
                 g.DrawImage(image, 0, 0, b.Width, b.Height);
             }
+            b.SetResolution(image.HorizontalResolution, image.VerticalResolution);
             return b;
         }
 
@@ -63,13 +66,36 @@ namespace Cliver.Win
 
         public static Bitmap GetScaled(Image image, Size max_size)
         {
-            float ratio;
-            return GetScaled(image, max_size, out ratio);
+            return GetScaled(image, max_size, out _);
+        }
+
+        /// <summary>
+        /// !!!CAUTION: it disposes the passed image!
+        /// </summary>
+        /// <param name="bitmap"></param>
+        /// <param name="max_size"></param>
+        public static void Scale(ref Bitmap bitmap, Size max_size)
+        {
+            Bitmap b = GetScaled(bitmap, max_size, out _);
+            bitmap.Dispose();
+            bitmap = b;
         }
 
         public static Bitmap GetScaled(Image image, float ratio)
         {
             return GetResized(image, (int)Math.Round(image.Width * ratio, 0), (int)Math.Round(image.Height * ratio, 0));
+        }
+
+        /// <summary>
+        /// !!!CAUTION: it disposes the passed image!
+        /// </summary>
+        /// <param name="bitmap"></param>
+        /// <param name="ratio"></param>
+        public static void Scale(ref Bitmap bitmap, float ratio)
+        {
+            Bitmap b = GetScaled(bitmap, ratio);
+            bitmap.Dispose();
+            bitmap = b;
         }
 
         public static Bitmap GetCroppedByColor(Image image, Color color)
@@ -139,6 +165,12 @@ namespace Cliver.Win
                 }
             }
             return b2;
+        }
+
+        public static Color ToGreyScale(Color c)
+        {
+            int gc = (c.R + c.G + c.B) / 3;
+            return Color.FromArgb(c.A, gc, gc, gc);
         }
 
         public static Bitmap GetInverted(Bitmap b)
@@ -228,7 +260,7 @@ namespace Cliver.Win
             for (int x = 0; x < bw; x++)
                 for (int y = 0; y < bh; y++)
                     if (isHashMatch(bHash, x, y, hash, w, h, brightnessMaxDifference, differentPixelMaxNumber))
-                        return new PointF(x/ hashImageRatio, y/ hashImageRatio);
+                        return new PointF(x / hashImageRatio, y / hashImageRatio);
             return null;
         }
 

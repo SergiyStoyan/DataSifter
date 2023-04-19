@@ -1,84 +1,53 @@
 //********************************************************************************************
 //Author: Sergey Stoyan
 //        sergey.stoyan@gmail.com
-//        sergey_stoyan@yahoo.com
+//        sergey.stoyan@hotmail.com
+//        stoyan@cliversoft.com
 //        http://www.cliversoft.com
-//        26 September 2006
-//Copyright: (C) 2006-2013, Sergey Stoyan
 //********************************************************************************************
 using System;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Collections.Generic;
 
 namespace Cliver
 {
     public partial class Log
     {
-        public abstract partial class Writer
+        /// <summary>
+        /// The base log writer. 
+        /// </summary>
+        abstract public partial class Writer
         {
-            internal Writer(string name, Session session)
+            internal Writer(string name)
             {
                 Name = name;
-                Session = session;
-                SetFile();
             }
 
-            public Level Level
-            {
-                get
-                {
-                    return level;
-                }
-                set
-                {
-                    lock (this)
-                    {
-                        if (level == Level.NONE && value > Level.NONE)
-                        {
-                            setWorkDir(true);
-                            Directory.CreateDirectory(Session.Dir);
-                        }
-                        level = value;
-                    }
-                }
-            }
-            Level level = Log.defaultLevel;
-
+            /// <summary>
+            /// Log name.
+            /// </summary>
             public readonly string Name;
 
-            public string File { get; private set; } = null;
+            /// <summary>
+            /// Message importance level.
+            /// </summary>
+            abstract public Level Level { get; set; }
+            protected Level level = Log.DefaultLevel;
 
-            internal void SetFile()
-            {
-                lock (this)
-                {
-                    string file2 = Session.Dir + System.IO.Path.DirectorySeparatorChar + Log.ProcessName;
-                    switch (Log.mode)
-                    {
-                        case Log.Mode.ALL_LOGS_ARE_IN_SAME_FOLDER:
-                            file2 += (string.IsNullOrWhiteSpace(Session.Name) ? "" : "_" + Session.Name);
-                            break;
-                        case Cliver.Log.Mode.EACH_SESSION_IS_IN_OWN_FORLDER:
-                            break;
-                        default:
-                            throw new Exception("Unknown LOGGING_MODE:" + Cliver.Log.mode);
-                    }
-                    file2 += "_" + Session.TimeMark + (string.IsNullOrWhiteSpace(Name) ? "" : "_" + Name) + (fileCounter > 0 ? "[" + fileCounter + "]" : "") + "." + FileExtension;
+            /// <summary>
+            /// Log file path.
+            /// </summary>
+            public string File { get; protected set; } = null;
 
-                    if (File == file2)
-                        return;
-                    if (logWriter != null)
-                        logWriter.Close();
-                    File = file2;
-                }
-            }
-            int fileCounter = 0;
+            abstract internal void SetFile();
+            protected int fileCounter = 0;
 
-            public readonly Session Session;
-
-            public int MaxFileSize = Log.defaultMaxFileSize;
-
-            public const string MAIN_THREAD_LOG_NAME = "";
+            /// <summary>
+            /// Maximum log file length in bytes.
+            /// If negative than no effect.
+            /// </summary>
+            public int MaxFileSize = Log.DefaultMaxFileSize;
 
             /// <summary>
             /// Close the log
@@ -93,8 +62,16 @@ namespace Cliver
                 }
             }
 
+            internal bool IsClosed
+            {
+                get
+                {
+                    return logWriter == null;
+                }
+            }
+
             /// <summary>
-            /// General writting log method.
+            /// Base writting log method.
             /// </summary>
             public void Write(Log.MessageType messageType, string message, string details = null)
             {
@@ -102,62 +79,17 @@ namespace Cliver
                 {
                     write(messageType, message, details);
                     if (messageType == Log.MessageType.EXIT)
-                    {
-                        if (exiting)
-                            return;
-                        exiting = true;
-                        //if (exitingThread != null)
-                        //    return;
-                        //exitingThread = ThreadRoutines.Start(() =>
-                        //{
-                        try
-                        {
-                            Exitig?.Invoke(message);
-                        }
-                        catch (Exception e)
-                        {
-                            string m;
-                            string d;
-                            GetExceptionMessage(e, out m, out d);
-                            write(Log.MessageType.ERROR, m, d);
-                        }
-                        finally
-                        {
-                            Environment.Exit(0);
-                        }
-                        //});
-                    }
+                        Environment.Exit(0);
                 }
             }
-            //static protected System.Threading.Thread exitingThread = null;
-            static protected bool exiting = false;
-            void write(Log.MessageType messageType, string message, string details)
+            void write(Log.MessageType messageType, string message, string details = null)
             {
                 lock (this)
                 {
                     Writing?.Invoke(Name, messageType, message, details);
 
-                    switch (Level)
-                    {
-                        case Level.NONE:
-                            return;
-                        case Level.ERROR:
-                            if (messageType < MessageType.ERROR)
-                                return;
-                            break;
-                        case Level.WARNING:
-                            if (messageType < MessageType.WARNING)
-                                return;
-                            break;
-                        case Level.INFORM:
-                            if (messageType < MessageType.INFORM)
-                                return;
-                            break;
-                        case Level.ALL:
-                            break;
-                        default:
-                            throw new Exception("Unknown option: " + Level);
-                    }
+                    if (!Is2BeLogged(messageType))
+                        return;
 
                     if (MaxFileSize > 0)
                     {
@@ -175,15 +107,50 @@ namespace Cliver
                         logWriter = new StreamWriter(File, true);
                     }
 
-                    details = string.IsNullOrWhiteSpace(details) ? "" : "\r\n\r\n" + details;
-                    message = (messageType == MessageType.LOG ? "" : messageType.ToString()) + ": " + message + details;
-                    logWriter.WriteLine(DateTime.Now.ToString("[dd-MM-yy HH:mm:ss] ") + message);
+                    message = (messageType == MessageType.LOG ? "" : messageType.ToString() + ": ") + message + (string.IsNullOrWhiteSpace(details) ? "" : "\r\n\r\n" + details);
+                    logWriter.WriteLine(DateTime.Now.ToString(Log.TimePattern) + message);
                     logWriter.Flush();
                 }
             }
-            TextWriter logWriter = null;
+            protected TextWriter logWriter = null;
 
+            public bool Is2BeLogged(Log.MessageType messageType)
+            {
+                switch (Level)
+                {
+                    case Level.NONE:
+                        return false;
+                    case Level.ERROR:
+                        if (messageType < MessageType.ERROR)
+                            return false;
+                        break;
+                    case Level.WARNING:
+                        if (messageType < MessageType.WARNING)
+                            return false;
+                        break;
+                    case Level.INFORM:
+                        if (messageType < MessageType.INFORM)
+                            return false;
+                        break;
+                    case Level.ALL:
+                        break;
+                    default:
+                        throw new Exception("Unknown option: " + Level);
+                }
+                return true;
+            }
+
+            /// <summary>
+            /// Called for Writing. 
+            /// </summary>
+            /// <param name="logWriterName"></param>
+            /// <param name="messageType"></param>
+            /// <param name="message"></param>
+            /// <param name="details"></param>
             public delegate void OnWrite(string logWriterName, Log.MessageType messageType, string message, string details);
+            /// <summary>
+            /// Triggered before writing message.
+            /// </summary>
             static public event OnWrite Writing = null;
         }
     }

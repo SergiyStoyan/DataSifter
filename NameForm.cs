@@ -21,7 +21,7 @@ namespace Cliver.DataSifter
             InitializeComponent();
             Icon = Win.AssemblyRoutines.GetAppIcon();
 
-            this.Text = Program.Title;
+            this.Text = Program.FullName;
             boxName.Text = default_file_name;
         }
 

@@ -1,10 +1,8 @@
 //********************************************************************************************
-//Author: Sergey Stoyan, CliverSoft.com
-//        http://cliversoft.com
-//        stoyan@cliversoft.com
+//Author: Sergey Stoyan
 //        sergey.stoyan@gmail.com
-//        15 December 2006
-//Copyright: (C) 2006, Sergey Stoyan
+//        sergey.stoyan@hotmail.com
+//        http://www.cliversoft.com
 //********************************************************************************************
 
 using System;
@@ -14,6 +12,8 @@ namespace Cliver.WinApi
 {
     public partial class Wts
     {
+        public const uint INVALID_SESSION_ID = 0xFFFFFFFF;
+
         public enum WTS_CONNECTSTATE_CLASS
         {
             WTSActive,
@@ -46,11 +46,10 @@ namespace Cliver.WinApi
             int Version,
             ref IntPtr ppSessionInfo,
             ref int pCount);
+        public static readonly IntPtr WTS_CURRENT_SERVER_HANDLE = IntPtr.Zero;
 
         [DllImport("Wtsapi32.dll")]
         public static extern uint WTSQueryUserToken(uint SessionId, ref IntPtr phToken);
-
-        public readonly IntPtr WTS_CURRENT_SERVER_HANDLE = IntPtr.Zero;
 
         public class WtsEvents
         {

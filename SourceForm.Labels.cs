@@ -25,9 +25,9 @@ namespace Cliver.DataSifter
                 TextBox.Select(cl.start3, 0);
                 TextBox.SelectedText = cl.label;
                 TextBox.Select(cl.start3, cl.label.Length);
-                TextBox.SelectionBackColor = Settings.Default.GetFilterBackColor(cl.level);
+                TextBox.SelectionBackColor = Settings.Appearance.GetFilterBackColor(cl.level);
                 TextBox.SelectionColor = cl.fgcolor;
-                TextBox.SelectionFont = Settings.Default.CaptureLabelFont;
+                TextBox.SelectionFont = Settings.Appearance.CaptureLabelFont;
             });
         }
 
@@ -116,7 +116,7 @@ namespace Cliver.DataSifter
             ControlRoutines.Invoke(this, () =>
             {
                 TextBox.Select(cl.start3, cl.end3 - cl.start3);
-                TextBox.SelectionBackColor = Settings.Default.GetFilterBackColor(cl.level);
+                TextBox.SelectionBackColor = Settings.Appearance.GetFilterBackColor(cl.level);
             });
         }
 
@@ -273,7 +273,7 @@ namespace Cliver.DataSifter
 
         public string set_status_by_position_2(string text)
         {
-            if (Settings.Default.StripParsedTextInStatusBarFromHtmlTags)
+            if (Settings.Appearance.StripParsedTextInStatusBarFromHtmlTags)
             {
                 text = Regex.Replace(text, "<!--.*?-->|[\n\r]", "", RegexOptions.Compiled | RegexOptions.Singleline);
                 text = Regex.Replace(text, "</?(td|p|tr|br|body|option|div).*?>", " ", RegexOptions.Compiled | RegexOptions.Singleline | RegexOptions.IgnoreCase);

@@ -219,9 +219,9 @@ namespace Cliver.DataSifter
                 
                 return get_filters(xn, null);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                throw new Exception("Could not load '" + filter_file + "'\r\n\r\n" + e.Message);
+                throw new Exception("Could not load '" + filter_file + "'\r\n\r\n" + ex.Message);
             }
             //catch (Exception e)
             //{
@@ -270,7 +270,7 @@ namespace Cliver.DataSifter
             XmlDocument xd = new XmlDocument();
 
             xd.AppendChild(xd.CreateXmlDeclaration("1.0", "utf-8", null));
-            xd.AppendChild(xd.CreateComment("Filter tree file. Produced by "  + Program.AppTitle + ", http://www.cliversoft.com"));
+            xd.AppendChild(xd.CreateComment("Filter tree file. Produced by "  + Program.FullName + ", http://www.cliversoft.com"));
 
             XmlElement pxe = xd.CreateElement("FilterTree");
             

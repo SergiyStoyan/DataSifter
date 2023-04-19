@@ -1,10 +1,9 @@
 //********************************************************************************************
-//Author: Sergey Stoyan, CliverSoft.com
-//        http://cliversoft.com
-//        stoyan@cliversoft.com
+//Author: Sergey Stoyan
 //        sergey.stoyan@gmail.com
-//        27 February 2007
-//Copyright: (C) 2007, Sergey Stoyan
+//        sergey.stoyan@hotmail.com
+//        stoyan@cliversoft.com
+//        http://www.cliversoft.com
 //********************************************************************************************
 using System;
 using System.Threading;
@@ -28,7 +27,7 @@ namespace Cliver
 
         public delegate void ErrorHandler(Exception e);
 
-        public static Thread StartTry(Action code, ErrorHandler on_error = null, Action on_finally = null, bool background = true, ApartmentState state = ApartmentState.Unknown)
+        public static Thread StartTry(Action code, ErrorHandler onError = null, Action finallyCode = null, bool background = true, ApartmentState state = ApartmentState.Unknown)
         {
             Thread t = new Thread(
                 () =>
@@ -45,9 +44,9 @@ namespace Cliver
                     {
                         try
                         {
-                            if (on_error == null)
-                                throw e;
-                            on_error.Invoke(e);
+                            if (onError == null)
+                                throw;
+                            onError.Invoke(e);
                         }
                         catch (ThreadAbortException)
                         {
@@ -56,7 +55,7 @@ namespace Cliver
                     }
                     finally
                     {
-                        on_finally?.Invoke();
+                        finallyCode?.Invoke();
                     }
                 }
             );
@@ -67,9 +66,16 @@ namespace Cliver
             return t;
         }
 
-        public static Thread StartTrySta(Action code, ErrorHandler on_error = null, Action on_finally = null, bool background = true)
+        public static Thread StartTrySta(Action code, ErrorHandler onError = null, Action finallyCode = null, bool background = true)
         {
-            return StartTry(code, on_error, on_finally, background, ApartmentState.STA);
+            return StartTry(code, onError, finallyCode, background, ApartmentState.STA);
+        }
+
+        public static bool TryAbort(this Thread thread, int timeoutMss, int pollTimeSpanMss = 300)
+        {
+            if (thread == null || !thread.IsAlive)
+                return true;
+            return SleepRoutines.WaitForCondition(() => { thread.Abort(); thread.Join(pollTimeSpanMss); return !thread.IsAlive; }, timeoutMss);
         }
 
         //static HashSet<Thread> threads = new HashSet<Thread>();

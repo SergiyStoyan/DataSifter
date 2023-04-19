@@ -38,7 +38,7 @@ namespace Cliver.DataSifter
                 PreparedFilterTrees.Items.Add(name);
             }
         }
-        Dictionary<string,string> prepared_filter_tree_files = new Dictionary<string,string>();
+        Dictionary<string, string> prepared_filter_tree_files = new Dictionary<string, string>();
 
         /// <summary>
         /// saves the current filter tree as a prepared filter tree
@@ -156,7 +156,7 @@ namespace Cliver.DataSifter
         {
             if (rns == null)
                 return;
-            
+
             TreeNodeCollection tns;
             TreeNode stn = (TreeNode)FilterTree.SelectedNode;
             if (stn == null)
@@ -199,7 +199,7 @@ namespace Cliver.DataSifter
                 int level = 0;
                 if (tns.Count > 0)
                     level = ((Filter)tns[0].Tag).Level;
-                {                    
+                {
                     TreeNode tn = create_tree(f, level);
                     tns.Add(tn);
 
@@ -228,7 +228,7 @@ namespace Cliver.DataSifter
                     Filter f = (Filter)tn.Tag;
                     root_filters[i++] = f;
                     add_filter_nodes(f, tn.Nodes);
-                }                
+                }
                 //check for errors
                 return new Parser(root_filters);
             }
@@ -251,7 +251,7 @@ namespace Cliver.DataSifter
             }
         }
 
-#endregion
+        #endregion
 
         #region filter tree file routines
 
@@ -286,8 +286,8 @@ namespace Cliver.DataSifter
                     d.AddExtension = true;
                     d.DefaultExt = Program.FilterTreeFileExtension;
                     d.Filter = "Filter tree files (*." + Program.FilterTreeFileExtension + ")|*." + Program.FilterTreeFileExtension + "|All files (*.*)|*.*";
-                    if (!string.IsNullOrEmpty(Settings.Default.LastFilterTreeFile))
-                        d.InitialDirectory = Path.GetDirectoryName(Settings.Default.LastFilterTreeFile);
+                    if (!string.IsNullOrEmpty(Settings.History.LastFilterTreeFile))
+                        d.InitialDirectory = Path.GetDirectoryName(Settings.History.LastFilterTreeFile);
                     if (d.ShowDialog(this) != DialogResult.OK)
                         return;
                     //Settings.Default.LastFilterTreeFile = d.FileName;
@@ -323,12 +323,12 @@ namespace Cliver.DataSifter
                 if (!string.IsNullOrWhiteSpace(Document.File))
                 {
                     string ft_folder = Path.GetDirectoryName(file);
-                    if (Settings.Default.FilterTreeFolder2SourceFolder.Contains(ft_folder))
-                        Settings.Default.FilterTreeFolder2SourceFolder.Remove(ft_folder);
-                    Settings.Default.FilterTreeFolder2SourceFolder.Add(ft_folder, Path.GetDirectoryName(Document.File));
-                    if (Settings.Default.FilterTreeFolder2SourceFolder.Count > 30)
-                        Settings.Default.FilterTreeFolder2SourceFolder.RemoveAt(0);
-                    Settings.Default.Save();
+                    if (Settings.History.FilterTreeFolders2SourceFolder.Contains(ft_folder))
+                        Settings.History.FilterTreeFolders2SourceFolder.Remove(ft_folder);
+                    Settings.History.FilterTreeFolders2SourceFolder.Add(ft_folder, Path.GetDirectoryName(Document.File));
+                    if (Settings.History.FilterTreeFolders2SourceFolder.Count > 30)
+                        Settings.History.FilterTreeFolders2SourceFolder.RemoveAt(0);
+                    Settings.History.Save();
                 }
             }
             catch (Exception ex)
@@ -352,7 +352,7 @@ namespace Cliver.DataSifter
                 OpenFileDialog d = new OpenFileDialog();
                 d.Title = "Pick a filter tree file to open within DataSifter";
                 d.Filter = "Filter tree files (*." + Program.FilterTreeFileExtension + ")|*." + Program.FilterTreeFileExtension + "|All files (*.*)|*.*";
-                d.InitialDirectory = get_corresponding_filter_tree_folder(Settings.Default.LastFilterTreeFile);
+                d.InitialDirectory = get_corresponding_filter_tree_folder(Settings.History.LastFilterTreeFile);
                 if (string.IsNullOrWhiteSpace(d.InitialDirectory) || !Directory.Exists(d.InitialDirectory))
                     d.InitialDirectory = null;
                 if (d.ShowDialog(this) != DialogResult.OK || string.IsNullOrWhiteSpace(d.FileName))
@@ -360,7 +360,7 @@ namespace Cliver.DataSifter
                 LoadFilterTree(d.FileName);
                 Focus();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Message.Error(ex);
             }
@@ -371,9 +371,9 @@ namespace Cliver.DataSifter
             try
             {
                 string s_folder = Path.GetDirectoryName(source_file);
-                foreach (string ft_folder in Settings.Default.FilterTreeFolder2SourceFolder.Keys)
+                foreach (string ft_folder in Settings.History.FilterTreeFolders2SourceFolder.Keys)
                 {
-                    string sf = (string)Settings.Default.FilterTreeFolder2SourceFolder[ft_folder];
+                    string sf = (string)Settings.History.FilterTreeFolders2SourceFolder[ft_folder];
                     if (sf == s_folder)
                         return ft_folder;
                 }
@@ -381,7 +381,7 @@ namespace Cliver.DataSifter
             catch { }
             try
             {
-                return Path.GetDirectoryName(Settings.Default.LastFilterTreeFile);
+                return Path.GetDirectoryName(Settings.History.LastFilterTreeFile);
             }
             catch
             {
@@ -394,9 +394,9 @@ namespace Cliver.DataSifter
         /// </summary>
         internal bool FilterTreeChanged
         {
-            get 
+            get
             {
-                return pFilterTreeNameChangedHighlight.BackColor == CHANGED_FILTER_TREE_COLOR; 
+                return pFilterTreeNameChangedHighlight.BackColor == CHANGED_FILTER_TREE_COLOR;
             }
             set
             {
@@ -473,7 +473,7 @@ namespace Cliver.DataSifter
             OutputForm f = new OutputForm(all_ogs, captured_ogs);
             f.ShowDialog();
         }
-        
+
         /// <summary>
         /// Return output group names as an array
         /// </summary>
@@ -516,12 +516,12 @@ namespace Cliver.DataSifter
             }
 
             try
-            { 
+            {
                 Filter f = (Filter)stn.Tag;
-                Settings.Default.FilterTypeName2NewFilter[f.GetType().Name] = f.GetSerializedFilter();
-                Settings.Default.Save();
+                Settings.General.FilterTypeNames2NewFilter[f.GetType().Name] = f.GetSerializedFilter();
+                Settings.General.Save();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Message.Error(ex);
                 return;
