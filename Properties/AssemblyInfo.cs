@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("CliverSoft")]
 [assembly: AssemblyProduct("DataSifter")]
-[assembly: AssemblyCopyright("Copyright © 2006-2021, Sergey Stoyan")]
+[assembly: AssemblyCopyright("Copyright © 2006-2023, Sergiy Stoyan")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -28,5 +28,5 @@ using System.Runtime.InteropServices;
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion("3.2.5.*")]
+[assembly: AssemblyVersion("3.3.0.*")]
 //[assembly: AssemblyFileVersion("1.1.0.0")]
